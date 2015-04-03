@@ -3,6 +3,7 @@ module Test.QuickCheck.Laws.DistributiveLattice where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Distributivity: `x && (y || z) = (x && y) || (x && z)`
 checkDistributiveLattice :: forall m a. (Arbitrary a, DistributiveLattice a) => a -> QC Unit
 checkDistributiveLattice _ = do
 

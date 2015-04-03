@@ -3,17 +3,17 @@ module Test.QuickCheck.Laws.Semiring where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
-  -- | - Commutative monoid under addition:
-  -- |   - Associativity: `(a + b) + c = a + (b + c)`
-  -- |   - Identity: `zero + a = a + zero = a`
-  -- |   - Commutative: `a + b = b + a`
-  -- | - Monoid under multiplication:
-  -- |   - Associativity: `(a * b) * c = a * (b * c)`
-  -- |   - Identity: `one * a = a * one = a`
-  -- | - Multiplication distributes over addition:
-  -- |   - Left distributivity: `a * (b + c) = (a * b) + (a * c)`
-  -- |   - Right distributivity: `(a + b) * c = (a * c) + (b * c)`
-  -- | - Annihiliation: `zero * a = a * zero = zero`
+-- | - Commutative monoid under addition:
+-- |   - Associativity: `(a + b) + c = a + (b + c)`
+-- |   - Identity: `zero + a = a + zero = a`
+-- |   - Commutative: `a + b = b + a`
+-- | - Monoid under multiplication:
+-- |   - Associativity: `(a * b) * c = a * (b * c)`
+-- |   - Identity: `one * a = a * one = a`
+-- | - Multiplication distributes over addition:
+-- |   - Left distributivity: `a * (b + c) = (a * b) + (a * c)`
+-- |   - Right distributivity: `(a + b) * c = (a * c) + (b * c)`
+-- | - Annihiliation: `zero * a = a * zero = zero`
 checkSemiring :: forall a. (Semiring a, Arbitrary a, Eq a) => a -> QC Unit
 checkSemiring _ = do
 

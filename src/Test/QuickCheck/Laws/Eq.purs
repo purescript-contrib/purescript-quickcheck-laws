@@ -3,6 +3,10 @@ module Test.QuickCheck.Laws.Eq where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Reflexivity: `x == x = true`
+-- | - Symmetry: `x == y = y == x`
+-- | - Transitivity: if `x == y` and `y == z` then `x == z`
+-- | - Negation: `x /= y = not (x == y)`
 checkEq :: forall m a. (Arbitrary a, Eq a) => a -> QC Unit
 checkEq _ = do
 

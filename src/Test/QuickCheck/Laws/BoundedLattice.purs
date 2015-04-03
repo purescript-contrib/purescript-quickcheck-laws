@@ -3,6 +3,12 @@ module Test.QuickCheck.Laws.BoundedLattice where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Identity:
+-- |   - `a || bottom = a`
+-- |   - `a && top = a`
+-- | - Annihiliation:
+-- |   - `a || top = top`
+-- |   - `a && bottom = bottom`
 checkBoundedLattice :: forall m a. (Arbitrary a, BoundedLattice a) => a -> QC Unit
 checkBoundedLattice _ = do
 

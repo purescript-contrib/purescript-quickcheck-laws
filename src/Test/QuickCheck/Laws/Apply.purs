@@ -3,6 +3,7 @@ module Test.QuickCheck.Laws.Apply where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Associative composition: `(<<<) <$> f <*> g <*> h = f <*> (g <*> h)`
 checkApply :: forall f a b c. (Apply f,
                                Arbitrary (f a),
                                Arbitrary (f (a -> b)),

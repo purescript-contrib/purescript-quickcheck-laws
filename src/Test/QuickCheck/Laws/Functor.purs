@@ -3,6 +3,8 @@ module Test.QuickCheck.Laws.Functor where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Identity: `(<$>) id = id`
+-- | - Composition: `(<$>) (f <<< g) = (f <$>) <<< (g <$>)`
 checkFunctor :: forall f a b c. (Functor f,
                                  Arbitrary a,
                                  Arbitrary (f a),

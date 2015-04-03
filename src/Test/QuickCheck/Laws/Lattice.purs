@@ -3,6 +3,18 @@ module Test.QuickCheck.Laws.Lattice where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Associativity:
+-- |   - `a || (b || c) = (a || b) || c`
+-- |   - `a && (b && c) = (a && b) && c`
+-- | - Commutativity:
+-- |   - `a || b = b || a`
+-- |   - `a && b = b && a`
+-- | - Absorption:
+-- |   - `a || (a && b) = a`
+-- |   - `a && (a || b) = a`
+-- | - Idempotent:
+-- |   - `a || a = a`
+-- |   - `a && a = a`
 checkLattice :: forall m a. (Arbitrary a, Lattice a) => a -> QC Unit
 checkLattice _ = do
 

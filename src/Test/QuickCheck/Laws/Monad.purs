@@ -3,6 +3,8 @@ module Test.QuickCheck.Laws.Monad where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Left Identity: `pure x >>= f = f x`
+-- | - Right Identity: `x >>= pure = x`
 checkMonad :: forall m a. (Monad m,
                            Arbitrary a,
                            Arbitrary (m a),

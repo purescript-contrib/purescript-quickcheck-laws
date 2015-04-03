@@ -3,6 +3,7 @@ module Test.QuickCheck.Laws.DivisionRing where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Multiplicative inverse: `(one / x) * x = one`
 checkDivisionRing :: forall a. (DivisionRing a, Arbitrary a, Eq a) => a -> QC Unit
 checkDivisionRing _ = do
 

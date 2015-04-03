@@ -3,6 +3,7 @@ module Test.QuickCheck.Laws.Num where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Commutative multiplication: `a * b = b * a`
 checkNum :: forall a. (Num a, Arbitrary a, Eq a) => a -> QC Unit
 checkNum _ = do
 

@@ -3,6 +3,7 @@ module Test.QuickCheck.Laws.Bind where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Associativity: `(x >>= f) >>= g = x >>= (\k => f k >>= g)`
 checkBind :: forall m a. (Bind m,
                           Arbitrary a,
                           Arbitrary (m a),

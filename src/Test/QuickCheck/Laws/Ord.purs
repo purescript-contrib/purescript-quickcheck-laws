@@ -3,6 +3,9 @@ module Test.QuickCheck.Laws.Ord where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Reflexivity: `a <= a`
+-- | - Antisymmetry: if `a <= b` and `b <= a` then `a = b`
+-- | - Transitivity: if `a <= b` and `b <= c` then `a <= c`
 checkOrd :: forall m a. (Arbitrary a, Ord a) => a -> QC Unit
 checkOrd _ = do
 

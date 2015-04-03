@@ -3,6 +3,7 @@ module Test.QuickCheck.Laws.Semigroupoid where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Associativity: `p <<< (q <<< r) = (p <<< q) <<< r`
 checkSemigroupoid :: forall a b c d e. (Semigroupoid a,
                                         Arbitrary (a b c),
                                         Arbitrary (a c d),

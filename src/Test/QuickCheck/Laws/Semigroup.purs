@@ -3,6 +3,7 @@ module Test.QuickCheck.Laws.Semigroup where
 import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
+-- | - Associativity: `(x <> y) <> z = x <> (y <> z)`
 checkSemigroup :: forall s. (Semigroup s, Arbitrary s, Eq s) => s -> QC Unit
 checkSemigroup _ = do
 
