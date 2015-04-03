@@ -80,6 +80,16 @@ checkDistributiveLattice :: forall m a. (Arbitrary a, DistributiveLattice a) => 
 
 
 
+## Module Test.QuickCheck.Laws.DivisionRing
+
+#### `checkDivisionRing`
+
+``` purescript
+checkDivisionRing :: forall a. (DivisionRing a, Arbitrary a, Eq a) => a -> QC Unit
+```
+
+
+
 ## Module Test.QuickCheck.Laws.Eq
 
 #### `checkEq`
@@ -110,6 +120,16 @@ checkLattice :: forall m a. (Arbitrary a, Lattice a) => a -> QC Unit
 
 
 
+## Module Test.QuickCheck.Laws.ModuloSemiring
+
+#### `checkModuloSemiring`
+
+``` purescript
+checkModuloSemiring :: forall a. (ModuloSemiring a, Arbitrary a, Eq a) => a -> QC Unit
+```
+
+
+
 ## Module Test.QuickCheck.Laws.Monad
 
 #### `checkMonad`
@@ -120,12 +140,32 @@ checkMonad :: forall m a. (Monad m, Arbitrary a, Arbitrary (m a), CoArbitrary a,
 
 
 
+## Module Test.QuickCheck.Laws.Num
+
+#### `checkNum`
+
+``` purescript
+checkNum :: forall a. (Num a, Arbitrary a, Eq a) => a -> QC Unit
+```
+
+
+
 ## Module Test.QuickCheck.Laws.Ord
 
 #### `checkOrd`
 
 ``` purescript
 checkOrd :: forall m a. (Arbitrary a, Ord a) => a -> QC Unit
+```
+
+
+
+## Module Test.QuickCheck.Laws.Ring
+
+#### `checkRing`
+
+``` purescript
+checkRing :: forall a. (Ring a, Arbitrary a, Eq a) => a -> QC Unit
 ```
 
 
@@ -148,6 +188,27 @@ checkSemigroup :: forall s. (Semigroup s, Arbitrary s, Eq s) => s -> QC Unit
 checkSemigroupoid :: forall a b c d e. (Semigroupoid a, Arbitrary (a b c), Arbitrary (a c d), Arbitrary (a d e), Eq (a b e)) => a b c -> a d e -> QC Unit
 ```
 
+
+
+## Module Test.QuickCheck.Laws.Semiring
+
+#### `checkSemiring`
+
+``` purescript
+checkSemiring :: forall a. (Semiring a, Arbitrary a, Eq a) => a -> QC Unit
+```
+
+- Commutative monoid under addition:
+  - Associativity: `(a + b) + c = a + (b + c)`
+  - Identity: `zero + a = a + zero = a`
+  - Commutative: `a + b = b + a`
+- Monoid under multiplication:
+  - Associativity: `(a * b) * c = a * (b * c)`
+  - Identity: `one * a = a * one = a`
+- Multiplication distributes over addition:
+  - Left distributivity: `a * (b + c) = (a * b) + (a * c)`
+  - Right distributivity: `(a + b) * c = (a * c) + (b * c)`
+- Annihiliation: `zero * a = a * zero = zero`
 
 
 
