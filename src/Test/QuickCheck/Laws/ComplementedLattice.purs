@@ -8,7 +8,7 @@ import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 -- |   - `not a && a == bottom`
 -- | - Double negation:
 -- |   - `not <<< not == id`
-checkComplementedLattice :: forall m a. (Arbitrary a, ComplementedLattice a) => a -> QC Unit
+checkComplementedLattice :: forall a. (Arbitrary a, ComplementedLattice a) => a -> QC Unit
 checkComplementedLattice _ = do
 
   trace "Checking 'Complemented' law for ComplementedLattice"

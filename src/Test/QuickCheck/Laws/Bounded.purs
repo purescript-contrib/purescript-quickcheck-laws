@@ -4,7 +4,7 @@ import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
 -- | - Ordering: `bottom <= a <= top`
-checkBounded :: forall m a. (Arbitrary a, Bounded a) => a -> QC Unit
+checkBounded :: forall a. (Arbitrary a, Bounded a) => a -> QC Unit
 checkBounded _ = do
 
   trace "Checking 'Ordering' law for Bounded"

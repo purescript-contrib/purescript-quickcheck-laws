@@ -9,7 +9,7 @@ import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 -- | - Annihiliation:
 -- |   - `a || top = top`
 -- |   - `a && bottom = bottom`
-checkBoundedLattice :: forall m a. (Arbitrary a, BoundedLattice a) => a -> QC Unit
+checkBoundedLattice :: forall a. (Arbitrary a, BoundedLattice a) => a -> QC Unit
 checkBoundedLattice _ = do
 
   trace "Checking 'Identity' law for BoundedLattice"

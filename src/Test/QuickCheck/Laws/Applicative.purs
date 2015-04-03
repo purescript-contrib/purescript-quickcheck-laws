@@ -4,7 +4,7 @@ import Debug.Trace (trace)
 import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 
 -- | - Identity: `(pure id) <*> v = v`
--- | - Composition: `(pure <<<) <*> f <*> g <*> h = f <*> (g <*> h)`
+-- | - Composition: `(pure (<<<)) <*> f <*> g <*> h = f <*> (g <*> h)`
 -- | - Homomorphism: `(pure f) <*> (pure x) = pure (f x)`
 -- | - Interchange: `u <*> (pure y) = (pure ($ y)) <*> u`
 checkApplicative :: forall f a b c. (Applicative f,

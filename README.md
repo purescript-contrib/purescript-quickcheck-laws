@@ -41,7 +41,7 @@ checkBind :: forall m a. (Bind m, Arbitrary a, Arbitrary (m a), CoArbitrary a, E
 #### `checkBounded`
 
 ``` purescript
-checkBounded :: forall m a. (Arbitrary a, Bounded a) => a -> QC Unit
+checkBounded :: forall a. (Arbitrary a, Bounded a) => a -> QC Unit
 ```
 
 - Ordering: `bottom <= a <= top`
@@ -52,7 +52,7 @@ checkBounded :: forall m a. (Arbitrary a, Bounded a) => a -> QC Unit
 #### `checkBoundedLattice`
 
 ``` purescript
-checkBoundedLattice :: forall m a. (Arbitrary a, BoundedLattice a) => a -> QC Unit
+checkBoundedLattice :: forall a. (Arbitrary a, BoundedLattice a) => a -> QC Unit
 ```
 
 - Identity:
@@ -79,7 +79,7 @@ checkCategory :: forall a b. (Category a, Arbitrary (a b b), Eq (a b b)) => a b 
 #### `checkComplementedLattice`
 
 ``` purescript
-checkComplementedLattice :: forall m a. (Arbitrary a, ComplementedLattice a) => a -> QC Unit
+checkComplementedLattice :: forall a. (Arbitrary a, ComplementedLattice a) => a -> QC Unit
 ```
 
 - Complemented:
@@ -94,7 +94,7 @@ checkComplementedLattice :: forall m a. (Arbitrary a, ComplementedLattice a) => 
 #### `checkDistributiveLattice`
 
 ``` purescript
-checkDistributiveLattice :: forall m a. (Arbitrary a, DistributiveLattice a) => a -> QC Unit
+checkDistributiveLattice :: forall a. (Arbitrary a, DistributiveLattice a) => a -> QC Unit
 ```
 
 - Distributivity: `x && (y || z) = (x && y) || (x && z)`
@@ -116,7 +116,7 @@ checkDivisionRing :: forall a. (DivisionRing a, Arbitrary a, Eq a) => a -> QC Un
 #### `checkEq`
 
 ``` purescript
-checkEq :: forall m a. (Arbitrary a, Eq a) => a -> QC Unit
+checkEq :: forall a. (Arbitrary a, Eq a) => a -> QC Unit
 ```
 
 - Reflexivity: `x == x = true`
@@ -142,7 +142,7 @@ checkFunctor :: forall f a b c. (Functor f, Arbitrary a, Arbitrary (f a), Arbitr
 #### `checkLattice`
 
 ``` purescript
-checkLattice :: forall m a. (Arbitrary a, Lattice a) => a -> QC Unit
+checkLattice :: forall a. (Arbitrary a, Lattice a) => a -> QC Unit
 ```
 
 - Associativity:
@@ -198,7 +198,7 @@ checkNum :: forall a. (Num a, Arbitrary a, Eq a) => a -> QC Unit
 #### `checkOrd`
 
 ``` purescript
-checkOrd :: forall m a. (Arbitrary a, Ord a) => a -> QC Unit
+checkOrd :: forall a. (Arbitrary a, Ord a) => a -> QC Unit
 ```
 
 - Reflexivity: `a <= a`

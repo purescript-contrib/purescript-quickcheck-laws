@@ -15,7 +15,7 @@ import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 -- | - Idempotent:
 -- |   - `a || a = a`
 -- |   - `a && a = a`
-checkLattice :: forall m a. (Arbitrary a, Lattice a) => a -> QC Unit
+checkLattice :: forall a. (Arbitrary a, Lattice a) => a -> QC Unit
 checkLattice _ = do
 
   trace "Checking 'Associativity' law for Lattice"

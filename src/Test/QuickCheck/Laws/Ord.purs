@@ -6,7 +6,7 @@ import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
 -- | - Reflexivity: `a <= a`
 -- | - Antisymmetry: if `a <= b` and `b <= a` then `a = b`
 -- | - Transitivity: if `a <= b` and `b <= c` then `a <= c`
-checkOrd :: forall m a. (Arbitrary a, Ord a) => a -> QC Unit
+checkOrd :: forall a. (Arbitrary a, Ord a) => a -> QC Unit
 checkOrd _ = do
 
   trace "Checking 'Reflexivity' law for Ord"
