@@ -1,14 +1,15 @@
 module Test.QuickCheck.Laws.Data.ModuloSemiring where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Remainder: ```a / b * b + (a `mod` b) = a```
 checkModuloSemiring :: forall a. (ModuloSemiring a, Arbitrary a, Eq a) => Proxy a -> QC Unit
 checkModuloSemiring _ = do
 
-  trace "Checking 'Remainder' law for ModuloSemiring"
+  log "Checking 'Remainder' law for ModuloSemiring"
   quickCheck remainder
 
   where

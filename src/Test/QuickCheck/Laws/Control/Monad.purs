@@ -1,21 +1,25 @@
 module Test.QuickCheck.Laws.Control.Monad where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+import Type.Proxy (Proxy(), Proxy2())
 
 -- | - Left Identity: `pure x >>= f = f x`
 -- | - Right Identity: `x >>= pure = x`
 checkMonad :: forall m a. (Monad m,
                            Arbitrary a,
                            Arbitrary (m a),
-                           CoArbitrary a,
-                           Eq (m a)) => m a -> QC Unit
-checkMonad _ = do
+                           Coarbitrary a,
+                           Eq (m a)) => Proxy2 m
+                                     -> Proxy a
+                                     -> QC Unit
+checkMonad _ _ = do
 
-  trace "Checking 'Left identity' law for Monad"
+  log "Checking 'Left identity' law for Monad"
   quickCheck leftIdentity
 
-  trace "Checking 'Right identity' law for Monad"
+  log "Checking 'Right identity' law for Monad"
   quickCheck rightIdentity
 
   where

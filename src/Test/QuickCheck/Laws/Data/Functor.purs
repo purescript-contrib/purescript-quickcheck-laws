@@ -1,7 +1,8 @@
 module Test.QuickCheck.Laws.Data.Functor where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy2(), Proxy())
 
 -- | - Identity: `(<$>) id = id`
@@ -9,10 +10,10 @@ import Type.Proxy (Proxy2(), Proxy())
 checkFunctor :: forall f a b. (Functor f, Arbitrary (f a), Arbitrary (a -> b), Arbitrary (b -> a), Eq (f a)) => Proxy2 f -> Proxy a -> Proxy b -> QC Unit
 checkFunctor _ _ _ = do
 
-  trace "Checking 'Identity' law for Functor"
+  log "Checking 'Identity' law for Functor"
   quickCheck identity
 
-  trace "Checking 'Composition' law for Functor"
+  log "Checking 'Composition' law for Functor"
   quickCheck composition
 
   where

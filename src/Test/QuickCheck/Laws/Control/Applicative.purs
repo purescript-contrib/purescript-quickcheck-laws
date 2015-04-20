@@ -1,7 +1,9 @@
 module Test.QuickCheck.Laws.Control.Applicative where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+import Type.Proxy (Proxy(), Proxy2())
 
 -- | - Identity: `(pure id) <*> v = v`
 -- | - Composition: `(pure (<<<)) <*> f <*> g <*> h = f <*> (g <*> h)`
@@ -13,22 +15,26 @@ checkApplicative :: forall f a b c. (Applicative f,
                                      Arbitrary (f a),
                                      Arbitrary (f (a -> b)),
                                      Arbitrary (f (b -> c)),
-                                     CoArbitrary a,
+                                     Coarbitrary a,
                                      Eq (f a),
                                      Eq (f b),
-                                     Eq (f c)) => f a -> f b -> f c -> QC Unit
-checkApplicative _ _ _ = do
+                                     Eq (f c)) => Proxy2 f
+                                               -> Proxy a
+                                               -> Proxy b
+                                               -> Proxy c
+                                               -> QC Unit
+checkApplicative _ _ _ _ = do
 
-  trace "Checking 'Identity' law for Applicative"
+  log "Checking 'Identity' law for Applicative"
   quickCheck identity
 
-  trace "Checking 'Composition' law for Applicative"
+  log "Checking 'Composition' law for Applicative"
   quickCheck composition
 
-  trace "Checking 'Homomorphism' law for Applicative"
+  log "Checking 'Homomorphism' law for Applicative"
   quickCheck homomorphism
 
-  trace "Checking 'Interchange' law for Applicative"
+  log "Checking 'Interchange' law for Applicative"
   quickCheck interchange
 
   where

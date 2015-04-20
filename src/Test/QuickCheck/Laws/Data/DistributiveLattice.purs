@@ -1,14 +1,15 @@
 module Test.QuickCheck.Laws.Data.DistributiveLattice where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Distributivity: `x && (y || z) = (x && y) || (x && z)`
 checkDistributiveLattice :: forall a. (Arbitrary a, DistributiveLattice a) => Proxy a -> QC Unit
 checkDistributiveLattice _ = do
 
-  trace "Checking 'Distributivity' law for DistributiveLattice"
+  log "Checking 'Distributivity' law for DistributiveLattice"
   quickCheck distributivity
 
   where

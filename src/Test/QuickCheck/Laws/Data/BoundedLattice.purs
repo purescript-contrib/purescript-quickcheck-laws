@@ -1,7 +1,8 @@
 module Test.QuickCheck.Laws.Data.BoundedLattice where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Identity:
@@ -13,10 +14,10 @@ import Type.Proxy (Proxy())
 checkBoundedLattice :: forall a. (Arbitrary a, BoundedLattice a) => Proxy a -> QC Unit
 checkBoundedLattice _ = do
 
-  trace "Checking 'Identity' law for BoundedLattice"
+  log "Checking 'Identity' law for BoundedLattice"
   quickCheck identity
 
-  trace "Checking 'Annihiliation' law for BoundedLattice"
+  log "Checking 'Annihiliation' law for BoundedLattice"
   quickCheck annihiliation
 
   where

@@ -1,14 +1,15 @@
 module Test.QuickCheck.Laws.Data.Num where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Commutative multiplication: `a * b = b * a`
 checkNum :: forall a. (Num a, Arbitrary a, Eq a) => Proxy a -> QC Unit
 checkNum _ = do
 
-  trace "Checking 'Commutative multiplication' law for Num"
+  log "Checking 'Commutative multiplication' law for Num"
   quickCheck commutativeMultiplication
 
   where

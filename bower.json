@@ -11,14 +11,12 @@
     "bower_components",
     "node_modules",
     "output",
-    "test",
-    "tmp",
     "bower.json",
     "gulpfile.js",
     "package.json"
   ],
   "dependencies": {
-    "purescript-quickcheck": "~0.5.1",
+    "purescript-quickcheck": "~0.6.0",
     "purescript-proxy": "~0.1.0"
   }
 }

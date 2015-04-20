@@ -1,7 +1,8 @@
 module Test.QuickCheck.Laws.Data.Ord where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Reflexivity: `a <= a`
@@ -10,13 +11,13 @@ import Type.Proxy (Proxy())
 checkOrd :: forall a. (Arbitrary a, Ord a) => Proxy a -> QC Unit
 checkOrd _ = do
 
-  trace "Checking 'Reflexivity' law for Ord"
+  log "Checking 'Reflexivity' law for Ord"
   quickCheck reflexivity
 
-  trace "Checking 'Antisymmetry' law for Ord"
+  log "Checking 'Antisymmetry' law for Ord"
   quickCheck antisymmetry
 
-  trace "Checking 'Transitivity' law for Ord"
+  log "Checking 'Transitivity' law for Ord"
   quickCheck transitivity
 
   where

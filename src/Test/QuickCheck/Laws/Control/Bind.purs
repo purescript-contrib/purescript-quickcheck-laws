@@ -1,17 +1,21 @@
 module Test.QuickCheck.Laws.Control.Bind where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+import Type.Proxy (Proxy(), Proxy2())
 
 -- | - Associativity: `(x >>= f) >>= g = x >>= (\k => f k >>= g)`
 checkBind :: forall m a. (Bind m,
                           Arbitrary a,
                           Arbitrary (m a),
-                          CoArbitrary a,
-                          Eq (m a)) => m a -> QC Unit
-checkBind _ = do
+                          Coarbitrary a,
+                          Eq (m a)) => Proxy2 m
+                                    -> Proxy a
+                                    -> QC Unit
+checkBind _ _ = do
 
-  trace "Checking 'Associativity' law for Bind"
+  log "Checking 'Associativity' law for Bind"
   quickCheck associativity
 
   where

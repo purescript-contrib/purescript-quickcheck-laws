@@ -1,17 +1,24 @@
 module Test.QuickCheck.Laws.Control.Category where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+import Type.Proxy (Proxy(), Proxy3())
 
 -- | - Identity: `id <<< p = p <<< id = p`
-checkCategory :: forall a b. (Category a, Arbitrary (a b b), Eq (a b b)) => a b b -> QC Unit
-checkCategory _ = do
+checkCategory :: forall a b c. (Category a,
+                                Arbitrary (a b c),
+                                Eq (a b c)) => Proxy3 a
+                                            -> Proxy b
+                                            -> Proxy c
+                                            -> QC Unit
+checkCategory _ _ _ = do
 
-  trace "Checking 'Identity' law for Category"
+  log "Checking 'Identity' law for Category"
   quickCheck identity
 
   where
 
-  identity :: a b b -> Boolean
+  identity :: a b c -> Boolean
   identity p = (id <<< p) == p
             && (p <<< id) == p

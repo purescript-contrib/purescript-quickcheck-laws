@@ -1,5 +1,6 @@
-module Test.Prim.Boolean where
+module Test.Prim.Boolean (checkBoolean) where
 
+import Console (log)
 import Test.QuickCheck.Laws.Data.Bounded
 import Test.QuickCheck.Laws.Data.BoundedLattice
 import Test.QuickCheck.Laws.Data.ComplementedLattice
@@ -13,6 +14,7 @@ prxBoolean :: Proxy Boolean
 prxBoolean = Proxy
 
 checkBoolean = do
+  log "\n\nChecking Boolean instances...\n"
   checkEq prxBoolean
   checkOrd prxBoolean
   checkBounded prxBoolean

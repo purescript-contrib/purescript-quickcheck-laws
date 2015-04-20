@@ -1,14 +1,15 @@
 module Test.QuickCheck.Laws.Data.DivisionRing where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Multiplicative inverse: `(one / x) * x = one`
 checkDivisionRing :: forall a. (DivisionRing a, Arbitrary a, Eq a) => Proxy a -> QC Unit
 checkDivisionRing _ = do
 
-  trace "Checking 'Multiplicative inverse' law for DivisionRing"
+  log "Checking 'Multiplicative inverse' law for DivisionRing"
   quickCheck multiplicativeInverse
 
   where

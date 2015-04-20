@@ -38,4 +38,10 @@ gulp.task("test", function() {
     .pipe(run("node"));
 });
 
-gulp.task("default", ["jsvalidate", "docs"]);
+gulp.task("dotpsci", function () {
+  return gulp.src(paths)
+    .pipe(plumber())
+    .pipe(purescript.dotPsci());
+});
+
+gulp.task("default", ["jsvalidate", "docs", "dotpsci"]);

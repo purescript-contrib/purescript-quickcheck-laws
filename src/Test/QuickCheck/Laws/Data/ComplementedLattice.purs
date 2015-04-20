@@ -1,7 +1,8 @@
 module Test.QuickCheck.Laws.Data.ComplementedLattice where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Complemented:
@@ -12,10 +13,10 @@ import Type.Proxy (Proxy())
 checkComplementedLattice :: forall a. (Arbitrary a, ComplementedLattice a) => Proxy a -> QC Unit
 checkComplementedLattice _ = do
 
-  trace "Checking 'Complemented' law for ComplementedLattice"
+  log "Checking 'Complemented' law for ComplementedLattice"
   quickCheck complemented
 
-  trace "Checking 'Double negation' law for ComplementedLattice"
+  log "Checking 'Double negation' law for ComplementedLattice"
   quickCheck doubleNegation
 
   where

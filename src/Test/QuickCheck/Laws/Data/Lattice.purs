@@ -1,7 +1,8 @@
 module Test.QuickCheck.Laws.Data.Lattice where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Associativity:
@@ -19,16 +20,16 @@ import Type.Proxy (Proxy())
 checkLattice :: forall a. (Arbitrary a, Lattice a) => Proxy a -> QC Unit
 checkLattice _ = do
 
-  trace "Checking 'Associativity' law for Lattice"
+  log "Checking 'Associativity' law for Lattice"
   quickCheck associativity
 
-  trace "Checking 'Commutativity' law for Lattice"
+  log "Checking 'Commutativity' law for Lattice"
   quickCheck commutativity
 
-  trace "Checking 'Absorption' law for Lattice"
+  log "Checking 'Absorption' law for Lattice"
   quickCheck absorption
 
-  trace "Checking 'Idempotent' law for Lattice"
+  log "Checking 'Idempotent' law for Lattice"
   quickCheck idempotent
 
   where

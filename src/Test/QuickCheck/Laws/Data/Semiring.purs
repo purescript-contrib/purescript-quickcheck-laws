@@ -1,7 +1,8 @@
 module Test.QuickCheck.Laws.Data.Semiring where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Commutative monoid under addition:
@@ -18,25 +19,25 @@ import Type.Proxy (Proxy())
 checkSemiring :: forall a. (Semiring a, Arbitrary a, Eq a) => Proxy a -> QC Unit
 checkSemiring _ = do
 
-  trace "Checking 'Associativity' law for Semiring addition"
+  log "Checking 'Associativity' law for Semiring addition"
   quickCheck associativeAddition
 
-  trace "Checking 'Identity' law for Semiring addition"
+  log "Checking 'Identity' law for Semiring addition"
   quickCheck identityAddition
 
-  trace "Checking 'Commutative' law for Semiring addition"
+  log "Checking 'Commutative' law for Semiring addition"
   quickCheck commutativeAddition
 
-  trace "Checking 'Associativity' law for Semiring multiplication"
+  log "Checking 'Associativity' law for Semiring multiplication"
   quickCheck associativeMultiplication
 
-  trace "Checking 'Identity' law for Semiring multiplication"
+  log "Checking 'Identity' law for Semiring multiplication"
   quickCheck identityMultiplication
 
-  trace "Checking 'Left distribution' law for Semiring"
+  log "Checking 'Left distribution' law for Semiring"
   quickCheck leftDistribution
 
-  trace "Checking 'Right distribution' law for Semiring"
+  log "Checking 'Right distribution' law for Semiring"
   quickCheck rightDistribution
 
   where

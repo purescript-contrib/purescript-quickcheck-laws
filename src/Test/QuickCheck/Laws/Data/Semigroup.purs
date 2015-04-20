@@ -1,14 +1,15 @@
 module Test.QuickCheck.Laws.Data.Semigroup where
 
-import Debug.Trace (trace)
-import Test.QuickCheck (QC(..), Arbitrary, CoArbitrary, quickCheck)
+import Console (log)
+import Test.QuickCheck (QC(..), quickCheck)
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Associativity: `(x <> y) <> z = x <> (y <> z)`
 checkSemigroup :: forall s. (Semigroup s, Arbitrary s, Eq s) => Proxy s -> QC Unit
 checkSemigroup _ = do
 
-  trace "Checking 'Associativity' law for Semigroup"
+  log "Checking 'Associativity' law for Semigroup"
   quickCheck associativity
 
   where
