@@ -4,20 +4,17 @@ import Prelude
     
 import Control.Monad.Eff
 import Control.Monad.Eff.Console (log)
+
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+import Test.QuickCheck.Laws
+
 import Type.Proxy (Proxy(), Proxy2())
 
 -- | - Left Identity: `pure x >>= f = f x`
 -- | - Right Identity: `x >>= pure = x`
-checkMonad :: forall m a. (Monad m,
-                           Arbitrary a,
-                           Arbitrary (m a),
-                           Coarbitrary a,
-                           Eq (m a)) => Proxy2 m
-                                     -> Proxy a
-                                     -> QC Unit
-checkMonad _ _ = do
+checkMonad :: forall m. (Monad m, Arbitrary1 m, Eq1 m) => Proxy2 m -> QC Unit
+checkMonad _ = do
 
   log "Checking 'Left identity' law for Monad"
   quickCheck leftIdentity
@@ -27,8 +24,10 @@ checkMonad _ _ = do
 
   where
 
-  leftIdentity :: a -> (a -> m a) -> Boolean
-  leftIdentity x f = (pure x >>= f) == f x
+  leftIdentity :: A -> (A -> Wrap m B) -> Boolean
+  leftIdentity x f = (pure x >>= f') `eq1` f' x
+    where
+    f' = f >>> unwrap
 
-  rightIdentity :: m a -> Boolean
-  rightIdentity m = (m >>= pure) == m
+  rightIdentity :: Wrap m A -> Boolean
+  rightIdentity (Wrap m) = (m >>= pure) `eq1` m

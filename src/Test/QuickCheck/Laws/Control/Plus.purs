@@ -10,22 +10,15 @@ import Control.Plus (Plus, empty)
 
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+import Test.QuickCheck.Laws
 
 import Type.Proxy (Proxy(), Proxy2())
 
 -- | - Left identity: `empty <|> x == x`
 -- | - Right identity: `x <|> empty == x`
 -- | - Annihilation: `f <$> empty == empty`
-checkPlus :: forall f a b. (Plus f,
-                           Arbitrary a,
-                           Arbitrary (a -> b),
-                           Arbitrary (f a),
-                           Eq (f a),
-                           Eq (f b)) => Proxy2 f
-                                     -> Proxy a
-                                     -> Proxy b
-                                     -> QC Unit
-checkPlus _ _ _ = do
+checkPlus :: forall f. (Plus f, Arbitrary1 f, Eq1 f) => Proxy2 f -> QC Unit
+checkPlus _ = do
 
   log "Checking 'Left identity' law for Plus"
   quickCheck leftIdentity
@@ -38,11 +31,11 @@ checkPlus _ _ _ = do
 
   where
 
-  leftIdentity :: f a -> Boolean
-  leftIdentity x = (empty <|> x) == x
+  leftIdentity :: Wrap f A -> Boolean
+  leftIdentity (Wrap x) = (empty <|> x) `eq1` x
 
-  rightIdentity :: f a -> Boolean
-  rightIdentity x = (x <|> empty) == x
+  rightIdentity :: Wrap f A -> Boolean
+  rightIdentity (Wrap x) = (x <|> empty) `eq1` x
 
-  annihilation :: (a -> b) -> Boolean
-  annihilation f = f <$> empty == empty :: f b
+  annihilation :: (A -> B) -> Boolean
+  annihilation f = map f empty `eq1` (empty :: f B)

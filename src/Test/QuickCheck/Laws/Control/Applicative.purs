@@ -7,6 +7,7 @@ import Control.Monad.Eff.Console (log)
 
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+import Test.QuickCheck.Laws
 
 import Type.Proxy (Proxy(), Proxy2())
 
@@ -14,21 +15,8 @@ import Type.Proxy (Proxy(), Proxy2())
 -- | - Composition: `(pure (<<<)) <*> f <*> g <*> h = f <*> (g <*> h)`
 -- | - Homomorphism: `(pure f) <*> (pure x) = pure (f x)`
 -- | - Interchange: `u <*> (pure y) = (pure ($ y)) <*> u`
-checkApplicative :: forall f a b c. (Applicative f,
-                                     Arbitrary a,
-                                     Arbitrary b,
-                                     Arbitrary (f a),
-                                     Arbitrary (f (a -> b)),
-                                     Arbitrary (f (b -> c)),
-                                     Coarbitrary a,
-                                     Eq (f a),
-                                     Eq (f b),
-                                     Eq (f c)) => Proxy2 f
-                                               -> Proxy a
-                                               -> Proxy b
-                                               -> Proxy c
-                                               -> QC Unit
-checkApplicative _ _ _ _ = do
+checkApplicative :: forall f. (Applicative f, Arbitrary1 f, Eq1 f) => Proxy2 f -> QC Unit
+checkApplicative _ = do
 
   log "Checking 'Identity' law for Applicative"
   quickCheck identity
@@ -44,14 +32,14 @@ checkApplicative _ _ _ _ = do
 
   where
 
-  identity :: f a -> Boolean
-  identity v = (pure id <*> v) == v
+  identity :: Wrap f A -> Boolean
+  identity (Wrap v) = (pure id <*> v) `eq1` v
 
-  composition :: f (b -> c) -> f (a -> b) -> f a -> Boolean
-  composition f g x = (pure (<<<) <*> f <*> g <*> x) == (f <*> (g <*> x))
+  composition :: Wrap f (A -> C) -> Wrap f (A -> B) -> Wrap f A -> Boolean
+  composition (Wrap f) (Wrap g) (Wrap x) = (pure (<<<) <*> f <*> g <*> x) `eq1` (f <*> (g <*> x))
 
-  homomorphism :: (a -> b) -> a -> Boolean
-  homomorphism f x = (pure f <*> pure x) == (pure (f x) :: f b)
+  homomorphism :: (A -> B) -> A -> Boolean
+  homomorphism f x = (pure f <*> pure x) `eq1` (pure (f x) :: f B)
 
-  interchange :: a -> f (a -> b) -> Boolean
-  interchange y u = (u <*> pure y) == (pure ($ y) <*> u)
+  interchange :: A -> Wrap f (A -> B) -> Boolean
+  interchange y (Wrap u) = (u <*> pure y) `eq1` (pure ($ y) <*> u)

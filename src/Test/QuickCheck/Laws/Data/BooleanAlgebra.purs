@@ -16,31 +16,31 @@ import Type.Proxy (Proxy())
 checkBooleanAlgebra :: forall a. (Arbitrary a, Eq a, BooleanAlgebra a) => Proxy a -> QC Unit
 checkBooleanAlgebra _ = do
 
-  log "Checking 'Complemented' law for ComplementedLattice"
+  log "Checking 'Complemented' law for BooleanAlgebra"
   quickCheck complemented
 
-  log "Checking 'Double negation' law for ComplementedLattice"
+  log "Checking 'Double negation' law for BooleanAlgebra"
   quickCheck doubleNegation
 
-  log "Checking 'Identity' law for BoundedLattice"
+  log "Checking 'Identity' law for BooleanAlgebra"
   quickCheck identity
 
-  log "Checking 'Annihiliation' law for BoundedLattice"
+  log "Checking 'Annihiliation' law for BooleanAlgebra"
   quickCheck annihiliation
 
-  log "Checking 'Distributivity' law for DistributiveLattice"
+  log "Checking 'Distributivity' law for BooleanAlgebra"
   quickCheck distributivity
   
-  log "Checking 'Associativity' law for Lattice"
+  log "Checking 'Associativity' law for BooleanAlgebra"
   quickCheck associativity
 
-  log "Checking 'Commutativity' law for Lattice"
+  log "Checking 'Commutativity' law for BooleanAlgebra"
   quickCheck commutativity
 
-  log "Checking 'Absorption' law for Lattice"
+  log "Checking 'Absorption' law for BooleanAlgebra"
   quickCheck absorption
 
-  log "Checking 'Idempotent' law for Lattice"
+  log "Checking 'Idempotent' law for BooleanAlgebra"
   quickCheck idempotent
 
   where

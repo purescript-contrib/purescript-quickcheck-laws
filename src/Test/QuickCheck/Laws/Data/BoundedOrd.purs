@@ -1,4 +1,4 @@
-module Test.QuickCheck.Laws.Data.Bounded where
+module Test.QuickCheck.Laws.Data.BoundedOrd where
 
 import Prelude
     
@@ -11,10 +11,10 @@ import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
 
 -- | - Ordering: `bottom <= a <= top`
-checkBounded :: forall a. (Arbitrary a, BoundedOrd a) => Proxy a -> QC Unit
-checkBounded _ = do
+checkBoundedOrd :: forall a. (Arbitrary a, BoundedOrd a) => Proxy a -> QC Unit
+checkBoundedOrd _ = do
 
-  log "Checking 'Ordering' law for Bounded"
+  log "Checking 'Ordering' law for BoundedOrd"
   quickCheck ordering
 
   where
