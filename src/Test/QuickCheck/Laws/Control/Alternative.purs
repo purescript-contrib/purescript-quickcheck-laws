@@ -1,11 +1,17 @@
 module Test.QuickCheck.Laws.Control.Alternative where
+    
+import Prelude
+    
+import Control.Monad.Eff
+import Control.Monad.Eff.Console (log)
 
-import Console (log)
 import Control.Alt ((<|>))
 import Control.Alternative (Alternative)
 import Control.Plus (empty)
+
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+
 import Type.Proxy (Proxy(), Proxy2())
 
 -- | - Distributivity: `(f <|> g) <*> x == (f <*> x) <|> (g <*> x)`

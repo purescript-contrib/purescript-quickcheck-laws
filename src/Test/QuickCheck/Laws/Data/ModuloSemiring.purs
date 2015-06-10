@@ -1,8 +1,13 @@
 module Test.QuickCheck.Laws.Data.ModuloSemiring where
 
-import Console (log)
+import Prelude
+    
+import Control.Monad.Eff
+import Control.Monad.Eff.Console (log)
+
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+
 import Type.Proxy (Proxy())
 
 -- | - Remainder: ```a / b * b + (a `mod` b) = a```

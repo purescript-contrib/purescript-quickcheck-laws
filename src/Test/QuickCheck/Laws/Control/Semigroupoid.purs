@@ -1,8 +1,13 @@
 module Test.QuickCheck.Laws.Control.Semigroupoid where
 
-import Console (log)
+import Prelude
+    
+import Control.Monad.Eff
+import Control.Monad.Eff.Console (log)
+
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+
 import Type.Proxy (Proxy(), Proxy3())
 
 -- | - Associativity: `p <<< (q <<< r) = (p <<< q) <<< r`

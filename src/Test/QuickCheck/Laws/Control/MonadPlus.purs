@@ -1,11 +1,17 @@
 module Test.QuickCheck.Laws.Control.MonadPlus where
 
-import Console (log)
+import Prelude
+    
+import Control.Monad.Eff
+import Control.Monad.Eff.Console (log)
+
 import Control.Alt ((<|>))
 import Control.Plus (empty)
 import Control.MonadPlus (MonadPlus)
+
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+
 import Type.Proxy (Proxy(), Proxy2())
 
 -- | - Distributivity: `(x <|> y) >>= f == (x >>= f) <|> (y >>= f)`

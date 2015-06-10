@@ -16,7 +16,8 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-quickcheck": "~0.6.0",
-    "purescript-proxy": "~0.1.0"
+    "purescript-quickcheck": "^0.6.0",
+    "purescript-proxy": "^0.1.0",
+    "purescript-eff": "^0.1.0"
   }
 }

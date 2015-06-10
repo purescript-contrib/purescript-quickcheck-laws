@@ -1,9 +1,15 @@
 module Test.QuickCheck.Laws.Control.Alt where
+    
+import Prelude
+    
+import Control.Monad.Eff
+import Control.Monad.Eff.Console (log)
 
-import Console (log)
 import Control.Alt (Alt, (<|>))
+
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+
 import Type.Proxy (Proxy(), Proxy2())
 
 -- | - Associativity: `(x <|> y) <|> z == x <|> (y <|> z)`
