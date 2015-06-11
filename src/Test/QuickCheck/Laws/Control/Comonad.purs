@@ -1,11 +1,13 @@
 module Test.QuickCheck.Laws.Control.Comonad where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Control.Comonad (Comonad, extract)
 import Control.Extend ((<<=))
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy(), Proxy2())
+
+import Prelude
 
 -- | - Left Identity: `extract <<= x = x`
 -- | - Right Identity: `extract (f <<= x) = f x`

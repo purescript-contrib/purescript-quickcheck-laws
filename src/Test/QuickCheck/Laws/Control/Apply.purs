@@ -1,9 +1,11 @@
 module Test.QuickCheck.Laws.Control.Apply where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy(), Proxy2())
+
+import Prelude
 
 -- | - Associative composition: `(<<<) <$> f <*> g <*> h = f <*> (g <*> h)`
 checkApply :: forall f a b c. (Apply f,

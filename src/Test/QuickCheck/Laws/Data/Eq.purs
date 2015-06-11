@@ -1,9 +1,11 @@
 module Test.QuickCheck.Laws.Data.Eq where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
+
+import Prelude
 
 -- | - Reflexivity: `x == x = true`
 -- | - Symmetry: `x == y = y == x`

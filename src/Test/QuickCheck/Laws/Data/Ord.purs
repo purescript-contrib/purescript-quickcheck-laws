@@ -1,9 +1,11 @@
 module Test.QuickCheck.Laws.Data.Ord where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
+
+import Prelude
 
 -- | - Reflexivity: `a <= a`
 -- | - Antisymmetry: if `a <= b` and `b <= a` then `a = b`

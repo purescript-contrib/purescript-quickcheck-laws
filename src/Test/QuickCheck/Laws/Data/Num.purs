@@ -1,9 +1,11 @@
 module Test.QuickCheck.Laws.Data.Num where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
+
+import Prelude
 
 -- | - Commutative multiplication: `a * b = b * a`
 checkNum :: forall a. (Num a, Arbitrary a, Eq a) => Proxy a -> QC Unit

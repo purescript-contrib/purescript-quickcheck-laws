@@ -1,12 +1,14 @@
 module Test.QuickCheck.Laws.Control.Alternative where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Control.Alt ((<|>))
 import Control.Alternative (Alternative)
 import Control.Plus (empty)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy(), Proxy2())
+
+import Prelude
 
 -- | - Distributivity: `(f <|> g) <*> x == (f <*> x) <|> (g <*> x)`
 -- | - Annihilation: `empty <*> x = empty`
