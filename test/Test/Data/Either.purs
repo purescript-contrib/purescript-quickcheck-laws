@@ -2,6 +2,7 @@ module Test.Data.Either (checkEither) where
 
 import Control.Monad.Eff.Console (log)
 import Data.Either (Either())
+import Data.Maybe (Maybe())
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Applicative
 import Test.QuickCheck.Laws.Control.Apply
@@ -12,12 +13,19 @@ import Test.QuickCheck.Laws.Data.Bounded
 import Test.QuickCheck.Laws.Data.Eq
 import Test.QuickCheck.Laws.Data.Functor
 import Test.QuickCheck.Laws.Data.Ord
+import Test.QuickCheck.Laws.Data.Traversable
 import Type.Proxy (Proxy(..), Proxy2(..))
 
 import Prelude
 
 prxEither2 :: Proxy2 (Either Unit)
 prxEither2 = Proxy2
+
+prxF2 :: Proxy2 Maybe
+prxF2 = Proxy2
+
+prxG2 :: Proxy2 Array
+prxG2 = Proxy2
 
 prxA :: Proxy Int
 prxA = Proxy
@@ -40,3 +48,4 @@ checkEither = do
   checkEq (Proxy :: Proxy (Either String Int))
   checkOrd (Proxy :: Proxy (Either Int String))
   checkBounded (Proxy :: Proxy (Either Boolean Boolean))
+  checkTraversable prxEither2 prxF2 prxG2 prxA prxB prxC

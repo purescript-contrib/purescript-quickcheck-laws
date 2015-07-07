@@ -1,6 +1,8 @@
 module Test.Prim.Array (checkArray) where
 
 import Control.Monad.Eff.Console (log)
+import Data.Maybe (Maybe())
+import Data.Tuple (Tuple())
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Alternative
 import Test.QuickCheck.Laws.Control.Applicative
@@ -14,12 +16,19 @@ import Test.QuickCheck.Laws.Data.Functor
 import Test.QuickCheck.Laws.Data.Monoid
 import Test.QuickCheck.Laws.Data.Ord
 import Test.QuickCheck.Laws.Data.Semigroup
+import Test.QuickCheck.Laws.Data.Traversable
 import Type.Proxy (Proxy(..), Proxy2(..))
 
 import Prelude
 
 prxArray2 :: Proxy2 Array
 prxArray2 = Proxy2
+
+prxF2 :: Proxy2 Maybe
+prxF2 = Proxy2
+
+prxG2 :: Proxy2 (Tuple Int)
+prxG2 = Proxy2
 
 prxA :: Proxy Int
 prxA = Proxy

@@ -2,6 +2,7 @@ module Test.Data.Maybe (checkMaybe) where
 
 import Control.Monad.Eff.Console (log)
 import Data.Maybe (Maybe())
+import Data.List (List())
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Alternative
 import Test.QuickCheck.Laws.Control.Applicative
@@ -17,12 +18,19 @@ import Test.QuickCheck.Laws.Data.Functor
 import Test.QuickCheck.Laws.Data.Monoid
 import Test.QuickCheck.Laws.Data.Ord
 import Test.QuickCheck.Laws.Data.Semigroup
+import Test.QuickCheck.Laws.Data.Traversable
 import Type.Proxy (Proxy(..), Proxy2(..))
 
 import Prelude
 
 prxMaybe2 :: Proxy2 Maybe
 prxMaybe2 = Proxy2
+
+prxF2 :: Proxy2 Array
+prxF2 = Proxy2
+
+prxG2 :: Proxy2 Array
+prxG2 = Proxy2
 
 prxA :: Proxy Boolean
 prxA = Proxy
@@ -50,3 +58,4 @@ checkMaybe = do
   checkOrd (Proxy :: Proxy (Maybe Int))
   checkBounded (Proxy :: Proxy (Maybe Boolean))
   checkMonoid (Proxy :: Proxy (Maybe String))
+  checkTraversable prxMaybe2 prxF2 prxG2 prxA prxB prxC
