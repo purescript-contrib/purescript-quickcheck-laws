@@ -19,6 +19,8 @@
     "purescript-console": "^0.1.0",
     "purescript-quickcheck": "~0.6.0",
     "purescript-prelude": "^0.1.0",
-    "purescript-proxy": "~0.1.0"
+    "purescript-proxy": "~0.1.0",
+    "purescript-functor-compose": "~0.0.0",
+    "purescript-identity": "~0.4.0"
   }
 }
