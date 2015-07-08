@@ -1,8 +1,7 @@
 module Test.Data.Either (checkEither) where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Data.Either (Either())
-import Data.Int (Int())
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Applicative
 import Test.QuickCheck.Laws.Control.Apply
@@ -14,6 +13,8 @@ import Test.QuickCheck.Laws.Data.Eq
 import Test.QuickCheck.Laws.Data.Functor
 import Test.QuickCheck.Laws.Data.Ord
 import Type.Proxy (Proxy(..), Proxy2(..))
+
+import Prelude
 
 prxEither2 :: Proxy2 (Either Unit)
 prxEither2 = Proxy2

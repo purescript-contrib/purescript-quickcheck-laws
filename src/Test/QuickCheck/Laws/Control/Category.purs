@@ -1,9 +1,11 @@
 module Test.QuickCheck.Laws.Control.Category where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy(), Proxy3())
+
+import Prelude
 
 -- | - Identity: `id <<< p = p <<< id = p`
 checkCategory :: forall a b c. (Category a,

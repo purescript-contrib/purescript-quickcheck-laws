@@ -1,9 +1,11 @@
 module Test.QuickCheck.Laws.Data.Ring where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
+
+import Prelude
 
 -- | - Additive inverse: `a + (-a) = (-a) + a = zero`
 checkRing :: forall a. (Ring a, Arbitrary a, Eq a) => Proxy a -> QC Unit

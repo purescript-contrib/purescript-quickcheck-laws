@@ -1,7 +1,6 @@
 module Test.Data.Maybe (checkMaybe) where
 
-import Console (log)
-import Data.Int (Int())
+import Control.Monad.Eff.Console (log)
 import Data.Maybe (Maybe())
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Alternative
@@ -19,6 +18,8 @@ import Test.QuickCheck.Laws.Data.Monoid
 import Test.QuickCheck.Laws.Data.Ord
 import Test.QuickCheck.Laws.Data.Semigroup
 import Type.Proxy (Proxy(..), Proxy2(..))
+
+import Prelude
 
 prxMaybe2 :: Proxy2 Maybe
 prxMaybe2 = Proxy2

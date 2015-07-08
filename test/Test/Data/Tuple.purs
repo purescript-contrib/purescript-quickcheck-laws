@@ -1,7 +1,6 @@
 module Test.Data.Tuple (checkTuple) where
 
-import Console (log)
-import Data.Int (Int())
+import Control.Monad.Eff.Console (log)
 import Data.Tuple (Tuple())
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Applicative
@@ -18,6 +17,8 @@ import Test.QuickCheck.Laws.Data.Ord
 import Test.QuickCheck.Laws.Data.Semigroup
 import Test.QuickCheck.Laws.Data.Monoid
 import Type.Proxy (Proxy(..), Proxy2(..), Proxy3(..))
+
+import Prelude
 
 prxTuple2 :: Proxy2 (Tuple Unit)
 prxTuple2 = Proxy2

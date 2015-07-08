@@ -1,9 +1,11 @@
 module Test.QuickCheck.Laws.Data.ModuloSemiring where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
+
+import Prelude
 
 -- | - Remainder: ```a / b * b + (a `mod` b) = a```
 checkModuloSemiring :: forall a. (ModuloSemiring a, Arbitrary a, Eq a) => Proxy a -> QC Unit

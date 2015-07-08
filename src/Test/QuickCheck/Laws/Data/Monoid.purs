@@ -1,10 +1,12 @@
 module Test.QuickCheck.Laws.Data.Monoid where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Data.Monoid (Monoid, mempty)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy())
+
+import Prelude
 
 -- | - Left identity: `mempty <> x = x`
 -- | - Right identity: `x <> mempty = x`

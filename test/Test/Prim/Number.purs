@@ -1,5 +1,6 @@
 module Test.Prim.Number (checkNumber) where
 
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck.Data.ApproxNumber (ApproxNumber())
 import Test.QuickCheck.Laws.Data.DivisionRing
 import Test.QuickCheck.Laws.Data.Eq
@@ -9,7 +10,8 @@ import Test.QuickCheck.Laws.Data.Ord
 import Test.QuickCheck.Laws.Data.Ring
 import Test.QuickCheck.Laws.Data.Semiring
 import Type.Proxy (Proxy(..))
-import Console (log)
+
+import Prelude
 
 prxNumber :: Proxy ApproxNumber
 prxNumber = Proxy

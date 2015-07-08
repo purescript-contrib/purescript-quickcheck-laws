@@ -1,9 +1,11 @@
 module Test.QuickCheck.Laws.Control.Bind where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy(), Proxy2())
+
+import Prelude
 
 -- | - Associativity: `(x >>= f) >>= g = x >>= (\k => f k >>= g)`
 checkBind :: forall m a. (Bind m,

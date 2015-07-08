@@ -1,11 +1,13 @@
 module Test.QuickCheck.Laws.Control.Plus where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Control.Alt ((<|>))
 import Control.Plus (Plus, empty)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy(), Proxy2())
+
+import Prelude
 
 -- | - Left identity: `empty <|> x == x`
 -- | - Right identity: `x <|> empty == x`

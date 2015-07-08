@@ -1,9 +1,11 @@
 module Test.QuickCheck.Laws.Data.Functor where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy2(), Proxy())
+
+import Prelude
 
 -- | - Identity: `(<$>) id = id`
 -- | - Composition: `(<$>) (f <<< g) = (f <$>) <<< (g <$>)`

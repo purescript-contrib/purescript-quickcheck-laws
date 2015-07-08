@@ -1,10 +1,12 @@
 module Test.QuickCheck.Laws.Control.Extend where
 
-import Console (log)
+import Control.Monad.Eff.Console (log)
 import Control.Extend (Extend, (<<=))
 import Test.QuickCheck (QC(..), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
 import Type.Proxy (Proxy(), Proxy2())
+
+import Prelude
 
 -- | - Associativity: `extend f <<< extend g = extend (f <<< extend g)`
 checkExtend :: forall w a b c. (Extend w,
