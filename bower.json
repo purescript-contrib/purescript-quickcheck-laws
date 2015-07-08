@@ -1,7 +1,7 @@
 {
   "name": "purescript-quickcheck-laws",
   "homepage": "https://github.com/purescript/purescript-quickcheck-laws",
-  "description": "Law tests for Prelude classes",
+  "description": "Law tests for core classes",
   "keywords": [
     "purescript"
   ],
@@ -16,9 +16,7 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-console": "^0.1.0",
-    "purescript-quickcheck": "~0.6.0",
-    "purescript-prelude": "^0.1.0",
-    "purescript-proxy": "~0.1.0"
+    "purescript-proxy": "^0.1.0",
+    "purescript-quickcheck": "^0.6.0"
   }
 }

@@ -43,7 +43,8 @@ checkMaybe = do
   checkAlternative prxMaybe2 prxA prxB
   checkBind prxMaybe2 prxA
   checkMonad prxMaybe2 prxA
-  checkMonadPlus prxMaybe2 prxA prxB
+  -- TODO: Maybe is not a law-abiding MonadPlus
+  -- checkMonadPlus prxMaybe2 prxA prxB
   checkExtend prxMaybe2 prxA prxB prxC
   checkSemigroup (Proxy :: Proxy (Maybe String))
   checkEq (Proxy :: Proxy (Maybe Int))
