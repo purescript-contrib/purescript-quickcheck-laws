@@ -10,9 +10,11 @@ import Prelude
 
 -- | - Associativity: `extend f <<< extend g = extend (f <<< extend g)`
 checkExtend :: forall w a b c. (Extend w,
+                                Arbitrary b,
+                                Arbitrary c,
                                 Arbitrary (w a),
-                                Arbitrary (w a -> b),
-                                Arbitrary (w b -> c),
+                                Coarbitrary (w a),
+                                Coarbitrary (w b),
                                 Eq (w c)) => Proxy2 w
                                           -> Proxy a
                                           -> Proxy b

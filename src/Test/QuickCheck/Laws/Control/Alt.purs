@@ -12,8 +12,9 @@ import Prelude
 -- | - Distributivity: `f <$> (x <|> y) == (f <$> x) <|> (f <$> y)`
 checkAlt :: forall f a b. (Alt f,
                            Arbitrary a,
-                           Arbitrary (a -> b),
+                           Arbitrary b,
                            Arbitrary (f a),
+                           Coarbitrary a,
                            Eq (f a),
                            Eq (f b)) => Proxy2 f
                                      -> Proxy a
