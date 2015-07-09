@@ -10,7 +10,7 @@ import Test.QuickCheck           (QC(), quickCheck)
 import Test.QuickCheck.Arbitrary (Arbitrary)
 import Type.Proxy                (Proxy(), Proxy2())
 
--- | - Naturality: `t <<< traverse f = traverse (t <<< f)`
+-- | - Naturality: `t <<< traverse f = traverse (t <<< f)` (not tested because it is implied by parametricity)
 -- | - Identity: `traverse Identity = Identity`
 -- | - Composition: `traverse (Compose <<< map g <<< f) = Compose <<< map (traverse g) <<< traverse f`
 checkTraversable :: forall t f g a b c.
@@ -19,9 +19,7 @@ checkTraversable :: forall t f g a b c.
                  , Applicative g
                  , Arbitrary (t a)
                  , Arbitrary (a -> f b)
-                 -- , Arbitrary (forall k. f k -> g k)
                  , Arbitrary (b -> g c)
-                 -- , Eq (g (t b))
                  , Eq (t a)
                  , Eq ((Compose f g) (t c))
                  )
@@ -34,9 +32,6 @@ checkTraversable :: forall t f g a b c.
                  -> QC Unit
 checkTraversable _ _ _ _ _ _ = do
 
-    -- log "Checking 'Naturality' law for Traversable"
-    -- quickCheck naturality
-
     log "Checking 'Identity' law for Traversable"
     quickCheck identity
 
@@ -44,15 +39,6 @@ checkTraversable _ _ _ _ _ _ = do
     quickCheck composition
 
     where
-
-    {-
-    naturality :: (forall k. f k -> g k) -> (a -> f b) -> t a -> Boolean
-    naturality t f x = lhs == rhs
-      where lhs :: g (t b)
-            lhs = (t <<< traverse f) x
-            rhs :: g (t b)
-            rhs = traverse (t <<< f) x
-    -}
 
     identity :: t a -> Boolean
     identity x = lhs == rhs
