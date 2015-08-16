@@ -13,8 +13,9 @@ import Prelude
 -- | - Distributivity: `(x <|> y) >>= f == (x >>= f) <|> (y >>= f)`
 -- | - Annihilation: `empty >>= f = empty`
 checkMonadPlus :: forall m a b. (MonadPlus m,
-                                 Arbitrary (a -> m b),
                                  Arbitrary (m a),
+                                 Arbitrary (m b),
+                                 Coarbitrary a,
                                  Eq (m b)) => Proxy2 m
                                            -> Proxy a
                                            -> Proxy b

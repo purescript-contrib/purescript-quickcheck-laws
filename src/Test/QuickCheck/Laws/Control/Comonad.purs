@@ -13,8 +13,9 @@ import Prelude
 -- | - Right Identity: `extract (f <<= x) = f x`
 checkComonad :: forall w a b. (Comonad w,
                               Arbitrary a,
+                              Arbitrary b,
                               Arbitrary (w a),
-                              Arbitrary (w a -> b),
+                              Coarbitrary (w a),
                               Eq b,
                               Eq (w a)) => Proxy2 w
                                         -> Proxy a
