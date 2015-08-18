@@ -13,7 +13,7 @@ import Type.Proxy                (Proxy(), Proxy2())
 -- | - Naturality: `t <<< traverse f = traverse (t <<< f)` (not tested because it is implied by parametricity)
 -- | - Identity: `traverse Identity = Identity`
 -- | - Composition: `traverse (Compose <<< map g <<< f) = Compose <<< map (traverse g) <<< traverse f`
-checkTraversable :: forall t f g a b c.
+checkTraversable :: forall t f g a b c eff.
                  ( Traversable t
                  , Applicative f
                  , Applicative g
@@ -29,7 +29,7 @@ checkTraversable :: forall t f g a b c.
                  -> Proxy a
                  -> Proxy b
                  -> Proxy c
-                 -> QC Unit
+                 -> QC eff Unit
 checkTraversable _ _ _ _ _ _ = do
 
     log "Checking 'Identity' law for Traversable"

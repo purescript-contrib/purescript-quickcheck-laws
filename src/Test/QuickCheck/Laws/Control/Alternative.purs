@@ -12,15 +12,15 @@ import Prelude
 
 -- | - Distributivity: `(f <|> g) <*> x == (f <*> x) <|> (g <*> x)`
 -- | - Annihilation: `empty <*> x = empty`
-checkAlternative :: forall f a b. (Alternative f,
-                                   Arbitrary a,
-                                   Arbitrary (f (a -> b)),
-                                   Arbitrary (f a),
-                                   Eq (f a),
-                                   Eq (f b)) => Proxy2 f
-                                             -> Proxy a
-                                             -> Proxy b
-                                             -> QC Unit
+checkAlternative :: forall f a b eff. (Alternative f,
+                                      Arbitrary a,
+                                      Arbitrary (f (a -> b)),
+                                      Arbitrary (f a),
+                                      Eq (f a),
+                                      Eq (f b)) => Proxy2 f
+                                                -> Proxy a
+                                                -> Proxy b
+                                                -> QC eff Unit
 checkAlternative _ _ _ = do
 
   log "Checking 'Left identity' law for Alternative"

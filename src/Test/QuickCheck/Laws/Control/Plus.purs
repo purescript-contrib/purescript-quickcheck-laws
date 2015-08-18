@@ -12,16 +12,16 @@ import Prelude
 -- | - Left identity: `empty <|> x == x`
 -- | - Right identity: `x <|> empty == x`
 -- | - Annihilation: `f <$> empty == empty`
-checkPlus :: forall f a b. (Plus f,
-                           Arbitrary a,
-                           Arbitrary b,
-                           Arbitrary (f a),
-                           Coarbitrary a,
-                           Eq (f a),
-                           Eq (f b)) => Proxy2 f
-                                     -> Proxy a
-                                     -> Proxy b
-                                     -> QC Unit
+checkPlus :: forall f a b eff. (Plus f,
+                                Arbitrary a,
+                                Arbitrary b,
+                                Arbitrary (f a),
+                                Coarbitrary a,
+                                Eq (f a),
+                                Eq (f b)) => Proxy2 f
+                                          -> Proxy a
+                                          -> Proxy b
+                                          -> QC eff Unit
 checkPlus _ _ _ = do
 
   log "Checking 'Left identity' law for Plus"

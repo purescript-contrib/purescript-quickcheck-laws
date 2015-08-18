@@ -8,7 +8,7 @@ import Type.Proxy (Proxy())
 import Prelude
 
 -- | - Associativity: `(x <> y) <> z = x <> (y <> z)`
-checkSemigroup :: forall s. (Semigroup s, Arbitrary s, Eq s) => Proxy s -> QC Unit
+checkSemigroup :: forall s eff. (Semigroup s, Arbitrary s, Eq s) => Proxy s -> QC eff Unit
 checkSemigroup _ = do
 
   log "Checking 'Associativity' law for Semigroup"

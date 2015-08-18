@@ -9,13 +9,13 @@ import Prelude
 
 -- | - Left Identity: `pure x >>= f = f x`
 -- | - Right Identity: `x >>= pure = x`
-checkMonad :: forall m a. (Monad m,
-                           Arbitrary a,
-                           Arbitrary (m a),
-                           Coarbitrary a,
-                           Eq (m a)) => Proxy2 m
-                                     -> Proxy a
-                                     -> QC Unit
+checkMonad :: forall m a eff. (Monad m,
+                               Arbitrary a,
+                               Arbitrary (m a),
+                               Coarbitrary a,
+                               Eq (m a)) => Proxy2 m
+                                         -> Proxy a
+                                         -> QC eff Unit
 checkMonad _ _ = do
 
   log "Checking 'Left identity' law for Monad"

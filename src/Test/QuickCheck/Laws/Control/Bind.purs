@@ -8,13 +8,13 @@ import Type.Proxy (Proxy(), Proxy2())
 import Prelude
 
 -- | - Associativity: `(x >>= f) >>= g = x >>= (\k => f k >>= g)`
-checkBind :: forall m a. (Bind m,
-                          Arbitrary a,
-                          Arbitrary (m a),
-                          Coarbitrary a,
-                          Eq (m a)) => Proxy2 m
-                                    -> Proxy a
-                                    -> QC Unit
+checkBind :: forall m a eff. (Bind m,
+                              Arbitrary a,
+                              Arbitrary (m a),
+                              Coarbitrary a,
+                              Eq (m a)) => Proxy2 m
+                                        -> Proxy a
+                                        -> QC eff Unit
 checkBind _ _ = do
 
   log "Checking 'Associativity' law for Bind"

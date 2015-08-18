@@ -8,15 +8,15 @@ import Type.Proxy (Proxy(), Proxy2())
 import Prelude
 
 -- | - Associative composition: `(<<<) <$> f <*> g <*> h = f <*> (g <*> h)`
-checkApply :: forall f a b c. (Apply f,
-                               Arbitrary (f a),
-                               Arbitrary (f (a -> b)),
-                               Arbitrary (f (b -> c)),
-                               Eq (f c)) => Proxy2 f
-                                         -> Proxy a
-                                         -> Proxy b
-                                         -> Proxy c
-                                         -> QC Unit
+checkApply :: forall f a b c eff. (Apply f,
+                                   Arbitrary (f a),
+                                   Arbitrary (f (a -> b)),
+                                   Arbitrary (f (b -> c)),
+                                   Eq (f c)) => Proxy2 f
+                                             -> Proxy a
+                                             -> Proxy b
+                                             -> Proxy c
+                                             -> QC eff Unit
 checkApply _ _ _ _ = do
 
   log "Checking 'Associative composition' law for Apply"

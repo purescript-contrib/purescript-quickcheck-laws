@@ -10,10 +10,10 @@ import Prelude
 
 -- | - Left identity: `mempty <> x = x`
 -- | - Right identity: `x <> mempty = x`
-checkMonoid :: forall m. (Monoid m,
-                          Arbitrary m,
-                          Eq m) => Proxy m
-                                -> QC Unit
+checkMonoid :: forall m eff. (Monoid m,
+                              Arbitrary m,
+                              Eq m) => Proxy m
+                                    -> QC eff Unit
 checkMonoid _ = do
 
   log "Checking 'Left identity' law for Monoid"

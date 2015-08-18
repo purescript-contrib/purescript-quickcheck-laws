@@ -8,7 +8,7 @@ import Type.Proxy (Proxy())
 import Prelude
 
 -- | - Ordering: `bottom <= a <= top`
-checkBounded :: forall a. (Arbitrary a, Bounded a, Ord a) => Proxy a -> QC Unit
+checkBounded :: forall a eff. (Arbitrary a, Bounded a, Ord a) => Proxy a -> QC eff Unit
 checkBounded _ = do
 
   log "Checking 'Ordering' law for Bounded"

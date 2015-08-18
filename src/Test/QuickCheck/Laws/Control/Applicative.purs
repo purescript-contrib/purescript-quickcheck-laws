@@ -11,20 +11,20 @@ import Prelude
 -- | - Composition: `(pure (<<<)) <*> f <*> g <*> h = f <*> (g <*> h)`
 -- | - Homomorphism: `(pure f) <*> (pure x) = pure (f x)`
 -- | - Interchange: `u <*> (pure y) = (pure ($ y)) <*> u`
-checkApplicative :: forall f a b c. (Applicative f,
-                                     Arbitrary a,
-                                     Arbitrary b,
-                                     Arbitrary (f a),
-                                     Arbitrary (f (a -> b)),
-                                     Arbitrary (f (b -> c)),
-                                     Coarbitrary a,
-                                     Eq (f a),
-                                     Eq (f b),
-                                     Eq (f c)) => Proxy2 f
-                                               -> Proxy a
-                                               -> Proxy b
-                                               -> Proxy c
-                                               -> QC Unit
+checkApplicative :: forall f a b c eff. (Applicative f,
+                                         Arbitrary a,
+                                         Arbitrary b,
+                                         Arbitrary (f a),
+                                         Arbitrary (f (a -> b)),
+                                         Arbitrary (f (b -> c)),
+                                         Coarbitrary a,
+                                         Eq (f a),
+                                         Eq (f b),
+                                         Eq (f c)) => Proxy2 f
+                                                   -> Proxy a
+                                                   -> Proxy b
+                                                   -> Proxy c
+                                                   -> QC eff Unit
 checkApplicative _ _ _ _ = do
 
   log "Checking 'Identity' law for Applicative"

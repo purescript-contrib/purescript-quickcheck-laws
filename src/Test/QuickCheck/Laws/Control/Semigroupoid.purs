@@ -8,16 +8,16 @@ import Type.Proxy (Proxy(), Proxy3())
 import Prelude
 
 -- | - Associativity: `p <<< (q <<< r) = (p <<< q) <<< r`
-checkSemigroupoid :: forall a b c d e. (Semigroupoid a,
-                                        Arbitrary (a b c),
-                                        Arbitrary (a c d),
-                                        Arbitrary (a d e),
-                                        Eq (a b e)) => Proxy3 a
-                                                    -> Proxy b
-                                                    -> Proxy c
-                                                    -> Proxy d
-                                                    -> Proxy e
-                                                    -> QC Unit
+checkSemigroupoid :: forall a b c d e eff. (Semigroupoid a,
+                                            Arbitrary (a b c),
+                                            Arbitrary (a c d),
+                                            Arbitrary (a d e),
+                                            Eq (a b e)) => Proxy3 a
+                                                        -> Proxy b
+                                                        -> Proxy c
+                                                        -> Proxy d
+                                                        -> Proxy e
+                                                        -> QC eff Unit
 checkSemigroupoid _ _ _ _ _ = do
 
   log "Checking 'Associativity' law for Semigroupoid"

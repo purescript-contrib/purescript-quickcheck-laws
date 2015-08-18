@@ -9,17 +9,17 @@ import Type.Proxy (Proxy(), Proxy2())
 import Prelude
 
 -- | - Associativity: `extend f <<< extend g = extend (f <<< extend g)`
-checkExtend :: forall w a b c. (Extend w,
-                                Arbitrary b,
-                                Arbitrary c,
-                                Arbitrary (w a),
-                                Coarbitrary (w a),
-                                Coarbitrary (w b),
-                                Eq (w c)) => Proxy2 w
-                                          -> Proxy a
-                                          -> Proxy b
-                                          -> Proxy c
-                                          -> QC Unit
+checkExtend :: forall w a b c eff. (Extend w,
+                                    Arbitrary b,
+                                    Arbitrary c,
+                                    Arbitrary (w a),
+                                    Coarbitrary (w a),
+                                    Coarbitrary (w b),
+                                    Eq (w c)) => Proxy2 w
+                                              -> Proxy a
+                                              -> Proxy b
+                                              -> Proxy c
+                                              -> QC eff Unit
 checkExtend _ _ _ _ = do
 
   log "Checking 'Associativity' law for Extend"

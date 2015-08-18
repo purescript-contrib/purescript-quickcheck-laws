@@ -8,7 +8,7 @@ import Type.Proxy (Proxy())
 import Prelude
 
 -- | - Remainder: ```a / b * b + (a `mod` b) = a```
-checkModuloSemiring :: forall a. (ModuloSemiring a, Arbitrary a, Eq a) => Proxy a -> QC Unit
+checkModuloSemiring :: forall a eff. (ModuloSemiring a, Arbitrary a, Eq a) => Proxy a -> QC eff Unit
 checkModuloSemiring _ = do
 
   log "Checking 'Remainder' law for ModuloSemiring"

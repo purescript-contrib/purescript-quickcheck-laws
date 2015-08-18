@@ -8,7 +8,7 @@ import Type.Proxy (Proxy())
 import Prelude
 
 -- | - Additive inverse: `a + (-a) = (-a) + a = zero`
-checkRing :: forall a. (Ring a, Arbitrary a, Eq a) => Proxy a -> QC Unit
+checkRing :: forall a eff. (Ring a, Arbitrary a, Eq a) => Proxy a -> QC eff Unit
 checkRing _ = do
 
   log "Checking 'Additive inverse' law for Ring"

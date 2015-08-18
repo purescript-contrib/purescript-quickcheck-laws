@@ -11,16 +11,16 @@ import Prelude
 
 -- | - Left Identity: `extract <<= x = x`
 -- | - Right Identity: `extract (f <<= x) = f x`
-checkComonad :: forall w a b. (Comonad w,
-                              Arbitrary a,
-                              Arbitrary b,
-                              Arbitrary (w a),
-                              Coarbitrary (w a),
-                              Eq b,
-                              Eq (w a)) => Proxy2 w
-                                        -> Proxy a
-                                        -> Proxy b
-                                        -> QC Unit
+checkComonad :: forall w a b eff. (Comonad w,
+                                   Arbitrary a,
+                                   Arbitrary b,
+                                   Arbitrary (w a),
+                                   Coarbitrary (w a),
+                                   Eq b,
+                                   Eq (w a)) => Proxy2 w
+                                             -> Proxy a
+                                             -> Proxy b
+                                             -> QC eff Unit
 checkComonad _ _ _ = do
 
   log "Checking 'Left identity' law for Comonad"

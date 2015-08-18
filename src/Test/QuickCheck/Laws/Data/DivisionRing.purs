@@ -8,7 +8,7 @@ import Type.Proxy (Proxy())
 import Prelude
 
 -- | - Multiplicative inverse: `(one / x) * x = one`
-checkDivisionRing :: forall a. (DivisionRing a, Arbitrary a, Eq a) => Proxy a -> QC Unit
+checkDivisionRing :: forall a eff. (DivisionRing a, Arbitrary a, Eq a) => Proxy a -> QC eff Unit
 checkDivisionRing _ = do
 
   log "Checking 'Multiplicative inverse' law for DivisionRing"

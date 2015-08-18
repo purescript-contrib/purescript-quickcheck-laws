@@ -8,12 +8,12 @@ import Type.Proxy (Proxy(), Proxy3())
 import Prelude
 
 -- | - Identity: `id <<< p = p <<< id = p`
-checkCategory :: forall a b c. (Category a,
-                                Arbitrary (a b c),
-                                Eq (a b c)) => Proxy3 a
-                                            -> Proxy b
-                                            -> Proxy c
-                                            -> QC Unit
+checkCategory :: forall a b c eff. (Category a,
+                                    Arbitrary (a b c),
+                                    Eq (a b c)) => Proxy3 a
+                                                -> Proxy b
+                                                -> Proxy c
+                                                -> QC eff Unit
 checkCategory _ _ _ = do
 
   log "Checking 'Identity' law for Category"

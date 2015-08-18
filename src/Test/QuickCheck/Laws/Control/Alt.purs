@@ -10,16 +10,16 @@ import Prelude
 
 -- | - Associativity: `(x <|> y) <|> z == x <|> (y <|> z)`
 -- | - Distributivity: `f <$> (x <|> y) == (f <$> x) <|> (f <$> y)`
-checkAlt :: forall f a b. (Alt f,
-                           Arbitrary a,
-                           Arbitrary b,
-                           Arbitrary (f a),
-                           Coarbitrary a,
-                           Eq (f a),
-                           Eq (f b)) => Proxy2 f
-                                     -> Proxy a
-                                     -> Proxy b
-                                     -> QC Unit
+checkAlt :: forall f a b eff. (Alt f,
+                               Arbitrary a,
+                               Arbitrary b,
+                               Arbitrary (f a),
+                               Coarbitrary a,
+                               Eq (f a),
+                               Eq (f b)) => Proxy2 f
+                                         -> Proxy a
+                                         -> Proxy b
+                                         -> QC eff Unit
 checkAlt _ _ _ = do
 
   log "Checking 'Associativity' law for Alt"

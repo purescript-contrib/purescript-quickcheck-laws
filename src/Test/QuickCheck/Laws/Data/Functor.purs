@@ -9,16 +9,16 @@ import Prelude
 
 -- | - Identity: `(<$>) id = id`
 -- | - Composition: `(<$>) (f <<< g) = (f <$>) <<< (g <$>)`
-checkFunctor :: forall f a b. (Functor f,
-                               Arbitrary a,
-                               Arbitrary b,
-                               Arbitrary (f a),
-                               Coarbitrary a,
-                               Coarbitrary b,
-                               Eq (f a)) => Proxy2 f
-                                         -> Proxy a
-                                         -> Proxy b
-                                         -> QC Unit
+checkFunctor :: forall f a b eff. (Functor f,
+                                   Arbitrary a,
+                                   Arbitrary b,
+                                   Arbitrary (f a),
+                                   Coarbitrary a,
+                                   Coarbitrary b,
+                                   Eq (f a)) => Proxy2 f
+                                             -> Proxy a
+                                             -> Proxy b
+                                             -> QC eff Unit
 checkFunctor _ _ _ = do
 
   log "Checking 'Identity' law for Functor"
