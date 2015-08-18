@@ -14,8 +14,9 @@ import Prelude
 -- | - Annihilation: `f <$> empty == empty`
 checkPlus :: forall f a b. (Plus f,
                            Arbitrary a,
-                           Arbitrary (a -> b),
+                           Arbitrary b,
                            Arbitrary (f a),
+                           Coarbitrary a,
                            Eq (f a),
                            Eq (f b)) => Proxy2 f
                                      -> Proxy a
