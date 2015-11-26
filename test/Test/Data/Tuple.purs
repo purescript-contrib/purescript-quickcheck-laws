@@ -2,6 +2,7 @@ module Test.Data.Tuple (checkTuple) where
 
 import Control.Monad.Eff.Console (log)
 import Data.Tuple (Tuple())
+import Test.QuickCheck.Laws
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Applicative
 import Test.QuickCheck.Laws.Control.Apply
@@ -20,36 +21,27 @@ import Type.Proxy (Proxy(..), Proxy2(..), Proxy3(..))
 
 import Prelude
 
-prxTuple2 :: Proxy2 (Tuple Unit)
-prxTuple2 = Proxy2
+prxTuple :: Proxy (Tuple A B)
+prxTuple = Proxy
 
-prxTuple3 :: Proxy3 Tuple
-prxTuple3 = Proxy3
+prx2Tuple :: Proxy2 (Tuple C)
+prx2Tuple = Proxy2
 
-prxA :: Proxy Int
-prxA = Proxy
-
-prxB :: Proxy String
-prxB = Proxy
-
-prxC :: Proxy Boolean
-prxC = Proxy
-
-prxD :: Proxy Int
-prxD = Proxy
+prx3Tuple :: Proxy3 Tuple
+prx3Tuple = Proxy3
 
 checkTuple = do
   log "\n\nChecking Tuple instances...\n"
-  checkEq (Proxy :: Proxy (Tuple String Int))
-  checkOrd (Proxy :: Proxy (Tuple Int String))
-  checkBounded (Proxy :: Proxy (Tuple Boolean Boolean))
-  checkSemigroupoid prxTuple3 prxA prxB prxC prxD
-  checkSemigroup (Proxy :: Proxy (Tuple String String))
-  checkMonoid (Proxy :: Proxy (Tuple String String))
-  checkFunctor prxTuple2 prxA prxB
-  checkApply prxTuple2 prxA prxB prxC
-  checkApplicative prxTuple2 prxA prxB prxC
-  checkBind prxTuple2 prxA
-  checkMonad prxTuple2 prxA
-  checkExtend prxTuple2 prxA prxB prxC
-  checkComonad prxTuple2 prxA prxB
+  checkEq prxTuple
+  checkOrd prxTuple
+  checkBounded prxTuple
+  checkSemigroupoid prx3Tuple
+  checkSemigroup prxTuple
+  checkMonoid prxTuple
+  checkFunctor prx2Tuple
+  checkApply prx2Tuple
+  checkApplicative prx2Tuple
+  checkBind prx2Tuple
+  checkMonad prx2Tuple
+  checkExtend prx2Tuple
+  checkComonad prx2Tuple

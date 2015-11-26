@@ -1,6 +1,7 @@
 module Test.Prim.Array (checkArray) where
 
 import Control.Monad.Eff.Console (log)
+import Test.QuickCheck.Laws
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Alternative
 import Test.QuickCheck.Laws.Control.Applicative
@@ -18,30 +19,24 @@ import Type.Proxy (Proxy(..), Proxy2(..))
 
 import Prelude
 
-prxArray2 :: Proxy2 Array
-prxArray2 = Proxy2
+prxArray :: Proxy (Array A)
+prxArray = Proxy
 
-prxA :: Proxy Int
-prxA = Proxy
-
-prxB :: Proxy String
-prxB = Proxy
-
-prxC :: Proxy Boolean
-prxC = Proxy
+prx2Array :: Proxy2 Array
+prx2Array = Proxy2
 
 checkArray = do
   log "\n\nChecking Array instances...\n"
-  checkEq (Proxy :: Proxy (Array Int))
-  checkOrd (Proxy :: Proxy (Array Int))
-  checkFunctor prxArray2 prxA prxB
-  checkApply prxArray2 prxA prxB prxC
-  checkApplicative prxArray2 prxA prxB prxC
-  checkBind prxArray2 prxA
-  checkMonad prxArray2 prxA
-  checkSemigroup (Proxy :: Proxy (Array String))
-  checkMonoid (Proxy :: Proxy (Array String))
-  checkAlt prxArray2 prxA prxB
-  checkPlus prxArray2 prxA prxB
-  checkAlternative prxArray2 prxA prxB
-  checkMonadPlus prxArray2 prxA prxB
+  checkEq prxArray
+  checkOrd prxArray
+  checkFunctor prx2Array
+  checkApply prx2Array
+  checkApplicative prx2Array
+  checkBind prx2Array
+  checkMonad prx2Array
+  checkSemigroup prxArray
+  checkMonoid prxArray
+  checkAlt prx2Array
+  checkPlus prx2Array
+  checkAlternative prx2Array
+  checkMonadPlus prx2Array

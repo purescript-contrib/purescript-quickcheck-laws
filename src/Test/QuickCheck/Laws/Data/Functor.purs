@@ -1,36 +1,30 @@
 module Test.QuickCheck.Laws.Data.Functor where
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy2(), Proxy())
-
 import Prelude
+
+import Control.Monad.Eff.Console (log)
+
+import Type.Proxy (Proxy2())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Laws (A(), B())
 
 -- | - Identity: `(<$>) id = id`
 -- | - Composition: `(<$>) (f <<< g) = (f <$>) <<< (g <$>)`
-checkFunctor :: forall f a b. (Functor f,
-                               Arbitrary a,
-                               Arbitrary b,
-                               Arbitrary (f a),
-                               Coarbitrary a,
-                               Coarbitrary b,
-                               Eq (f a)) => Proxy2 f
-                                         -> Proxy a
-                                         -> Proxy b
-                                         -> QC Unit
-checkFunctor _ _ _ = do
+checkFunctor :: forall f. (Functor f, Arbitrary (f A), Eq (f A)) => Proxy2 f -> QC () Unit
+checkFunctor _ = do
 
   log "Checking 'Identity' law for Functor"
-  quickCheck identity
+  quickCheck' 1000 identity
 
   log "Checking 'Composition' law for Functor"
-  quickCheck composition
+  quickCheck' 1000 composition
 
   where
 
-  identity :: f a -> Boolean
+  identity :: f A -> Boolean
   identity f = (id <$> f) == id f
 
-  composition :: (b -> a) -> (a -> b) -> f a -> Boolean
+  composition :: (B -> A) -> (A -> B) -> f A -> Boolean
   composition f g x = ((<$>) (f <<< g) x) == (((f <$>) <<< (g <$>)) x)

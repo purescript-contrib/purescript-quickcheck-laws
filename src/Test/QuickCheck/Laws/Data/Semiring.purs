@@ -1,11 +1,13 @@
 module Test.QuickCheck.Laws.Data.Semiring where
 
+import Prelude
+
 import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+
 import Type.Proxy (Proxy())
 
-import Prelude
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
 
 -- | - Commutative monoid under addition:
 -- |   - Associativity: `(a + b) + c = a + (b + c)`
@@ -18,29 +20,29 @@ import Prelude
 -- |   - Left distributivity: `a * (b + c) = (a * b) + (a * c)`
 -- |   - Right distributivity: `(a + b) * c = (a * c) + (b * c)`
 -- | - Annihiliation: `zero * a = a * zero = zero`
-checkSemiring :: forall a. (Semiring a, Arbitrary a, Eq a) => Proxy a -> QC Unit
+checkSemiring :: forall a. (Semiring a, Arbitrary a, Eq a) => Proxy a -> QC () Unit
 checkSemiring _ = do
 
   log "Checking 'Associativity' law for Semiring addition"
-  quickCheck associativeAddition
+  quickCheck' 1000 associativeAddition
 
   log "Checking 'Identity' law for Semiring addition"
-  quickCheck identityAddition
+  quickCheck' 1000 identityAddition
 
   log "Checking 'Commutative' law for Semiring addition"
-  quickCheck commutativeAddition
+  quickCheck' 1000 commutativeAddition
 
   log "Checking 'Associativity' law for Semiring multiplication"
-  quickCheck associativeMultiplication
+  quickCheck' 1000 associativeMultiplication
 
   log "Checking 'Identity' law for Semiring multiplication"
-  quickCheck identityMultiplication
+  quickCheck' 1000 identityMultiplication
 
   log "Checking 'Left distribution' law for Semiring"
-  quickCheck leftDistribution
+  quickCheck' 1000 leftDistribution
 
   log "Checking 'Right distribution' law for Semiring"
-  quickCheck rightDistribution
+  quickCheck' 1000 rightDistribution
 
   where
 

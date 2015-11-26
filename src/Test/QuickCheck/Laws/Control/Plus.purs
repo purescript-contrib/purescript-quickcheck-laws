@@ -1,45 +1,39 @@
 module Test.QuickCheck.Laws.Control.Plus where
 
+import Prelude
+
 import Control.Monad.Eff.Console (log)
 import Control.Alt ((<|>))
 import Control.Plus (Plus, empty)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy(), Proxy2())
 
-import Prelude
+import Type.Proxy (Proxy2())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Laws (A(), B())
 
 -- | - Left identity: `empty <|> x == x`
 -- | - Right identity: `x <|> empty == x`
 -- | - Annihilation: `f <$> empty == empty`
-checkPlus :: forall f a b. (Plus f,
-                           Arbitrary a,
-                           Arbitrary b,
-                           Arbitrary (f a),
-                           Coarbitrary a,
-                           Eq (f a),
-                           Eq (f b)) => Proxy2 f
-                                     -> Proxy a
-                                     -> Proxy b
-                                     -> QC Unit
-checkPlus _ _ _ = do
+checkPlus :: forall f. (Plus f, Arbitrary (f A), Eq (f A), Eq (f B)) => Proxy2 f -> QC () Unit
+checkPlus _ = do
 
   log "Checking 'Left identity' law for Plus"
-  quickCheck leftIdentity
+  quickCheck' 1000 leftIdentity
 
   log "Checking 'Right identity' law for Plus"
-  quickCheck rightIdentity
+  quickCheck' 1000 rightIdentity
 
   log "Checking 'Annihilation' law for Plus"
-  quickCheck annihilation
+  quickCheck' 1000 annihilation
 
   where
 
-  leftIdentity :: f a -> Boolean
+  leftIdentity :: f A -> Boolean
   leftIdentity x = (empty <|> x) == x
 
-  rightIdentity :: f a -> Boolean
+  rightIdentity :: f A -> Boolean
   rightIdentity x = (x <|> empty) == x
 
-  annihilation :: (a -> b) -> Boolean
-  annihilation f = f <$> empty == empty :: f b
+  annihilation :: (A -> B) -> Boolean
+  annihilation f = f <$> empty == empty :: f B

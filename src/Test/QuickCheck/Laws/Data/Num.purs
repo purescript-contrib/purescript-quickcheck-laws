@@ -1,18 +1,20 @@
 module Test.QuickCheck.Laws.Data.Num where
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy())
-
 import Prelude
 
+import Control.Monad.Eff.Console (log)
+
+import Type.Proxy (Proxy())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+
 -- | - Commutative multiplication: `a * b = b * a`
-checkNum :: forall a. (Num a, Arbitrary a, Eq a) => Proxy a -> QC Unit
+checkNum :: forall a. (Num a, Arbitrary a, Eq a) => Proxy a -> QC () Unit
 checkNum _ = do
 
   log "Checking 'Commutative multiplication' law for Num"
-  quickCheck commutativeMultiplication
+  quickCheck' 1000 commutativeMultiplication
 
   where
 

@@ -1,37 +1,33 @@
 module Test.QuickCheck.Laws.Control.MonadPlus where
 
-import Control.Monad.Eff.Console (log)
-import Control.Alt ((<|>))
-import Control.Plus (empty)
-import Control.MonadPlus (MonadPlus)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy(), Proxy2())
-
 import Prelude
+
+import Control.Alt ((<|>))
+import Control.Monad.Eff.Console (log)
+import Control.MonadPlus (MonadPlus)
+import Control.Plus (empty)
+
+import Type.Proxy (Proxy2())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Laws (A(), B())
 
 -- | - Distributivity: `(x <|> y) >>= f == (x >>= f) <|> (y >>= f)`
 -- | - Annihilation: `empty >>= f = empty`
-checkMonadPlus :: forall m a b. (MonadPlus m,
-                                 Arbitrary (m a),
-                                 Arbitrary (m b),
-                                 Coarbitrary a,
-                                 Eq (m b)) => Proxy2 m
-                                           -> Proxy a
-                                           -> Proxy b
-                                           -> QC Unit
-checkMonadPlus _ _ _ = do
+checkMonadPlus :: forall m. (MonadPlus m, Arbitrary (m A), Arbitrary (m B), Eq (m B)) => Proxy2 m -> QC () Unit
+checkMonadPlus _ = do
 
   log "Checking 'Distributivity' law for MonadPlus"
-  quickCheck distributivity
+  quickCheck' 1000 distributivity
 
   log "Checking 'Annihilation' law for MonadPlus"
-  quickCheck annihilation
+  quickCheck' 1000 annihilation
 
   where
 
-  distributivity :: m a -> m a -> (a -> m b) -> Boolean
+  distributivity :: m A -> m A -> (A -> m B) -> Boolean
   distributivity x y f = ((x <|> y) >>= f) == ((x >>= f) <|> (y >>= f))
 
-  annihilation :: (a -> m b) -> Boolean
+  annihilation :: (A -> m B) -> Boolean
   annihilation f = (empty >>= f) == empty

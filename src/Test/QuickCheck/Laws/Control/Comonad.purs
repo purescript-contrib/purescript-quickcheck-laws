@@ -1,38 +1,32 @@
 module Test.QuickCheck.Laws.Control.Comonad where
 
+import Prelude
+
 import Control.Monad.Eff.Console (log)
 import Control.Comonad (Comonad, extract)
 import Control.Extend ((<<=))
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy(), Proxy2())
 
-import Prelude
+import Type.Proxy (Proxy2())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+import Test.QuickCheck.Laws (A(), B())
 
 -- | - Left Identity: `extract <<= x = x`
 -- | - Right Identity: `extract (f <<= x) = f x`
-checkComonad :: forall w a b. (Comonad w,
-                              Arbitrary a,
-                              Arbitrary b,
-                              Arbitrary (w a),
-                              Coarbitrary (w a),
-                              Eq b,
-                              Eq (w a)) => Proxy2 w
-                                        -> Proxy a
-                                        -> Proxy b
-                                        -> QC Unit
-checkComonad _ _ _ = do
+checkComonad :: forall w. (Comonad w, Arbitrary (w A), Coarbitrary (w A), Eq (w A)) => Proxy2 w -> QC () Unit
+checkComonad _ = do
 
   log "Checking 'Left identity' law for Comonad"
-  quickCheck leftIdentity
+  quickCheck' 1000 leftIdentity
 
   log "Checking 'Right identity' law for Comonad"
-  quickCheck rightIdentity
+  quickCheck' 1000 rightIdentity
 
   where
 
-  leftIdentity :: w a -> Boolean
+  leftIdentity :: w A -> Boolean
   leftIdentity x = (extract <<= x) == x
 
-  rightIdentity :: (w a -> b) -> w a -> Boolean
+  rightIdentity :: (w A -> B) -> w A -> Boolean
   rightIdentity f x = extract (f <<= x) == f x

@@ -1,28 +1,23 @@
 module Test.QuickCheck.Laws.Control.Apply where
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy(), Proxy2())
-
 import Prelude
 
+import Control.Monad.Eff.Console (log)
+
+import Type.Proxy (Proxy2())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Laws (A(), B(), C())
+
 -- | - Associative composition: `(<<<) <$> f <*> g <*> h = f <*> (g <*> h)`
-checkApply :: forall f a b c. (Apply f,
-                               Arbitrary (f a),
-                               Arbitrary (f (a -> b)),
-                               Arbitrary (f (b -> c)),
-                               Eq (f c)) => Proxy2 f
-                                         -> Proxy a
-                                         -> Proxy b
-                                         -> Proxy c
-                                         -> QC Unit
-checkApply _ _ _ _ = do
+checkApply :: forall f. (Apply f, Arbitrary (f A), Arbitrary (f (A -> B)), Arbitrary (f (B -> C)), Eq (f C)) => Proxy2 f -> QC () Unit
+checkApply _ = do
 
   log "Checking 'Associative composition' law for Apply"
-  quickCheck associativeComposition
+  quickCheck' 1000 associativeComposition
 
   where
 
-  associativeComposition :: f (b -> c) -> f (a -> b) -> f a -> Boolean
+  associativeComposition :: f (B -> C) -> f (A -> B) -> f A -> Boolean
   associativeComposition f g x = ((<<<) <$> f <*> g <*> x) == (f <*> (g <*> x))

@@ -2,6 +2,7 @@ module Test.Data.Either (checkEither) where
 
 import Control.Monad.Eff.Console (log)
 import Data.Either (Either())
+import Test.QuickCheck.Laws
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Applicative
 import Test.QuickCheck.Laws.Control.Apply
@@ -16,27 +17,21 @@ import Type.Proxy (Proxy(..), Proxy2(..))
 
 import Prelude
 
-prxEither2 :: Proxy2 (Either Unit)
-prxEither2 = Proxy2
+prxEither :: Proxy (Either A B)
+prxEither = Proxy
 
-prxA :: Proxy Int
-prxA = Proxy
-
-prxB :: Proxy String
-prxB = Proxy
-
-prxC :: Proxy Boolean
-prxC = Proxy
+prx2Either :: Proxy2 (Either C)
+prx2Either = Proxy2
 
 checkEither = do
   log "\n\nChecking Either instances...\n"
-  checkFunctor prxEither2 prxA prxB
-  checkApply prxEither2 prxA prxB prxC
-  checkApplicative prxEither2 prxA prxB prxC
-  checkAlt prxEither2 prxA prxB
-  checkBind prxEither2 prxA
-  checkMonad prxEither2 prxA
-  checkExtend prxEither2 prxA prxB prxC
-  checkEq (Proxy :: Proxy (Either String Int))
-  checkOrd (Proxy :: Proxy (Either Int String))
-  checkBounded (Proxy :: Proxy (Either Boolean Boolean))
+  checkFunctor prx2Either
+  checkApply prx2Either
+  checkApplicative prx2Either
+  checkAlt prx2Either
+  checkBind prx2Either
+  checkMonad prx2Either
+  checkExtend prx2Either
+  checkEq prxEither
+  checkOrd prxEither
+  checkBounded prxEither

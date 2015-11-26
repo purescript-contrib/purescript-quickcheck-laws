@@ -1,54 +1,44 @@
 module Test.QuickCheck.Laws.Control.Applicative where
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy(), Proxy2())
-
 import Prelude
+
+import Control.Monad.Eff.Console (log)
+
+import Type.Proxy (Proxy2())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Laws (A(), B(), C())
 
 -- | - Identity: `(pure id) <*> v = v`
 -- | - Composition: `(pure (<<<)) <*> f <*> g <*> h = f <*> (g <*> h)`
 -- | - Homomorphism: `(pure f) <*> (pure x) = pure (f x)`
 -- | - Interchange: `u <*> (pure y) = (pure ($ y)) <*> u`
-checkApplicative :: forall f a b c. (Applicative f,
-                                     Arbitrary a,
-                                     Arbitrary b,
-                                     Arbitrary (f a),
-                                     Arbitrary (f (a -> b)),
-                                     Arbitrary (f (b -> c)),
-                                     Coarbitrary a,
-                                     Eq (f a),
-                                     Eq (f b),
-                                     Eq (f c)) => Proxy2 f
-                                               -> Proxy a
-                                               -> Proxy b
-                                               -> Proxy c
-                                               -> QC Unit
-checkApplicative _ _ _ _ = do
+checkApplicative :: forall f. (Applicative f, Arbitrary (f A), Arbitrary (f (A -> B)), Arbitrary (f (B -> C)), Eq (f A), Eq (f B), Eq (f C)) => Proxy2 f -> QC () Unit
+checkApplicative _ = do
 
   log "Checking 'Identity' law for Applicative"
-  quickCheck identity
+  quickCheck' 1000 identity
 
   log "Checking 'Composition' law for Applicative"
-  quickCheck composition
+  quickCheck' 1000 composition
 
   log "Checking 'Homomorphism' law for Applicative"
-  quickCheck homomorphism
+  quickCheck' 1000 homomorphism
 
   log "Checking 'Interchange' law for Applicative"
-  quickCheck interchange
+  quickCheck' 1000 interchange
 
   where
 
-  identity :: f a -> Boolean
+  identity :: f A -> Boolean
   identity v = (pure id <*> v) == v
 
-  composition :: f (b -> c) -> f (a -> b) -> f a -> Boolean
+  composition :: f (B -> C) -> f (A -> B) -> f A -> Boolean
   composition f g x = (pure (<<<) <*> f <*> g <*> x) == (f <*> (g <*> x))
 
-  homomorphism :: (a -> b) -> a -> Boolean
-  homomorphism f x = (pure f <*> pure x) == (pure (f x) :: f b)
+  homomorphism :: (A -> B) -> A -> Boolean
+  homomorphism f x = (pure f <*> pure x) == (pure (f x) :: f B)
 
-  interchange :: a -> f (a -> b) -> Boolean
+  interchange :: A -> f (A -> B) -> Boolean
   interchange y u = (u <*> pure y) == (pure ($ y) <*> u)

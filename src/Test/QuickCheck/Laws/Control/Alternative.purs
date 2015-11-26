@@ -1,38 +1,33 @@
 module Test.QuickCheck.Laws.Control.Alternative where
 
-import Control.Monad.Eff.Console (log)
+import Prelude
+
 import Control.Alt ((<|>))
 import Control.Alternative (Alternative)
+import Control.Monad.Eff.Console (log)
 import Control.Plus (empty)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy(), Proxy2())
 
-import Prelude
+import Type.Proxy (Proxy2())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Laws (A(), B())
 
 -- | - Distributivity: `(f <|> g) <*> x == (f <*> x) <|> (g <*> x)`
 -- | - Annihilation: `empty <*> x = empty`
-checkAlternative :: forall f a b. (Alternative f,
-                                   Arbitrary a,
-                                   Arbitrary (f (a -> b)),
-                                   Arbitrary (f a),
-                                   Eq (f a),
-                                   Eq (f b)) => Proxy2 f
-                                             -> Proxy a
-                                             -> Proxy b
-                                             -> QC Unit
-checkAlternative _ _ _ = do
+checkAlternative :: forall f. (Alternative f, Arbitrary (f (A -> B)), Arbitrary (f A), Eq (f A), Eq (f B)) => Proxy2 f -> QC () Unit
+checkAlternative _ = do
 
   log "Checking 'Left identity' law for Alternative"
-  quickCheck distributivity
+  quickCheck' 1000 distributivity
 
   log "Checking 'Annihilation' law for Alternative"
-  quickCheck annihilation
+  quickCheck' 1000 annihilation
 
   where
 
-  distributivity :: f (a -> b) -> f (a -> b) -> f a -> Boolean
+  distributivity :: f (A -> B) -> f (A -> B) -> f A -> Boolean
   distributivity f g x = ((f <|> g) <*> x) == ((f <*> x) <|> (g <*> x))
 
-  annihilation :: f a -> Boolean
-  annihilation x = empty <*> x == empty :: f a
+  annihilation :: f A -> Boolean
+  annihilation x = empty <*> x == empty :: f A

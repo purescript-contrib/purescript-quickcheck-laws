@@ -1,26 +1,24 @@
 module Test.QuickCheck.Laws.Control.Category where
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy(), Proxy3())
-
 import Prelude
 
+import Control.Monad.Eff.Console (log)
+
+import Type.Proxy (Proxy3())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Laws (B(), C())
+
 -- | - Identity: `id <<< p = p <<< id = p`
-checkCategory :: forall a b c. (Category a,
-                                Arbitrary (a b c),
-                                Eq (a b c)) => Proxy3 a
-                                            -> Proxy b
-                                            -> Proxy c
-                                            -> QC Unit
-checkCategory _ _ _ = do
+checkCategory :: forall a. (Category a, Arbitrary (a B C), Eq (a B C)) => Proxy3 a -> QC () Unit
+checkCategory _ = do
 
   log "Checking 'Identity' law for Category"
-  quickCheck identity
+  quickCheck' 1000 identity
 
   where
 
-  identity :: a b c -> Boolean
+  identity :: a B C -> Boolean
   identity p = (id <<< p) == p
             && (p <<< id) == p

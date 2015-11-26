@@ -1,26 +1,23 @@
 module Test.QuickCheck.Laws.Control.Bind where
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy(), Proxy2())
-
 import Prelude
 
+import Control.Monad.Eff.Console (log)
+
+import Type.Proxy (Proxy2())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Laws (A())
+
 -- | - Associativity: `(x >>= f) >>= g = x >>= (\k => f k >>= g)`
-checkBind :: forall m a. (Bind m,
-                          Arbitrary a,
-                          Arbitrary (m a),
-                          Coarbitrary a,
-                          Eq (m a)) => Proxy2 m
-                                    -> Proxy a
-                                    -> QC Unit
-checkBind _ _ = do
+checkBind :: forall m. (Bind m, Arbitrary (m A), Eq (m A)) => Proxy2 m -> QC () Unit
+checkBind _ = do
 
   log "Checking 'Associativity' law for Bind"
-  quickCheck associativity
+  quickCheck' 1000 associativity
 
   where
 
-  associativity :: m a -> (a -> m a) -> (a -> m a) -> Boolean
+  associativity :: m A -> (A -> m A) -> (A -> m A) -> Boolean
   associativity m f g = ((m >>= f) >>= g) == (m >>= (\x -> f x >>= g))

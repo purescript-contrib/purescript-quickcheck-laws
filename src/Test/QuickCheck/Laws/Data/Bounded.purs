@@ -1,18 +1,20 @@
 module Test.QuickCheck.Laws.Data.Bounded where
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy())
-
 import Prelude
 
+import Control.Monad.Eff.Console (log)
+
+import Type.Proxy (Proxy())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+
 -- | - Ordering: `bottom <= a <= top`
-checkBounded :: forall a. (Arbitrary a, Bounded a, Ord a) => Proxy a -> QC Unit
+checkBounded :: forall a. (Arbitrary a, Bounded a, Ord a) => Proxy a -> QC () Unit
 checkBounded _ = do
 
   log "Checking 'Ordering' law for Bounded"
-  quickCheck ordering
+  quickCheck' 1000 ordering
 
   where
 

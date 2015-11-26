@@ -1,11 +1,15 @@
 {
   "name": "purescript-quickcheck-laws",
-  "homepage": "https://github.com/purescript/purescript-quickcheck-laws",
+  "homepage": "https://github.com/garyb/purescript-quickcheck-laws",
   "description": "Law tests for core classes",
   "keywords": [
     "purescript"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/garyb/purescript-quickcheck-laws.git"
+  },
   "ignore": [
     "**/.*",
     "bower_components",
@@ -17,6 +21,6 @@
   ],
   "dependencies": {
     "purescript-proxy": "^0.1.0",
-    "purescript-quickcheck": "^0.6.0"
+    "purescript-quickcheck": "^0.12.0"
   }
 }

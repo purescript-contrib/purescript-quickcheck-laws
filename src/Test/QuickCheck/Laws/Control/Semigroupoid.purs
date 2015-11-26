@@ -1,29 +1,23 @@
 module Test.QuickCheck.Laws.Control.Semigroupoid where
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
-import Type.Proxy (Proxy(), Proxy3())
-
 import Prelude
 
+import Control.Monad.Eff.Console (log)
+
+import Type.Proxy (Proxy3())
+
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Laws (B(), C(), D(), E())
+
 -- | - Associativity: `p <<< (q <<< r) = (p <<< q) <<< r`
-checkSemigroupoid :: forall a b c d e. (Semigroupoid a,
-                                        Arbitrary (a b c),
-                                        Arbitrary (a c d),
-                                        Arbitrary (a d e),
-                                        Eq (a b e)) => Proxy3 a
-                                                    -> Proxy b
-                                                    -> Proxy c
-                                                    -> Proxy d
-                                                    -> Proxy e
-                                                    -> QC Unit
-checkSemigroupoid _ _ _ _ _ = do
+checkSemigroupoid :: forall a. (Semigroupoid a, Arbitrary (a B C), Arbitrary (a C D), Arbitrary (a D E), Eq (a B E)) => Proxy3 a -> QC () Unit
+checkSemigroupoid _ = do
 
   log "Checking 'Associativity' law for Semigroupoid"
-  quickCheck associativity
+  quickCheck' 1000 associativity
 
   where
 
-  associativity :: a d e -> a c d -> a b c -> Boolean
+  associativity :: a D E -> a C D -> a B C -> Boolean
   associativity p q r = (p <<< (q <<< r)) == ((p <<< q) <<< r)

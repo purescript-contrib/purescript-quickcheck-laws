@@ -2,6 +2,7 @@ module Test.Data.Maybe (checkMaybe) where
 
 import Control.Monad.Eff.Console (log)
 import Data.Maybe (Maybe())
+import Test.QuickCheck.Laws
 import Test.QuickCheck.Laws.Control.Alt
 import Test.QuickCheck.Laws.Control.Alternative
 import Test.QuickCheck.Laws.Control.Applicative
@@ -21,33 +22,26 @@ import Type.Proxy (Proxy(..), Proxy2(..))
 
 import Prelude
 
-prxMaybe2 :: Proxy2 Maybe
-prxMaybe2 = Proxy2
+prxMaybe :: Proxy (Maybe A)
+prxMaybe = Proxy
 
-prxA :: Proxy Boolean
-prxA = Proxy
-
-prxB :: Proxy String
-prxB = Proxy
-
-prxC :: Proxy Int
-prxC = Proxy
+prx2Maybe :: Proxy2 Maybe
+prx2Maybe = Proxy2
 
 checkMaybe = do
   log "\n\nChecking Maybe instances...\n"
-  checkFunctor prxMaybe2 prxA prxB
-  checkApply prxMaybe2 prxA prxB prxC
-  checkApplicative prxMaybe2 prxA prxB prxC
-  checkAlt prxMaybe2 prxA prxB
-  checkPlus prxMaybe2 prxA prxB
-  checkAlternative prxMaybe2 prxA prxB
-  checkBind prxMaybe2 prxA
-  checkMonad prxMaybe2 prxA
-  -- TODO: Maybe is not a law-abiding MonadPlus
-  -- checkMonadPlus prxMaybe2 prxA prxB
-  checkExtend prxMaybe2 prxA prxB prxC
-  checkSemigroup (Proxy :: Proxy (Maybe String))
-  checkEq (Proxy :: Proxy (Maybe Int))
-  checkOrd (Proxy :: Proxy (Maybe Int))
-  checkBounded (Proxy :: Proxy (Maybe Boolean))
-  checkMonoid (Proxy :: Proxy (Maybe String))
+  checkFunctor prx2Maybe
+  checkApply prx2Maybe
+  checkApplicative prx2Maybe
+  checkAlt prx2Maybe
+  checkPlus prx2Maybe
+  checkAlternative prx2Maybe
+  checkBind prx2Maybe
+  checkMonad prx2Maybe
+  checkMonadPlus prx2Maybe
+  checkExtend prx2Maybe
+  checkSemigroup prxMaybe
+  checkEq prxMaybe
+  checkOrd prxMaybe
+  checkBounded prxMaybe
+  checkMonoid prxMaybe

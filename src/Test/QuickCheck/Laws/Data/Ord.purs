@@ -1,26 +1,28 @@
 module Test.QuickCheck.Laws.Data.Ord where
 
+import Prelude
+
 import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC(..), quickCheck)
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+
 import Type.Proxy (Proxy())
 
-import Prelude
+import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck.Arbitrary (Arbitrary)
 
 -- | - Reflexivity: `a <= a`
 -- | - Antisymmetry: if `a <= b` and `b <= a` then `a = b`
 -- | - Transitivity: if `a <= b` and `b <= c` then `a <= c`
-checkOrd :: forall a. (Arbitrary a, Ord a) => Proxy a -> QC Unit
+checkOrd :: forall a. (Arbitrary a, Ord a) => Proxy a -> QC () Unit
 checkOrd _ = do
 
   log "Checking 'Reflexivity' law for Ord"
-  quickCheck reflexivity
+  quickCheck' 1000 reflexivity
 
   log "Checking 'Antisymmetry' law for Ord"
-  quickCheck antisymmetry
+  quickCheck' 1000 antisymmetry
 
   log "Checking 'Transitivity' law for Ord"
-  quickCheck transitivity
+  quickCheck' 1000 transitivity
 
   where
 
