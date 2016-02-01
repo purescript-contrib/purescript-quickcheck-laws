@@ -12,7 +12,7 @@ import Test.QuickCheck.Laws (A())
 
 -- | - Left Identity: `pure x >>= f = f x`
 -- | - Right Identity: `x >>= pure = x`
-checkMonad :: forall m. (Monad m, Arbitrary (m A), Eq (m A)) => Proxy2 m -> QC () Unit
+checkMonad :: forall eff m. (Monad m, Arbitrary (m A), Eq (m A)) => Proxy2 m -> QC eff Unit
 checkMonad _ = do
 
   log "Checking 'Left identity' law for Monad"

@@ -10,7 +10,7 @@ import Test.QuickCheck (QC(), quickCheck')
 import Test.QuickCheck.Arbitrary (Arbitrary)
 
 -- | - Ordering: `bottom <= a <= top`
-checkBounded :: forall a. (Arbitrary a, Bounded a, Ord a) => Proxy a -> QC () Unit
+checkBounded :: forall eff a. (Arbitrary a, Bounded a, Ord a) => Proxy a -> QC eff Unit
 checkBounded _ = do
 
   log "Checking 'Ordering' law for Bounded"

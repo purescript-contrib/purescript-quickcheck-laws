@@ -12,7 +12,7 @@ import Test.QuickCheck.Arbitrary (Arbitrary)
 -- | - Reflexivity: `a <= a`
 -- | - Antisymmetry: if `a <= b` and `b <= a` then `a = b`
 -- | - Transitivity: if `a <= b` and `b <= c` then `a <= c`
-checkOrd :: forall a. (Arbitrary a, Ord a) => Proxy a -> QC () Unit
+checkOrd :: forall eff a. (Arbitrary a, Ord a) => Proxy a -> QC eff Unit
 checkOrd _ = do
 
   log "Checking 'Reflexivity' law for Ord"

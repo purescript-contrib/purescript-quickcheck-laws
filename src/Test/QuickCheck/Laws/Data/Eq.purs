@@ -13,7 +13,7 @@ import Test.QuickCheck.Arbitrary (Arbitrary)
 -- | - Symmetry: `x == y = y == x`
 -- | - Transitivity: if `x == y` and `y == z` then `x == z`
 -- | - Negation: `x /= y = not (x == y)`
-checkEq :: forall a. (Arbitrary a, Eq a) => Proxy a -> QC () Unit
+checkEq :: forall eff a. (Arbitrary a, Eq a) => Proxy a -> QC eff Unit
 checkEq _ = do
 
   log "Checking 'Reflexivity' law for Eq"

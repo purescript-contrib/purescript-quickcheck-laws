@@ -15,7 +15,7 @@ import Test.QuickCheck.Laws (A(), B())
 
 -- | - Distributivity: `(f <|> g) <*> x == (f <*> x) <|> (g <*> x)`
 -- | - Annihilation: `empty <*> x = empty`
-checkAlternative :: forall f. (Alternative f, Arbitrary (f (A -> B)), Arbitrary (f A), Eq (f A), Eq (f B)) => Proxy2 f -> QC () Unit
+checkAlternative :: forall eff f. (Alternative f, Arbitrary (f (A -> B)), Arbitrary (f A), Eq (f A), Eq (f B)) => Proxy2 f -> QC eff Unit
 checkAlternative _ = do
 
   log "Checking 'Left identity' law for Alternative"

@@ -14,7 +14,7 @@ import Test.QuickCheck.Laws (A(), B())
 
 -- | - Left Identity: `extract <<= x = x`
 -- | - Right Identity: `extract (f <<= x) = f x`
-checkComonad :: forall w. (Comonad w, Arbitrary (w A), Coarbitrary (w A), Eq (w A)) => Proxy2 w -> QC () Unit
+checkComonad :: forall eff w. (Comonad w, Arbitrary (w A), Coarbitrary (w A), Eq (w A)) => Proxy2 w -> QC eff Unit
 checkComonad _ = do
 
   log "Checking 'Left identity' law for Comonad"
