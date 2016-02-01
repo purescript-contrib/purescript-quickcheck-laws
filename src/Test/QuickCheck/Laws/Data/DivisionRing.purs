@@ -10,7 +10,7 @@ import Test.QuickCheck (QC(), quickCheck')
 import Test.QuickCheck.Arbitrary (Arbitrary)
 
 -- | - Multiplicative inverse: `(one / x) * x = one`
-checkDivisionRing :: forall a. (DivisionRing a, Arbitrary a, Eq a) => Proxy a -> QC () Unit
+checkDivisionRing :: forall eff a. (DivisionRing a, Arbitrary a, Eq a) => Proxy a -> QC eff Unit
 checkDivisionRing _ = do
 
   log "Checking 'Multiplicative inverse' law for DivisionRing"

@@ -20,7 +20,7 @@ import Test.QuickCheck.Arbitrary (Arbitrary)
 -- |   - Left distributivity: `a * (b + c) = (a * b) + (a * c)`
 -- |   - Right distributivity: `(a + b) * c = (a * c) + (b * c)`
 -- | - Annihiliation: `zero * a = a * zero = zero`
-checkSemiring :: forall a. (Semiring a, Arbitrary a, Eq a) => Proxy a -> QC () Unit
+checkSemiring :: forall eff a. (Semiring a, Arbitrary a, Eq a) => Proxy a -> QC eff Unit
 checkSemiring _ = do
 
   log "Checking 'Associativity' law for Semiring addition"

@@ -10,7 +10,7 @@ import Test.QuickCheck (QC(), quickCheck')
 import Test.QuickCheck.Arbitrary (Arbitrary)
 
 -- | - Commutative multiplication: `a * b = b * a`
-checkNum :: forall a. (Num a, Arbitrary a, Eq a) => Proxy a -> QC () Unit
+checkNum :: forall eff a. (Num a, Arbitrary a, Eq a) => Proxy a -> QC eff Unit
 checkNum _ = do
 
   log "Checking 'Commutative multiplication' law for Num"

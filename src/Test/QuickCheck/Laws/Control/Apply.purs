@@ -11,7 +11,7 @@ import Test.QuickCheck.Arbitrary (Arbitrary)
 import Test.QuickCheck.Laws (A(), B(), C())
 
 -- | - Associative composition: `(<<<) <$> f <*> g <*> h = f <*> (g <*> h)`
-checkApply :: forall f. (Apply f, Arbitrary (f A), Arbitrary (f (A -> B)), Arbitrary (f (B -> C)), Eq (f C)) => Proxy2 f -> QC () Unit
+checkApply :: forall eff f. (Apply f, Arbitrary (f A), Arbitrary (f (A -> B)), Arbitrary (f (B -> C)), Eq (f C)) => Proxy2 f -> QC eff Unit
 checkApply _ = do
 
   log "Checking 'Associative composition' law for Apply"

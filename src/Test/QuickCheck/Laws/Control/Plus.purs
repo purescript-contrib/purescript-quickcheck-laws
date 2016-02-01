@@ -15,7 +15,7 @@ import Test.QuickCheck.Laws (A(), B())
 -- | - Left identity: `empty <|> x == x`
 -- | - Right identity: `x <|> empty == x`
 -- | - Annihilation: `f <$> empty == empty`
-checkPlus :: forall f. (Plus f, Arbitrary (f A), Eq (f A), Eq (f B)) => Proxy2 f -> QC () Unit
+checkPlus :: forall eff f. (Plus f, Arbitrary (f A), Eq (f A), Eq (f B)) => Proxy2 f -> QC eff Unit
 checkPlus _ = do
 
   log "Checking 'Left identity' law for Plus"

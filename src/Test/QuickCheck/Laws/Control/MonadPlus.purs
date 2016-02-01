@@ -15,7 +15,7 @@ import Test.QuickCheck.Laws (A(), B())
 
 -- | - Distributivity: `(x <|> y) >>= f == (x >>= f) <|> (y >>= f)`
 -- | - Annihilation: `empty >>= f = empty`
-checkMonadPlus :: forall m. (MonadPlus m, Arbitrary (m A), Arbitrary (m B), Eq (m B)) => Proxy2 m -> QC () Unit
+checkMonadPlus :: forall eff m. (MonadPlus m, Arbitrary (m A), Arbitrary (m B), Eq (m B)) => Proxy2 m -> QC eff Unit
 checkMonadPlus _ = do
 
   log "Checking 'Distributivity' law for MonadPlus"

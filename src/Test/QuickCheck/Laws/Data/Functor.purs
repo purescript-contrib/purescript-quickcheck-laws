@@ -12,7 +12,7 @@ import Test.QuickCheck.Laws (A(), B())
 
 -- | - Identity: `(<$>) id = id`
 -- | - Composition: `(<$>) (f <<< g) = (f <$>) <<< (g <$>)`
-checkFunctor :: forall f. (Functor f, Arbitrary (f A), Eq (f A)) => Proxy2 f -> QC () Unit
+checkFunctor :: forall eff f. (Functor f, Arbitrary (f A), Eq (f A)) => Proxy2 f -> QC eff Unit
 checkFunctor _ = do
 
   log "Checking 'Identity' law for Functor"

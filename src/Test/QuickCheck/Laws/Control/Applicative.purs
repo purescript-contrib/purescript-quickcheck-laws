@@ -14,7 +14,7 @@ import Test.QuickCheck.Laws (A(), B(), C())
 -- | - Composition: `(pure (<<<)) <*> f <*> g <*> h = f <*> (g <*> h)`
 -- | - Homomorphism: `(pure f) <*> (pure x) = pure (f x)`
 -- | - Interchange: `u <*> (pure y) = (pure ($ y)) <*> u`
-checkApplicative :: forall f. (Applicative f, Arbitrary (f A), Arbitrary (f (A -> B)), Arbitrary (f (B -> C)), Eq (f A), Eq (f B), Eq (f C)) => Proxy2 f -> QC () Unit
+checkApplicative :: forall eff f. (Applicative f, Arbitrary (f A), Arbitrary (f (A -> B)), Arbitrary (f (B -> C)), Eq (f A), Eq (f B), Eq (f C)) => Proxy2 f -> QC eff Unit
 checkApplicative _ = do
 
   log "Checking 'Identity' law for Applicative"

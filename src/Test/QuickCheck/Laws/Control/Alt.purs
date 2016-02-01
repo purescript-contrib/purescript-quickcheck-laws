@@ -13,7 +13,7 @@ import Test.QuickCheck.Laws (A(), B())
 
 -- | - Associativity: `(x <|> y) <|> z == x <|> (y <|> z)`
 -- | - Distributivity: `f <$> (x <|> y) == (f <$> x) <|> (f <$> y)`
-checkAlt :: forall f. (Alt f, Arbitrary (f A), Eq (f A), Eq (f B)) => Proxy2 f -> QC () Unit
+checkAlt :: forall eff f. (Alt f, Arbitrary (f A), Eq (f A), Eq (f B)) => Proxy2 f -> QC eff Unit
 checkAlt _ = do
 
   log "Checking 'Associativity' law for Alt"

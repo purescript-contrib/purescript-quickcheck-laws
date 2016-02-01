@@ -10,7 +10,7 @@ import Test.QuickCheck (QC(), quickCheck')
 import Test.QuickCheck.Arbitrary (Arbitrary)
 
 -- | - Associativity: `(x <> y) <> z = x <> (y <> z)`
-checkSemigroup :: forall s. (Semigroup s, Arbitrary s, Eq s) => Proxy s -> QC () Unit
+checkSemigroup :: forall eff s. (Semigroup s, Arbitrary s, Eq s) => Proxy s -> QC eff Unit
 checkSemigroup _ = do
 
   log "Checking 'Associativity' law for Semigroup"
