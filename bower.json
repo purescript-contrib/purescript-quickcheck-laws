@@ -20,7 +20,7 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-proxy": "^0.1.0",
-    "purescript-quickcheck": "^0.12.0"
+    "purescript-proxy": "^1.0.0",
+    "purescript-quickcheck": "^1.0.0"
   }
 }
