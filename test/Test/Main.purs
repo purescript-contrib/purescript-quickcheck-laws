@@ -1,16 +1,15 @@
 module Test.Main where
 
-import Control.Monad.Eff.Console (log)
-import Test.Data.Either
-import Test.Data.Int
-import Test.Data.Maybe
-import Test.Data.Ordering
-import Test.Data.Tuple
-import Test.Data.Unit
-import Test.Prim.Array
-import Test.Prim.Boolean
-import Test.Prim.Number
-import Test.Prim.String
+import Test.Data.Either (checkEither)
+import Test.Data.Int (checkInt)
+import Test.Data.Maybe (checkMaybe)
+import Test.Data.Ordering (checkOrdering)
+import Test.Data.Tuple (checkTuple)
+import Test.Data.Unit (checkUnit)
+import Test.Prim.Array (checkArray)
+import Test.Prim.Boolean (checkBoolean)
+import Test.Prim.Number (checkNumber)
+import Test.Prim.String (checkString)
 
 import Prelude
 

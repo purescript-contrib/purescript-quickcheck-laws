@@ -2,21 +2,20 @@ module Test.Data.Tuple (checkTuple) where
 
 import Control.Monad.Eff.Console (log)
 import Data.Tuple (Tuple())
-import Test.QuickCheck.Laws
-import Test.QuickCheck.Laws.Control.Alt
-import Test.QuickCheck.Laws.Control.Applicative
-import Test.QuickCheck.Laws.Control.Apply
-import Test.QuickCheck.Laws.Control.Bind
-import Test.QuickCheck.Laws.Control.Comonad
-import Test.QuickCheck.Laws.Control.Extend
-import Test.QuickCheck.Laws.Control.Monad
-import Test.QuickCheck.Laws.Control.Semigroupoid
-import Test.QuickCheck.Laws.Data.Bounded
-import Test.QuickCheck.Laws.Data.Eq
-import Test.QuickCheck.Laws.Data.Functor
-import Test.QuickCheck.Laws.Data.Ord
-import Test.QuickCheck.Laws.Data.Semigroup
-import Test.QuickCheck.Laws.Data.Monoid
+import Test.QuickCheck.Laws (A, B, C)
+import Test.QuickCheck.Laws.Control.Applicative (checkApplicative)
+import Test.QuickCheck.Laws.Control.Apply (checkApply)
+import Test.QuickCheck.Laws.Control.Bind (checkBind)
+import Test.QuickCheck.Laws.Control.Comonad (checkComonad)
+import Test.QuickCheck.Laws.Control.Extend (checkExtend)
+import Test.QuickCheck.Laws.Control.Monad (checkMonad)
+import Test.QuickCheck.Laws.Control.Semigroupoid (checkSemigroupoid)
+import Test.QuickCheck.Laws.Data.Bounded (checkBounded)
+import Test.QuickCheck.Laws.Data.Eq (checkEq)
+import Test.QuickCheck.Laws.Data.Functor (checkFunctor)
+import Test.QuickCheck.Laws.Data.Ord (checkOrd)
+import Test.QuickCheck.Laws.Data.Semigroup (checkSemigroup)
+import Test.QuickCheck.Laws.Data.Monoid (checkMonoid)
 import Type.Proxy (Proxy(..), Proxy2(..), Proxy3(..))
 
 import Prelude

@@ -13,7 +13,6 @@ import Test.QuickCheck (QC(), quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A(), B())
 
--- | - Distributivity: `(x <|> y) >>= f == (x >>= f) <|> (y >>= f)`
 -- | - Annihilation: `empty >>= f = empty`
 checkMonadZero :: forall eff m. (MonadZero m, Arbitrary (m A), Arbitrary (m B), Eq (m B)) => Proxy2 m -> QC eff Unit
 checkMonadZero _ = do

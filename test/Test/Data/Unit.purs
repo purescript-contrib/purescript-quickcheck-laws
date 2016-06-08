@@ -1,16 +1,16 @@
 module Test.Data.Unit (checkUnit) where
 
 import Control.Monad.Eff.Console (log)
-import Test.QuickCheck.Laws.Data.Bounded
-import Test.QuickCheck.Laws.Data.CommutativeRing
-import Test.QuickCheck.Laws.Data.Eq
-import Test.QuickCheck.Laws.Data.EuclideanRing
-import Test.QuickCheck.Laws.Data.Field
-import Test.QuickCheck.Laws.Data.Monoid
-import Test.QuickCheck.Laws.Data.Ord
-import Test.QuickCheck.Laws.Data.Ring
-import Test.QuickCheck.Laws.Data.Semigroup
-import Test.QuickCheck.Laws.Data.Semiring
+import Test.QuickCheck.Laws.Data.Bounded (checkBounded)
+import Test.QuickCheck.Laws.Data.CommutativeRing (checkCommutativeRing)
+import Test.QuickCheck.Laws.Data.Eq (checkEq)
+import Test.QuickCheck.Laws.Data.EuclideanRing (checkEuclideanRing)
+import Test.QuickCheck.Laws.Data.Field (checkField)
+import Test.QuickCheck.Laws.Data.Monoid (checkMonoid)
+import Test.QuickCheck.Laws.Data.Ord (checkOrd)
+import Test.QuickCheck.Laws.Data.Ring (checkRing)
+import Test.QuickCheck.Laws.Data.Semigroup (checkSemigroup)
+import Test.QuickCheck.Laws.Data.Semiring (checkSemiring)
 import Type.Proxy (Proxy(..))
 
 import Prelude

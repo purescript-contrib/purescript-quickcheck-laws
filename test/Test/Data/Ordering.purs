@@ -1,10 +1,10 @@
 module Test.Data.Ordering (checkOrdering) where
 
 import Control.Monad.Eff.Console (log)
-import Test.QuickCheck.Laws.Data.Bounded
-import Test.QuickCheck.Laws.Data.Eq
-import Test.QuickCheck.Laws.Data.Ord
-import Test.QuickCheck.Laws.Data.Semigroup
+import Test.QuickCheck.Laws.Data.Bounded (checkBounded)
+import Test.QuickCheck.Laws.Data.Eq (checkEq)
+import Test.QuickCheck.Laws.Data.Ord (checkOrd)
+import Test.QuickCheck.Laws.Data.Semigroup (checkSemigroup)
 import Type.Proxy (Proxy(..))
 
 import Prelude
