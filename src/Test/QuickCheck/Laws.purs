@@ -2,9 +2,10 @@ module Test.QuickCheck.Laws where
 
 import Prelude
 
-import Data.Monoid (Monoid)
+import Data.Monoid (class Monoid)
 
-import Test.QuickCheck.Arbitrary (Arbitrary, arbitrary, Coarbitrary, coarbitrary)
+import Test.QuickCheck.Arbitrary
+  (class Arbitrary, arbitrary, class Coarbitrary, coarbitrary)
 
 newtype A = A Ordering
 

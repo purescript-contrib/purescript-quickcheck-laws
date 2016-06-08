@@ -7,7 +7,7 @@ import Control.Monad.Eff.Console (log)
 import Type.Proxy (Proxy3())
 
 import Test.QuickCheck (QC(), quickCheck')
-import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (B(), C())
 
 -- | - Identity: `id <<< p = p <<< id = p`

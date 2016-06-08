@@ -4,13 +4,13 @@ import Prelude
 
 import Control.Alt ((<|>))
 import Control.Monad.Eff.Console (log)
-import Control.MonadPlus (MonadPlus)
+import Control.MonadPlus (class MonadPlus)
 import Control.Plus (empty)
 
 import Type.Proxy (Proxy2())
 
 import Test.QuickCheck (QC(), quickCheck')
-import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A(), B())
 
 -- | - Distributivity: `(x <|> y) >>= f == (x >>= f) <|> (y >>= f)`

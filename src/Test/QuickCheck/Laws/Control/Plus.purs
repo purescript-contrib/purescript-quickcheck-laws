@@ -4,12 +4,12 @@ import Prelude
 
 import Control.Monad.Eff.Console (log)
 import Control.Alt ((<|>))
-import Control.Plus (Plus, empty)
+import Control.Plus (class Plus, empty)
 
 import Type.Proxy (Proxy2())
 
 import Test.QuickCheck (QC(), quickCheck')
-import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A(), B())
 
 -- | - Left identity: `empty <|> x == x`

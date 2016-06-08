@@ -7,7 +7,7 @@ import Control.Monad.Eff.Console (log)
 import Type.Proxy (Proxy())
 
 import Test.QuickCheck (QC(), quickCheck')
-import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Commutative monoid under addition:
 -- |   - Associativity: `(a + b) + c = a + (b + c)`
