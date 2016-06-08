@@ -21,13 +21,7 @@ checkMonadPlus _ = do
   log "Checking 'Distributivity' law for MonadPlus"
   quickCheck' 1000 distributivity
 
-  log "Checking 'Annihilation' law for MonadPlus"
-  quickCheck' 1000 annihilation
-
   where
 
   distributivity :: m A -> m A -> (A -> m B) -> Boolean
   distributivity x y f = ((x <|> y) >>= f) == ((x >>= f) <|> (y >>= f))
-
-  annihilation :: (A -> m B) -> Boolean
-  annihilation f = (empty >>= f) == empty
