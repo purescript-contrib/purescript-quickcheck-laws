@@ -2,10 +2,10 @@ module Test.Prim.Number (checkNumber) where
 
 import Control.Monad.Eff.Console (log)
 import Test.QuickCheck.Data.ApproxNumber (ApproxNumber())
-import Test.QuickCheck.Laws.Data.DivisionRing
+import Test.QuickCheck.Laws.Data.CommutativeRing
 import Test.QuickCheck.Laws.Data.Eq
-import Test.QuickCheck.Laws.Data.ModuloSemiring
-import Test.QuickCheck.Laws.Data.Num
+import Test.QuickCheck.Laws.Data.EuclideanRing
+import Test.QuickCheck.Laws.Data.Field
 import Test.QuickCheck.Laws.Data.Ord
 import Test.QuickCheck.Laws.Data.Ring
 import Test.QuickCheck.Laws.Data.Semiring
@@ -21,7 +21,7 @@ checkNumber = do
   checkEq prxNumber
   checkOrd prxNumber
   checkSemiring prxNumber
-  checkModuloSemiring prxNumber
+  checkEuclideanRing prxNumber
   checkRing prxNumber
-  checkDivisionRing prxNumber
-  checkNum prxNumber
+  checkField prxNumber
+  checkCommutativeRing prxNumber

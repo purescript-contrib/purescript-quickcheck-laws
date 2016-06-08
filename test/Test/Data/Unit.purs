@@ -2,11 +2,11 @@ module Test.Data.Unit (checkUnit) where
 
 import Control.Monad.Eff.Console (log)
 import Test.QuickCheck.Laws.Data.Bounded
-import Test.QuickCheck.Laws.Data.DivisionRing
+import Test.QuickCheck.Laws.Data.CommutativeRing
 import Test.QuickCheck.Laws.Data.Eq
-import Test.QuickCheck.Laws.Data.ModuloSemiring
+import Test.QuickCheck.Laws.Data.EuclideanRing
+import Test.QuickCheck.Laws.Data.Field
 import Test.QuickCheck.Laws.Data.Monoid
-import Test.QuickCheck.Laws.Data.Num
 import Test.QuickCheck.Laws.Data.Ord
 import Test.QuickCheck.Laws.Data.Ring
 import Test.QuickCheck.Laws.Data.Semigroup
@@ -26,7 +26,7 @@ checkUnit = do
   checkSemigroup prxUnit
   checkMonoid prxUnit
   checkSemiring prxUnit
-  checkModuloSemiring prxUnit
+  checkEuclideanRing prxUnit
   checkRing prxUnit
-  checkDivisionRing prxUnit
-  checkNum prxUnit
+  checkField prxUnit
+  checkCommutativeRing prxUnit

@@ -1,10 +1,10 @@
 module Test.Data.Int (checkInt) where
 
 import Control.Monad.Eff.Console (log)
-import Test.QuickCheck.Laws.Data.DivisionRing
+import Test.QuickCheck.Laws.Data.CommutativeRing
 import Test.QuickCheck.Laws.Data.Eq
-import Test.QuickCheck.Laws.Data.ModuloSemiring
-import Test.QuickCheck.Laws.Data.Num
+import Test.QuickCheck.Laws.Data.EuclideanRing
+import Test.QuickCheck.Laws.Data.Field
 import Test.QuickCheck.Laws.Data.Ord
 import Test.QuickCheck.Laws.Data.Ring
 import Test.QuickCheck.Laws.Data.Semiring
@@ -20,5 +20,5 @@ checkInt = do
   checkEq prxInt
   checkOrd prxInt
   checkSemiring prxInt
-  checkModuloSemiring prxInt
+  checkEuclideanRing prxInt
   checkRing prxInt

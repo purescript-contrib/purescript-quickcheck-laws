@@ -10,7 +10,7 @@ import Test.QuickCheck.Laws.Control.Apply
 import Test.QuickCheck.Laws.Control.Bind
 import Test.QuickCheck.Laws.Control.Extend
 import Test.QuickCheck.Laws.Control.Monad
-import Test.QuickCheck.Laws.Control.MonadPlus
+import Test.QuickCheck.Laws.Control.MonadZero
 import Test.QuickCheck.Laws.Control.Plus
 import Test.QuickCheck.Laws.Data.Bounded
 import Test.QuickCheck.Laws.Data.Eq
@@ -38,7 +38,7 @@ checkMaybe = do
   checkAlternative prx2Maybe
   checkBind prx2Maybe
   checkMonad prx2Maybe
-  checkMonadPlus prx2Maybe
+  checkMonadZero prx2Maybe
   checkExtend prx2Maybe
   checkSemigroup prxMaybe
   checkEq prxMaybe
