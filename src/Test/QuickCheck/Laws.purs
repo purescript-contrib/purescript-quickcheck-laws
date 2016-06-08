@@ -18,8 +18,6 @@ instance boundedA :: Bounded A where
   top = A top
   bottom = A bottom
 
-instance boundedOrdA :: BoundedOrd A
-
 instance semigroupA :: Semigroup A where
   append (A x) (A y) = A (x <> y)
 
@@ -43,8 +41,6 @@ instance ordB :: Ord B where
 instance boundedB :: Bounded B where
   top = B top
   bottom = B bottom
-
-instance boundedOrdB :: BoundedOrd B
 
 instance semigroupB :: Semigroup B where
   append (B x) (B y) = B (x <> y)
@@ -70,8 +66,6 @@ instance boundedC :: Bounded C where
   top = C top
   bottom = C bottom
 
-instance boundedOrdC :: BoundedOrd C
-
 instance semigroupC :: Semigroup C where
   append (C x) (C y) = C (x <> y)
 
@@ -96,8 +90,6 @@ instance boundedD :: Bounded D where
   top = D top
   bottom = D bottom
 
-instance boundedOrdD :: BoundedOrd D
-
 instance semigroupD :: Semigroup D where
   append (D x) (D y) = D (x <> y)
 
@@ -121,8 +113,6 @@ instance ordE :: Ord E where
 instance boundedE :: Bounded E where
   top = E top
   bottom = E bottom
-
-instance boundedOrdE :: BoundedOrd E
 
 instance semigroupE :: Semigroup E where
   append (E x) (E y) = E (x <> y)
