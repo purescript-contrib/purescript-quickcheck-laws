@@ -27,4 +27,4 @@ checkFunctor _ = do
   identity f = (id <$> f) == id f
 
   composition :: (B -> A) -> (A -> B) -> f A -> Boolean
-  composition f g x = ((<$>) (f <<< g) x) == (((f <$>) <<< (g <$>)) x)
+  composition f g x = ((<$>) (f <<< g) x) == (((f <$> _) <<< (g <$> _)) x)

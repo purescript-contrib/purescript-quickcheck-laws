@@ -21,4 +21,5 @@ checkExtend _ = do
   where
 
   associativity :: (w B -> C) -> (w A -> B) -> w A -> Boolean
-  associativity f g x = ((f <<=) <<< (g <<=) $ x) == (f <<< (g <<=) <<= x)
+  associativity f g x =
+    ((f <<= _) <<< (g <<= _) $ x) == (f <<< (g <<= _) <<= x)

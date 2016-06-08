@@ -41,4 +41,4 @@ checkApplicative _ = do
   homomorphism f x = (pure f <*> pure x) == (pure (f x) :: f B)
 
   interchange :: A -> f (A -> B) -> Boolean
-  interchange y u = (u <*> pure y) == (pure ($ y) <*> u)
+  interchange y u = (u <*> pure y) == (pure (_ $ y) <*> u)
