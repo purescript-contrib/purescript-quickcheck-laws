@@ -1,11 +1,21 @@
-module Test.QuickCheck.Laws where
+module Test.QuickCheck.Laws
+  ( module Test.QuickCheck.Laws
+  , module Test.QuickCheck
+  ) where
 
 import Prelude
 
+import Control.Monad.Eff.Console (log)
+
 import Data.Monoid (class Monoid)
 
-import Test.QuickCheck.Arbitrary
-  (class Arbitrary, arbitrary, class Coarbitrary, coarbitrary)
+import Test.QuickCheck (QC)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary, class Coarbitrary, coarbitrary)
+
+checkLaws :: forall eff. String -> QC eff Unit -> QC eff Unit
+checkLaws typeName laws = do
+  log $ "\n\nChecking laws of " <> typeName <> " instances...\n"
+  laws
 
 newtype A = A Ordering
 

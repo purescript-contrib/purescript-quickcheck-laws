@@ -9,7 +9,7 @@ import Type.Proxy (Proxy())
 import Test.QuickCheck (QC(), quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
--- | - Additive inverse: `a + (-a) = (-a) + a = zero`
+-- | - Additive inverse: `a - a = a + (-a) = (-a) + a = zero`
 checkRing :: forall eff a. (Ring a, Arbitrary a, Eq a) => Proxy a -> QC eff Unit
 checkRing _ = do
 
@@ -19,4 +19,4 @@ checkRing _ = do
   where
 
   additiveInverse :: a -> Boolean
-  additiveInverse a = a + (-a) == zero
+  additiveInverse a = a - a == zero && a + (-a) == zero && (-a) + a == zero

@@ -1,37 +1,27 @@
-module Test.Data.Either (checkEither) where
-
-import Control.Monad.Eff.Console (log)
-import Data.Either (Either())
-import Test.QuickCheck.Laws (A, B, C)
-import Test.QuickCheck.Laws.Control.Alt (checkAlt)
-import Test.QuickCheck.Laws.Control.Applicative (checkApplicative)
-import Test.QuickCheck.Laws.Control.Apply (checkApply)
-import Test.QuickCheck.Laws.Control.Bind (checkBind)
-import Test.QuickCheck.Laws.Control.Extend (checkExtend)
-import Test.QuickCheck.Laws.Control.Monad (checkMonad)
-import Test.QuickCheck.Laws.Data.Bounded (checkBounded)
-import Test.QuickCheck.Laws.Data.Eq (checkEq)
-import Test.QuickCheck.Laws.Data.Functor (checkFunctor)
-import Test.QuickCheck.Laws.Data.Ord (checkOrd)
-import Type.Proxy (Proxy(..), Proxy2(..))
+module Test.Data.Either where
 
 import Prelude
 
-prxEither :: Proxy (Either A B)
-prxEither = Proxy
+import Data.Either (Either)
 
-prx2Either :: Proxy2 (Either C)
-prx2Either = Proxy2
+import Test.QuickCheck.Laws (QC, A, B, C, checkLaws)
+import Test.QuickCheck.Laws.Control as Control
+import Test.QuickCheck.Laws.Data as Data
 
-checkEither = do
-  log "\n\nChecking Either instances...\n"
-  checkFunctor prx2Either
-  checkApply prx2Either
-  checkApplicative prx2Either
-  checkAlt prx2Either
-  checkBind prx2Either
-  checkMonad prx2Either
-  checkExtend prx2Either
-  checkEq prxEither
-  checkOrd prxEither
-  checkBounded prxEither
+import Type.Proxy (Proxy(..), Proxy2(..))
+
+checkEither ∷ ∀ eff. QC eff Unit
+checkEither = checkLaws "Either" do
+  Data.checkEq prxEither
+  Data.checkOrd prxEither
+  Data.checkBounded prxEither
+  Data.checkFunctor prx2Either
+  Control.checkApply prx2Either
+  Control.checkApplicative prx2Either
+  Control.checkAlt prx2Either
+  Control.checkBind prx2Either
+  Control.checkMonad prx2Either
+  Control.checkExtend prx2Either
+  where
+  prxEither = Proxy ∷ Proxy (Either A B)
+  prx2Either = Proxy2 ∷ Proxy2 (Either C)

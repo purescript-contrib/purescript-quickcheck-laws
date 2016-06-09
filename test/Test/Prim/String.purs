@@ -1,20 +1,17 @@
-module Test.Prim.String (checkString) where
-
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck.Laws.Data.Eq (checkEq)
-import Test.QuickCheck.Laws.Data.Monoid (checkMonoid)
-import Test.QuickCheck.Laws.Data.Ord (checkOrd)
-import Test.QuickCheck.Laws.Data.Semigroup (checkSemigroup)
-import Type.Proxy (Proxy(..))
+module Test.Prim.String where
 
 import Prelude
 
-prxString :: Proxy String
-prxString = Proxy
+import Test.QuickCheck.Laws (QC, checkLaws)
+import Test.QuickCheck.Laws.Data as Data
 
-checkString = do
-  log "\n\nChecking String instances...\n"
-  checkEq prxString
-  checkOrd prxString
-  checkSemigroup prxString
-  checkMonoid prxString
+import Type.Proxy (Proxy(..))
+
+checkString ∷ ∀ eff. QC eff Unit
+checkString = checkLaws "String" do
+  Data.checkEq prxString
+  Data.checkOrd prxString
+  Data.checkSemigroup prxString
+  Data.checkMonoid prxString
+  where
+  prxString = Proxy ∷ Proxy String

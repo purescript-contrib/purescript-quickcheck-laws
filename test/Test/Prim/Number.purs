@@ -1,27 +1,21 @@
-module Test.Prim.Number (checkNumber) where
-
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck.Data.ApproxNumber (ApproxNumber())
-import Test.QuickCheck.Laws.Data.CommutativeRing (checkCommutativeRing)
-import Test.QuickCheck.Laws.Data.Eq (checkEq)
-import Test.QuickCheck.Laws.Data.EuclideanRing (checkEuclideanRing)
-import Test.QuickCheck.Laws.Data.Field (checkField)
-import Test.QuickCheck.Laws.Data.Ord (checkOrd)
-import Test.QuickCheck.Laws.Data.Ring (checkRing)
-import Test.QuickCheck.Laws.Data.Semiring (checkSemiring)
-import Type.Proxy (Proxy(..))
+module Test.Prim.Number where
 
 import Prelude
 
-prxNumber :: Proxy ApproxNumber
-prxNumber = Proxy
+import Test.QuickCheck.Data.ApproxNumber (ApproxNumber)
+import Test.QuickCheck.Laws (QC, checkLaws)
+import Test.QuickCheck.Laws.Data as Data
 
-checkNumber = do
-  log "\n\nChecking Number instances...\n"
-  checkEq prxNumber
-  checkOrd prxNumber
-  checkSemiring prxNumber
-  checkEuclideanRing prxNumber
-  checkRing prxNumber
-  checkField prxNumber
-  checkCommutativeRing prxNumber
+import Type.Proxy (Proxy(..))
+
+checkNumber ∷ ∀ eff. QC eff Unit
+checkNumber = checkLaws "Number" do
+  Data.checkEq prxNumber
+  Data.checkOrd prxNumber
+  Data.checkSemiring prxNumber
+  Data.checkEuclideanRing prxNumber
+  Data.checkRing prxNumber
+  Data.checkField prxNumber
+  Data.checkCommutativeRing prxNumber
+  where
+  prxNumber = Proxy ∷ Proxy ApproxNumber
