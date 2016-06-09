@@ -1,42 +1,29 @@
-module Test.Prim.Array (checkArray) where
-
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck.Laws (A)
-import Test.QuickCheck.Laws.Control.Alt (checkAlt)
-import Test.QuickCheck.Laws.Control.Alternative (checkAlternative)
-import Test.QuickCheck.Laws.Control.Applicative (checkApplicative)
-import Test.QuickCheck.Laws.Control.Apply (checkApply)
-import Test.QuickCheck.Laws.Control.Bind (checkBind)
-import Test.QuickCheck.Laws.Control.Monad (checkMonad)
-import Test.QuickCheck.Laws.Control.MonadPlus (checkMonadPlus)
-import Test.QuickCheck.Laws.Control.Plus (checkPlus)
-import Test.QuickCheck.Laws.Data.Eq (checkEq)
-import Test.QuickCheck.Laws.Data.Functor (checkFunctor)
-import Test.QuickCheck.Laws.Data.Monoid (checkMonoid)
-import Test.QuickCheck.Laws.Data.Ord (checkOrd)
-import Test.QuickCheck.Laws.Data.Semigroup (checkSemigroup)
-import Type.Proxy (Proxy(..), Proxy2(..))
+module Test.Prim.Array where
 
 import Prelude
 
-prxArray :: Proxy (Array A)
-prxArray = Proxy
+import Test.QuickCheck.Laws (QC, A, checkLaws)
+import Test.QuickCheck.Laws.Control as Control
+import Test.QuickCheck.Laws.Data as Data
 
-prx2Array :: Proxy2 Array
-prx2Array = Proxy2
+import Type.Proxy (Proxy(..), Proxy2(..))
 
-checkArray = do
-  log "\n\nChecking Array instances...\n"
-  checkEq prxArray
-  checkOrd prxArray
-  checkFunctor prx2Array
-  checkApply prx2Array
-  checkApplicative prx2Array
-  checkBind prx2Array
-  checkMonad prx2Array
-  checkSemigroup prxArray
-  checkMonoid prxArray
-  checkAlt prx2Array
-  checkPlus prx2Array
-  checkAlternative prx2Array
-  checkMonadPlus prx2Array
+checkArray ∷ ∀ eff. QC eff Unit
+checkArray = checkLaws "Array" do
+  Data.checkEq prxArray
+  Data.checkOrd prxArray
+  Data.checkFunctor prx2Array
+  Control.checkApply prx2Array
+  Control.checkApplicative prx2Array
+  Control.checkBind prx2Array
+  Control.checkMonad prx2Array
+  Data.checkSemigroup prxArray
+  Data.checkMonoid prxArray
+  Control.checkAlt prx2Array
+  Control.checkPlus prx2Array
+  Control.checkAlternative prx2Array
+  Control.checkMonadZero prx2Array
+  Control.checkMonadPlus prx2Array
+  where
+  prxArray = Proxy ∷ Proxy (Array A)
+  prx2Array = Proxy2 ∷ Proxy2 Array

@@ -6,14 +6,18 @@ import Control.Monad.Eff.Console (log)
 
 import Data.Monoid (class Monoid, mempty)
 
-import Type.Proxy (Proxy())
+import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck (QC, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Left identity: `mempty <> x = x`
 -- | - Right identity: `x <> mempty = x`
-checkMonoid :: forall eff m. (Monoid m, Arbitrary m, Eq m) => Proxy m -> QC eff Unit
+checkMonoid
+  ∷ ∀ eff m
+  . (Monoid m, Arbitrary m, Eq m)
+  ⇒ Proxy m
+  → QC eff Unit
 checkMonoid _ = do
 
   log "Checking 'Left identity' law for Monoid"
@@ -24,8 +28,8 @@ checkMonoid _ = do
 
   where
 
-  leftIdentity :: m -> Boolean
+  leftIdentity ∷ m → Boolean
   leftIdentity x = mempty <> x == x
 
-  rightIdentity :: m -> Boolean
+  rightIdentity ∷ m → Boolean
   rightIdentity x = x <> mempty == x

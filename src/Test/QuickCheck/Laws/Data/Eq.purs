@@ -4,16 +4,20 @@ import Prelude
 
 import Control.Monad.Eff.Console (log)
 
-import Type.Proxy (Proxy())
+import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck (QC, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Reflexivity: `x == x = true`
 -- | - Symmetry: `x == y = y == x`
 -- | - Transitivity: if `x == y` and `y == z` then `x == z`
 -- | - Negation: `x /= y = not (x == y)`
-checkEq :: forall eff a. (Arbitrary a, Eq a) => Proxy a -> QC eff Unit
+checkEq
+  ∷ ∀ eff a
+  . (Arbitrary a, Eq a)
+  ⇒ Proxy a
+  → QC eff Unit
 checkEq _ = do
 
   log "Checking 'Reflexivity' law for Eq"
@@ -30,14 +34,14 @@ checkEq _ = do
 
   where
 
-  reflexivity :: a -> Boolean
+  reflexivity ∷ a → Boolean
   reflexivity x = (x == x) == true
 
-  symmetry :: a -> a -> Boolean
+  symmetry ∷ a → a → Boolean
   symmetry x y = (x == y) == (y == x)
 
-  transitivity :: a -> a -> a -> Boolean
+  transitivity ∷ a → a → a → Boolean
   transitivity x y z = if (x == y) && (y == z) then x == z else true
 
-  negation :: a -> a -> Boolean
+  negation ∷ a → a → Boolean
   negation x y = (x /= y) == not (x == y)

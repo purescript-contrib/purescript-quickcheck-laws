@@ -1,32 +1,25 @@
-module Test.Data.Unit (checkUnit) where
-
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck.Laws.Data.Bounded (checkBounded)
-import Test.QuickCheck.Laws.Data.CommutativeRing (checkCommutativeRing)
-import Test.QuickCheck.Laws.Data.Eq (checkEq)
-import Test.QuickCheck.Laws.Data.EuclideanRing (checkEuclideanRing)
-import Test.QuickCheck.Laws.Data.Field (checkField)
-import Test.QuickCheck.Laws.Data.Monoid (checkMonoid)
-import Test.QuickCheck.Laws.Data.Ord (checkOrd)
-import Test.QuickCheck.Laws.Data.Ring (checkRing)
-import Test.QuickCheck.Laws.Data.Semigroup (checkSemigroup)
-import Test.QuickCheck.Laws.Data.Semiring (checkSemiring)
-import Type.Proxy (Proxy(..))
+module Test.Data.Unit where
 
 import Prelude
 
-prxUnit :: Proxy Unit
-prxUnit = Proxy
+import Test.QuickCheck.Laws (QC, checkLaws)
+import Test.QuickCheck.Laws.Data as Data
 
-checkUnit = do
-  log "\n\nChecking Unit instances...\n"
-  checkEq prxUnit
-  checkOrd prxUnit
-  checkBounded prxUnit
-  checkSemigroup prxUnit
-  checkMonoid prxUnit
-  checkSemiring prxUnit
-  checkEuclideanRing prxUnit
-  checkRing prxUnit
-  checkField prxUnit
-  checkCommutativeRing prxUnit
+import Type.Proxy (Proxy(..))
+
+checkUnit ∷ ∀ eff. QC eff Unit
+checkUnit = checkLaws "Unit" do
+  Data.checkEq prxUnit
+  Data.checkOrd prxUnit
+  Data.checkBounded prxUnit
+  Data.checkSemigroup prxUnit
+  Data.checkMonoid prxUnit
+  Data.checkSemiring prxUnit
+  Data.checkEuclideanRing prxUnit
+  Data.checkRing prxUnit
+  Data.checkField prxUnit
+  Data.checkCommutativeRing prxUnit
+  Data.checkHeytingAlgebra prxUnit
+  Data.checkBooleanAlgebra prxUnit
+  where
+  prxUnit = Proxy ∷ Proxy Unit

@@ -1,18 +1,18 @@
-module Test.Prim.Boolean (checkBoolean) where
-
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck.Laws.Data.Bounded (checkBounded)
-import Test.QuickCheck.Laws.Data.Eq (checkEq)
-import Test.QuickCheck.Laws.Data.Ord (checkOrd)
-import Type.Proxy (Proxy(..))
+module Test.Prim.Boolean where
 
 import Prelude
 
-prxBoolean :: Proxy Boolean
-prxBoolean = Proxy
+import Test.QuickCheck.Laws (QC, checkLaws)
+import Test.QuickCheck.Laws.Data as Data
 
-checkBoolean = do
-  log "\n\nChecking Boolean instances...\n"
-  checkEq prxBoolean
-  checkOrd prxBoolean
-  checkBounded prxBoolean
+import Type.Proxy (Proxy(..))
+
+checkBoolean ∷ ∀ eff. QC eff Unit
+checkBoolean = checkLaws "Boolean" do
+  Data.checkEq prxBoolean
+  Data.checkOrd prxBoolean
+  Data.checkBounded prxBoolean
+  Data.checkHeytingAlgebra prxBoolean
+  Data.checkBooleanAlgebra prxBoolean
+  where
+  prxBoolean = Proxy ∷ Proxy Boolean

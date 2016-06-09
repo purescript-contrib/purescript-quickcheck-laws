@@ -6,15 +6,19 @@ import Control.Monad.Eff.Console (log)
 import Control.Comonad (class Comonad, extract)
 import Control.Extend ((<<=))
 
-import Type.Proxy (Proxy2())
+import Type.Proxy (Proxy2)
 
-import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck (QC, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, class Coarbitrary)
-import Test.QuickCheck.Laws (A(), B())
+import Test.QuickCheck.Laws (A, B)
 
 -- | - Left Identity: `extract <<= x = x`
 -- | - Right Identity: `extract (f <<= x) = f x`
-checkComonad :: forall eff w. (Comonad w, Arbitrary (w A), Coarbitrary (w A), Eq (w A)) => Proxy2 w -> QC eff Unit
+checkComonad
+  ∷ ∀ eff w
+  . (Comonad w, Arbitrary (w A), Coarbitrary (w A), Eq (w A))
+  ⇒ Proxy2 w
+  → QC eff Unit
 checkComonad _ = do
 
   log "Checking 'Left identity' law for Comonad"
@@ -25,8 +29,8 @@ checkComonad _ = do
 
   where
 
-  leftIdentity :: w A -> Boolean
+  leftIdentity ∷ w A → Boolean
   leftIdentity x = (extract <<= x) == x
 
-  rightIdentity :: (w A -> B) -> w A -> Boolean
+  rightIdentity ∷ (w A → B) → w A → Boolean
   rightIdentity f x = extract (f <<= x) == f x
