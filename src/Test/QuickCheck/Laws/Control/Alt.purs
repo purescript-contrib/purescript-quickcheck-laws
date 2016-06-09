@@ -2,13 +2,13 @@ module Test.QuickCheck.Laws.Control.Alt where
 
 import Prelude
 
-import Control.Alt (Alt, (<|>))
+import Control.Alt (class Alt, (<|>))
 import Control.Monad.Eff.Console (log)
 
 import Type.Proxy (Proxy2())
 
 import Test.QuickCheck (QC(), quickCheck')
-import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A(), B())
 
 -- | - Associativity: `(x <|> y) <|> z == x <|> (y <|> z)`

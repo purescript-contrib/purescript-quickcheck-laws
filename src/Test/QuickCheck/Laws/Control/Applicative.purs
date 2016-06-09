@@ -7,7 +7,7 @@ import Control.Monad.Eff.Console (log)
 import Type.Proxy (Proxy2())
 
 import Test.QuickCheck (QC(), quickCheck')
-import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A(), B(), C())
 
 -- | - Identity: `(pure id) <*> v = v`
@@ -41,4 +41,4 @@ checkApplicative _ = do
   homomorphism f x = (pure f <*> pure x) == (pure (f x) :: f B)
 
   interchange :: A -> f (A -> B) -> Boolean
-  interchange y u = (u <*> pure y) == (pure ($ y) <*> u)
+  interchange y u = (u <*> pure y) == (pure (_ $ y) <*> u)

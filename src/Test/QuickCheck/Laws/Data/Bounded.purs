@@ -7,7 +7,7 @@ import Control.Monad.Eff.Console (log)
 import Type.Proxy (Proxy())
 
 import Test.QuickCheck (QC(), quickCheck')
-import Test.QuickCheck.Arbitrary (Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Ordering: `bottom <= a <= top`
 checkBounded :: forall eff a. (Arbitrary a, Bounded a, Ord a) => Proxy a -> QC eff Unit

@@ -3,13 +3,13 @@ module Test.QuickCheck.Laws.Control.Comonad where
 import Prelude
 
 import Control.Monad.Eff.Console (log)
-import Control.Comonad (Comonad, extract)
+import Control.Comonad (class Comonad, extract)
 import Control.Extend ((<<=))
 
 import Type.Proxy (Proxy2())
 
 import Test.QuickCheck (QC(), quickCheck')
-import Test.QuickCheck.Arbitrary (Arbitrary, Coarbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, class Coarbitrary)
 import Test.QuickCheck.Laws (A(), B())
 
 -- | - Left Identity: `extract <<= x = x`
