@@ -6,9 +6,9 @@ import Control.Monad.Eff.Console (log)
 
 import Data.HeytingAlgebra (tt, ff, implies)
 
-import Type.Proxy (Proxy())
+import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck (QC, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Associativity:
@@ -33,7 +33,11 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- |   - ``a `implies` (b && c) = (a `implies` b) && (a `implies` c)``
 -- | - Complemented:
 -- |   - ``not a = a `implies` ff``
-checkHeytingAlgebra :: forall eff a. (Arbitrary a, HeytingAlgebra a, Eq a) => Proxy a -> QC eff Unit
+checkHeytingAlgebra
+  ∷ ∀ eff a
+  . (Arbitrary a, HeytingAlgebra a, Eq a)
+  ⇒ Proxy a
+  → QC eff Unit
 checkHeytingAlgebra _ = do
 
   log "Checking 'Associativity of disjunction' law for HeytingAlgebra"
@@ -76,31 +80,31 @@ checkHeytingAlgebra _ = do
 
   where
 
-  associativity :: (a -> a -> a) -> a -> a -> a -> Boolean
+  associativity ∷ (a → a → a) → a → a → a → Boolean
   associativity op a b c = (a `op` (b `op` c)) == ((a `op` b) `op` c)
 
-  commutativity :: (a -> a -> a) -> a -> a -> Boolean
+  commutativity ∷ (a → a → a) → a → a → Boolean
   commutativity op a b = (a `op` b) == (b `op` a)
 
-  absorption :: (a -> a -> a) -> (a -> a -> a) -> a -> a -> Boolean
+  absorption ∷ (a → a → a) → (a → a → a) → a → a → Boolean
   absorption op1 op2 a b = (a `op1` (a `op2` b)) == a
 
-  idempotent :: (a -> a -> a) -> a -> a -> Boolean
+  idempotent ∷ (a → a → a) → a → a → Boolean
   idempotent op a b = a `op` a == a
 
-  identity :: (a -> a -> a) -> a -> a -> Boolean
+  identity ∷ (a → a → a) → a → a → Boolean
   identity op ident a = a `op` ident == a
 
-  implicationId :: a -> Boolean
+  implicationId ∷ a → Boolean
   implicationId a = (a `implies` a) == tt
 
-  implications :: a -> a -> Boolean
+  implications ∷ a → a → Boolean
   implications a b
     = ((a && (a `implies` b)) == (a && b))
     && ((b && (a `implies` b)) == b)
 
-  distributiveImplication :: a -> a -> a -> Boolean
+  distributiveImplication ∷ a → a → a → Boolean
   distributiveImplication a b c = (a `implies` (b && c)) == ((a `implies` b) && (a `implies` c))
 
-  complemented :: a -> Boolean
+  complemented ∷ a → Boolean
   complemented a = not a == (a `implies` ff)

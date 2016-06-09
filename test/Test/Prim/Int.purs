@@ -16,4 +16,4 @@ checkInt = checkLaws "Int" do
   Data.checkEuclideanRing prxInt
   Data.checkRing prxInt
   where
-  prxInt = Proxy :: Proxy Int
+  prxInt = Proxy ∷ Proxy Int

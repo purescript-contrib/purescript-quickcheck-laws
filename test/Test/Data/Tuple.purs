@@ -26,6 +26,6 @@ checkTuple = checkLaws "Tuple" do
   Control.checkExtend prx2Tuple
   Control.checkComonad prx2Tuple
   where
-  prxTuple = Proxy :: Proxy (Tuple A B)
-  prx2Tuple = Proxy2 :: Proxy2 (Tuple C)
-  prx3Tuple = Proxy3 :: Proxy3 Tuple
+  prxTuple = Proxy ∷ Proxy (Tuple A B)
+  prx2Tuple = Proxy2 ∷ Proxy2 (Tuple C)
+  prx3Tuple = Proxy3 ∷ Proxy3 Tuple

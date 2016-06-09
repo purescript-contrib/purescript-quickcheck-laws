@@ -4,13 +4,17 @@ import Prelude
 
 import Control.Monad.Eff.Console (log)
 
-import Type.Proxy (Proxy())
+import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC(), quickCheck')
+import Test.QuickCheck (QC, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Associativity: `(x <> y) <> z = x <> (y <> z)`
-checkSemigroup :: forall eff s. (Semigroup s, Arbitrary s, Eq s) => Proxy s -> QC eff Unit
+checkSemigroup
+  ∷ ∀ eff s
+  . (Semigroup s, Arbitrary s, Eq s)
+  ⇒ Proxy s
+  → QC eff Unit
 checkSemigroup _ = do
 
   log "Checking 'Associativity' law for Semigroup"
@@ -18,5 +22,5 @@ checkSemigroup _ = do
 
   where
 
-  associativity :: s -> s -> s -> Boolean
+  associativity ∷ s → s → s → Boolean
   associativity x y z = ((x <> y) <> z) == (x <> (y <> z))
