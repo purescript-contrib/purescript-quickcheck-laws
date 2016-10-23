@@ -2,7 +2,6 @@ module Test.QuickCheck.Laws.Control.MonadZero where
 
 import Prelude
 
-import Control.Alt ((<|>))
 import Control.Monad.Eff.Console (log)
 import Control.MonadZero (class MonadZero)
 import Control.Plus (empty)
