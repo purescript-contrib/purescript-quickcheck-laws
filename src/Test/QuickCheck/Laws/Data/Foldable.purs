@@ -9,9 +9,8 @@ import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
 
 
--- | - foldr == foldrDefault
--- | - foldl == foldlDefault
--- | - fold == foldMap id
+-- | - foldr: `foldr = foldrDefault`
+-- | - foldl: `foldl = foldlDefault`
 checkFoldable
   ∷ ∀ eff f
   . (Foldable f, Arbitrary (f A))
@@ -25,9 +24,6 @@ checkFoldable _ = do
   log "Checking 'foldl' law for Foldable"
   quickCheck' 1000 foldlLaw
 
-  log "Checking 'fold' law for Foldable"
-  quickCheck' 1000 foldLaw
-
   where
     foldrLaw :: (A -> B -> B) -> B -> f A -> Boolean
     foldrLaw f z t = foldr f z t == foldrDefault f z t
@@ -35,11 +31,8 @@ checkFoldable _ = do
     foldlLaw :: (B -> A -> B) -> B -> f A -> Boolean
     foldlLaw f z t = foldl f z t == foldlDefault f z t
                                                            
-    foldLaw :: f A -> Boolean
-    foldLaw t = fold t == foldMap id t
 
-
--- | foldMap = fold <<< map
+-- | foldMap: `foldMap = fold <<< map`
 checkFoldableFunctor
   ∷ ∀ eff f
   . (Foldable f, Functor f, Arbitrary (f A))
