@@ -13,6 +13,7 @@ checkArray = checkLaws "Array" do
   Data.checkEq prxArray
   Data.checkOrd prxArray
   Data.checkFunctor prx2Array
+  Data.checkFoldableFunctor prx2Array
   Control.checkApply prx2Array
   Control.checkApplicative prx2Array
   Control.checkBind prx2Array
