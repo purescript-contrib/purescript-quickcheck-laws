@@ -4,7 +4,7 @@ module Test.QuickCheck.Laws.Data.Enum where
 import Prelude
 import Control.Monad.Eff.Console (log)
 import Data.Enum (pred, succ, class Enum)
-import Data.Maybe (Maybe(Nothing))
+import Data.Maybe (maybe)
 import Test.QuickCheck (QC, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Type.Proxy (Proxy)
@@ -16,28 +16,43 @@ checkEnum
   → QC eff Unit
 checkEnum _ = do
 
-  log "Checking 'GT ordering' law for Enum"
-  quickCheck' 1000 gtordering
 
-  log "Checking 'LT ordering' law for Enum"
-  quickCheck' 1000 ltordering
+  log "Checking 'Successor' law for Enum"
+  quickCheck' 1000 successor
 
-  log "Checking 'predsuccpred' law for BoundedEnum"
-  quickCheck' 1000 predsuccpredLaw
+  log "Checking 'Predecessor' law for Enum"
+  quickCheck' 1000 predecessor
 
-  log "Checking 'succpredsucc' law for BoundedEnum"
-  quickCheck' 1000 succpredsuccLaw
-  
+  log "Checking 'Succ retracts pred' law for Enum"
+  quickCheck' 1000 succRetractsPred
+
+  log "Checking 'Pred retracts succ' law for Enum"
+  quickCheck' 1000 predRetractsSucc
+
+  log "Checking 'Non-skipping succ' law for Enum"
+  quickCheck' 1000 nonSkippingSucc
+
+  log "Checking 'Non-skipping pred' law for Enum"
+  quickCheck' 1000 nonSkippingPred
+
+
   where
-    gtordering ∷ a → Boolean
-    gtordering a = succ a == Nothing || succ a > pred a
 
-    ltordering ∷ a → Boolean
-    ltordering a = succ a == Nothing || pred a < succ a
-  
-    predsuccpredLaw :: a -> Boolean
-    predsuccpredLaw a = (pred a >>= succ >>= pred) == pred a
+    successor :: a -> Boolean
+    successor a = maybe true (a < _) (succ a)
 
-    succpredsuccLaw :: a -> Boolean
-    succpredsuccLaw a = (succ a >>= pred >>= succ) == succ a
-    
+    predecessor :: a -> Boolean
+    predecessor a = maybe true (_ < a) (pred a)
+
+    succRetractsPred :: a -> Boolean
+    succRetractsPred a = (pred a >>= succ >>= pred) == pred a
+
+    predRetractsSucc :: a -> Boolean
+    predRetractsSucc a = (succ a >>= pred >>= succ) == succ a
+
+    nonSkippingSucc :: a -> a -> Boolean
+    nonSkippingSucc x y = y <= x || maybe false (_ <= y) (succ x)
+
+    nonSkippingPred :: a -> a -> Boolean
+    nonSkippingPred x y = x <= y || maybe false (y <= _) (pred x)
+
