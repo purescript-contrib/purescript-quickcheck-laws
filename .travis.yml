@@ -16,3 +16,4 @@ after_success:
   test $TRAVIS_TAG &&
   echo $GITHUB_TOKEN | pulp login &&
   echo y | pulp publish --no-push
+
