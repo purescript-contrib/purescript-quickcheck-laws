@@ -36,8 +36,8 @@ checkEnum _ = do
     ltordering a = succ a == Nothing || pred a < succ a
   
     predsuccpredLaw :: a -> Boolean
-    predsuccpredLaw a = succ a == Nothing || (pred a >>= succ >>= pred) == pred a
+    predsuccpredLaw a = (pred a >>= succ >>= pred) == pred a
 
     succpredsuccLaw :: a -> Boolean
-    succpredsuccLaw a = succ a == Nothing || (succ a >>= pred >>= succ) == succ a
+    succpredsuccLaw a = (succ a >>= pred >>= succ) == succ a
     
