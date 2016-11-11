@@ -3,6 +3,7 @@ module Test.QuickCheck.Laws.Data (module Exports) where
 import Test.QuickCheck.Laws.Data.BooleanAlgebra (checkBooleanAlgebra) as Exports
 import Test.QuickCheck.Laws.Data.Bounded (checkBounded) as Exports
 import Test.QuickCheck.Laws.Data.CommutativeRing (checkCommutativeRing) as Exports
+import Test.QuickCheck.Laws.Data.Enum (checkEnum) as Exports
 import Test.QuickCheck.Laws.Data.Eq (checkEq) as Exports
 import Test.QuickCheck.Laws.Data.BoundedEnum (checkBoundedEnum) as Exports
 import Test.QuickCheck.Laws.Data.EuclideanRing (checkEuclideanRing) as Exports

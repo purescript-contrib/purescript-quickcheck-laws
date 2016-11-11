@@ -9,6 +9,7 @@ import Data.Maybe (Maybe(Just))
 import Data.Newtype (unwrap)
 import Test.QuickCheck (QC, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Laws.Data.Enum (checkEnum)
 import Type.Proxy (Proxy)
 
 
@@ -26,7 +27,9 @@ checkBoundedEnum
   . (Arbitrary a, BoundedEnum a, Ord a)
   ⇒ Proxy a
   → QC eff Unit
-checkBoundedEnum _ = do
+checkBoundedEnum p = do
+
+  checkEnum p
 
   log "Checking 'succ' law for BoundedEnum"
   quickCheck' 1 succLaw
