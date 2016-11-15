@@ -51,8 +51,8 @@ checkEnum _ = do
     predRetractsSucc a = (succ a >>= pred >>= succ) == succ a
 
     nonSkippingSucc :: a -> a -> Boolean
-    nonSkippingSucc x y = y <= x || maybe false (_ <= y) (succ x)
+    nonSkippingSucc a b = b <= a || maybe false (_ <= b) (succ a)
 
     nonSkippingPred :: a -> a -> Boolean
-    nonSkippingPred x y = x <= y || maybe false (y <= _) (pred x)
+    nonSkippingPred a b = a <= b || maybe false (b <= _) (pred a)
 
