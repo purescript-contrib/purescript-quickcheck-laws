@@ -12,6 +12,7 @@ checkBoolean = checkLaws "Boolean" do
   Data.checkEq prxBoolean
   Data.checkOrd prxBoolean
   Data.checkBounded prxBoolean
+  Data.checkEnum prxBoolean  
   Data.checkBoundedEnum prxBoolean
   Data.checkHeytingAlgebra prxBoolean
   Data.checkBooleanAlgebra prxBoolean
