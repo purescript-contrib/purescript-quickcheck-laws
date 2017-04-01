@@ -14,7 +14,9 @@ import Test.QuickCheck.Laws (A)
 -- | - Right Identity: `x >>= pure = x`
 checkMonad
   ∷ ∀ eff m
-  . (Monad m, Arbitrary (m A), Eq (m A))
+  . Monad m
+  ⇒ Arbitrary (m A)
+  ⇒ Eq (m A)
   ⇒ Proxy2 m
   → QC eff Unit
 checkMonad _ = do

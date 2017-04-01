@@ -13,7 +13,9 @@ import Test.QuickCheck.Laws (B, C)
 -- | - Identity: `id <<< p = p <<< id = p`
 checkCategory
   ∷ ∀ eff a
-  . (Category a, Arbitrary (a B C), Eq (a B C))
+  . Category a
+  ⇒ Arbitrary (a B C)
+  ⇒ Eq (a B C)
   ⇒ Proxy3 a
   → QC eff Unit
 checkCategory _ = do

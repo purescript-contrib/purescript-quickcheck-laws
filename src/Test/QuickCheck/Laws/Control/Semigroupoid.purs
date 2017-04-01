@@ -13,7 +13,11 @@ import Test.QuickCheck.Laws (B, C, D, E)
 -- | - Associativity: `p <<< (q <<< r) = (p <<< q) <<< r`
 checkSemigroupoid
   ∷ ∀ eff a
-  . (Semigroupoid a, Arbitrary (a B C), Arbitrary (a C D), Arbitrary (a D E), Eq (a B E))
+  . Semigroupoid a
+  ⇒ Arbitrary (a B C)
+  ⇒ Arbitrary (a C D)
+  ⇒ Arbitrary (a D E)
+  ⇒ Eq (a B E)
   ⇒ Proxy3 a
   → QC eff Unit
 checkSemigroupoid _ = do

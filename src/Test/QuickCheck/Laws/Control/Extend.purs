@@ -14,7 +14,11 @@ import Test.QuickCheck.Laws (A, B, C)
 -- | - Associativity: `extend f <<< extend g = extend (f <<< extend g)`
 checkExtend
   ∷ ∀ eff w
-  . (Extend w, Arbitrary (w A), Coarbitrary (w A), Coarbitrary (w B), Eq (w C))
+  . Extend w
+  ⇒ Arbitrary (w A)
+  ⇒ Coarbitrary (w A)
+  ⇒ Coarbitrary (w B)
+  ⇒ Eq (w C)
   ⇒ Proxy2 w
   → QC eff Unit
 checkExtend _ = do

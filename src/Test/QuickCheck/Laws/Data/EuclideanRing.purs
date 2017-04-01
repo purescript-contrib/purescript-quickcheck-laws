@@ -14,7 +14,9 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- |   where `degree a > 0` and `degree a <= degree (a * b)`
 checkEuclideanRing
   ∷ ∀ eff a
-  . (EuclideanRing a, Arbitrary a, Eq a)
+  . EuclideanRing a
+  ⇒ Arbitrary a
+  ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
 checkEuclideanRing _ = do

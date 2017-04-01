@@ -15,7 +15,9 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Right identity: `x <> mempty = x`
 checkMonoid
   ∷ ∀ eff m
-  . (Monoid m, Arbitrary m, Eq m)
+  . Monoid m
+  ⇒ Arbitrary m
+  ⇒ Eq m
   ⇒ Proxy m
   → QC eff Unit
 checkMonoid _ = do
