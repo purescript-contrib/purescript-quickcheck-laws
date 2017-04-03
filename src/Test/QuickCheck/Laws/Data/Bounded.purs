@@ -12,7 +12,9 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Ordering: `bottom <= a <= top`
 checkBounded
   ∷ ∀ eff a
-  . (Arbitrary a, Bounded a, Ord a)
+  . Arbitrary a
+  ⇒ Bounded a
+  ⇒ Ord a
   ⇒ Proxy a
   → QC eff Unit
 checkBounded _ = do

@@ -13,7 +13,11 @@ import Test.QuickCheck.Laws (A, B, C)
 -- | - Associative composition: `(<<<) <$> f <*> g <*> h = f <*> (g <*> h)`
 checkApply
   ∷ ∀ eff f
-  . (Apply f, Arbitrary (f A), Arbitrary (f (A → B)), Arbitrary (f (B → C)), Eq (f C))
+  . Apply f
+  ⇒ Arbitrary (f A)
+  ⇒ Arbitrary (f (A → B))
+  ⇒ Arbitrary (f (B → C))
+  ⇒ Eq (f C)
   ⇒ Proxy2 f
   → QC eff Unit
 checkApply _ = do

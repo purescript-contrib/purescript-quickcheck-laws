@@ -22,7 +22,9 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Annihiliation: `zero * a = a * zero = zero`
 checkSemiring
   ∷ ∀ eff a
-  . (Semiring a, Arbitrary a, Eq a)
+  . Semiring a
+  ⇒ Arbitrary a
+  ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
 checkSemiring _ = do

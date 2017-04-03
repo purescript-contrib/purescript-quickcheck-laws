@@ -12,7 +12,9 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Commutative multiplication: `a * b = b * a`
 checkCommutativeRing
   ∷ ∀ eff a
-  . (CommutativeRing a, Arbitrary a, Eq a)
+  . CommutativeRing a
+  ⇒ Arbitrary a
+  ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
 checkCommutativeRing _ = do

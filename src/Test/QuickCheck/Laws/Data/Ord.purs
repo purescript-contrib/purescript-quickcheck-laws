@@ -14,7 +14,8 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Transitivity: if `a <= b` and `b <= c` then `a <= c`
 checkOrd
   ∷ ∀ eff a
-  . (Arbitrary a, Ord a)
+  . Arbitrary a
+  ⇒ Ord a
   ⇒ Proxy a
   → QC eff Unit
 checkOrd _ = do

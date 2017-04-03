@@ -17,7 +17,10 @@ import Test.QuickCheck.Laws (A, B)
 -- | - Annihilation: `f <$> empty == empty`
 checkPlus
   ∷ ∀ eff f
-  . (Plus f, Arbitrary (f A), Eq (f A), Eq (f B))
+  . Plus f
+  ⇒ Arbitrary (f A)
+  ⇒ Eq (f A)
+  ⇒ Eq (f B)
   ⇒ Proxy2 f
   → QC eff Unit
 checkPlus _ = do
