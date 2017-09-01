@@ -13,7 +13,8 @@ import Type.Proxy (Proxy2)
 -- | - foldl: `foldl = foldlDefault`
 checkFoldable
   ∷ ∀ eff f
-  . (Foldable f, Arbitrary (f A))
+  . Foldable f
+  ⇒ Arbitrary (f A)
   ⇒ Proxy2 f
   → QC eff Unit
 checkFoldable _ = do
@@ -35,7 +36,9 @@ checkFoldable _ = do
 -- | foldMap: `foldMap = fold <<< map`
 checkFoldableFunctor
   ∷ ∀ eff f
-  . (Foldable f, Functor f, Arbitrary (f A))
+  . Foldable f
+  ⇒ Functor f
+  ⇒ Arbitrary (f A)
   ⇒ Proxy2 f
   → QC eff Unit
 checkFoldableFunctor ff = do

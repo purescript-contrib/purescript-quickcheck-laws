@@ -17,7 +17,11 @@ import Test.QuickCheck.Laws (A, B)
 -- | - Annihilation: `empty <*> x = empty`
 checkAlternative
   ∷ ∀ eff f
-  . (Alternative f, Arbitrary (f (A → B)), Arbitrary (f A), Eq (f A), Eq (f B))
+  . Alternative f
+  ⇒ Arbitrary (f (A → B))
+  ⇒ Arbitrary (f A)
+  ⇒ Eq (f A)
+  ⇒ Eq (f B)
   ⇒ Proxy2 f
   → QC eff Unit
 checkAlternative _ = do

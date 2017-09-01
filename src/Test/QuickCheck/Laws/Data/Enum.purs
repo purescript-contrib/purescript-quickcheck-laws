@@ -11,7 +11,9 @@ import Type.Proxy (Proxy)
 
 checkEnum
   ∷ ∀ eff a
-  . (Arbitrary a, Enum a, Ord a)
+  . Arbitrary a
+  ⇒ Enum a
+  ⇒ Ord a
   ⇒ Proxy a
   → QC eff Unit
 checkEnum _ = do

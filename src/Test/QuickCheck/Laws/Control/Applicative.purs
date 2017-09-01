@@ -16,7 +16,13 @@ import Test.QuickCheck.Laws (A, B, C)
 -- | - Interchange: `u <*> (pure y) = (pure ($ y)) <*> u`
 checkApplicative
   ∷ ∀ eff f
-  . (Applicative f, Arbitrary (f A), Arbitrary (f (A → B)), Arbitrary (f (B → C)), Eq (f A), Eq (f B), Eq (f C))
+  . Applicative f
+  ⇒ Arbitrary (f A)
+  ⇒ Arbitrary (f (A → B))
+  ⇒ Arbitrary (f (B → C))
+  ⇒ Eq (f A)
+  ⇒ Eq (f B)
+  ⇒ Eq (f C)
   ⇒ Proxy2 f
   → QC eff Unit
 checkApplicative _ = do

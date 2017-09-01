@@ -14,7 +14,9 @@ import Test.QuickCheck.Laws (A, B)
 -- | - Composition: `(<$>) (f <<< g) = (f <$>) <<< (g <$>)`
 checkFunctor
   ∷ ∀ eff f
-  . (Functor f, Arbitrary (f A), Eq (f A))
+  . Functor f
+  ⇒ Arbitrary (f A)
+  ⇒ Eq (f A)
   ⇒ Proxy2 f
   → QC eff Unit
 checkFunctor _ = do

@@ -14,16 +14,27 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- |   where `degree a > 0` and `degree a <= degree (a * b)`
 checkEuclideanRing
   ∷ ∀ eff a
-  . (EuclideanRing a, Arbitrary a, Eq a)
+  . EuclideanRing a
+  ⇒ Arbitrary a
+  ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
 checkEuclideanRing _ = do
 
   log "Checking 'Integral domain' law for EuclideanRing"
+  log "one /= zero:"
+  quickCheck' 1 \(_ :: Unit) -> (zero /= one :: a)
+  log "product of nonzero elements is nonzero:"
   quickCheck' 1000 integralDomain
 
-  log "Checking 'Multiplicative Euclidean function' law for EuclideanRing"
-  quickCheck' 1000 euclideanFunc
+  log "Checking 'Nonnegative euclidean function' law for EuclideanRing"
+  quickCheck' 1000 nonnegativeEuclideanFunc
+
+  log "Checking 'Quotient/remainder' law for EuclideanRing"
+  quickCheck' 1000 quotRem
+
+  log "Checking 'Submultiplicative euclidean function' law for EuclideanRing"
+  quickCheck' 1000 submultiplicative
 
   where
 
@@ -32,8 +43,23 @@ checkEuclideanRing _ = do
     | a /= zero && b /= zero = a * b /= zero
     | otherwise = true
 
-  euclideanFunc ∷ a → a → Boolean
-  euclideanFunc a b
-    | degree a > zero && degree a <= degree (a * b) =
-        a == (a / b) * b + (a `mod` b)
+  nonnegativeEuclideanFunc ∷ a → Boolean
+  nonnegativeEuclideanFunc a
+    | a /= zero = degree a >= zero
+    | otherwise = true
+
+  quotRem ∷ a → a → Boolean
+  quotRem a b
+    | b /= zero =
+        let
+          q = a / b
+          r = a `mod` b
+        in
+          a == q*b + r && (r == zero || degree r < degree b)
+
+    | otherwise = true
+
+  submultiplicative ∷ a → a → Boolean
+  submultiplicative a b
+    | a /= zero && b /= zero = degree a <= degree (a * b)
     | otherwise = true

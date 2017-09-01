@@ -15,7 +15,10 @@ import Test.QuickCheck.Laws (A, B)
 -- | - Annihilation: `empty >>= f = empty`
 checkMonadZero
   ∷ ∀ eff m
-  . (MonadZero m, Arbitrary (m A), Arbitrary (m B), Eq (m B))
+  . MonadZero m
+  ⇒ Arbitrary (m A)
+  ⇒ Arbitrary (m B)
+  ⇒ Eq (m B)
   ⇒ Proxy2 m
   → QC eff Unit
 checkMonadZero _ = do

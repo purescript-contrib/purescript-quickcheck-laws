@@ -35,7 +35,9 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- |   - ``not a = a `implies` ff``
 checkHeytingAlgebra
   ∷ ∀ eff a
-  . (Arbitrary a, HeytingAlgebra a, Eq a)
+  . Arbitrary a
+  ⇒ HeytingAlgebra a
+  ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
 checkHeytingAlgebra _ = do

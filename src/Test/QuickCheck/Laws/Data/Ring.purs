@@ -12,7 +12,9 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Additive inverse: `a - a = a + (-a) = (-a) + a = zero`
 checkRing
   ∷ ∀ eff a
-  . (Ring a, Arbitrary a, Eq a)
+  . Ring a
+  ⇒ Arbitrary a
+  ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
 checkRing _ = do

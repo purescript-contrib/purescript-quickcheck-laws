@@ -15,7 +15,10 @@ import Test.QuickCheck.Laws (A, B)
 -- | - Distributivity: `(x <|> y) >>= f == (x >>= f) <|> (y >>= f)`
 checkMonadPlus
   ∷ ∀ eff m
-  . (MonadPlus m, Arbitrary (m A), Arbitrary (m B), Eq (m B))
+  . MonadPlus m
+  ⇒ Arbitrary (m A)
+  ⇒ Arbitrary (m B)
+  ⇒ Eq (m B)
   ⇒ Proxy2 m
   → QC eff Unit
 checkMonadPlus _ = do

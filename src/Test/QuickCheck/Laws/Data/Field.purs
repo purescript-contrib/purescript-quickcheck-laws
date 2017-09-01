@@ -12,7 +12,9 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Non-zero multiplicative inverse: ``a `mod` b = 0` for all `a` and `b`
 checkField
   ∷ ∀ eff a
-  . (Field a, Arbitrary a, Eq a)
+  . Field a
+  ⇒ Arbitrary a
+  ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
 checkField _ = do

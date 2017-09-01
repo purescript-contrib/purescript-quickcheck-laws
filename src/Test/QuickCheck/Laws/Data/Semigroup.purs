@@ -12,7 +12,9 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Associativity: `(x <> y) <> z = x <> (y <> z)`
 checkSemigroup
   ∷ ∀ eff s
-  . (Semigroup s, Arbitrary s, Eq s)
+  . Semigroup s
+  ⇒ Arbitrary s
+  ⇒ Eq s
   ⇒ Proxy s
   → QC eff Unit
 checkSemigroup _ = do

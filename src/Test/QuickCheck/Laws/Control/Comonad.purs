@@ -16,7 +16,10 @@ import Test.QuickCheck.Laws (A, B)
 -- | - Right Identity: `extract (f <<= x) = f x`
 checkComonad
   ∷ ∀ eff w
-  . (Comonad w, Arbitrary (w A), Coarbitrary (w A), Eq (w A))
+  . Comonad w
+  ⇒ Arbitrary (w A)
+  ⇒ Coarbitrary (w A)
+  ⇒ Eq (w A)
   ⇒ Proxy2 w
   → QC eff Unit
 checkComonad _ = do

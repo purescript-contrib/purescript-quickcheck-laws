@@ -23,7 +23,9 @@ import Type.Proxy (Proxy)
 
 checkBoundedEnum
   ∷ ∀ eff a
-  . (Arbitrary a, BoundedEnum a, Ord a)
+  . Arbitrary a
+  ⇒ BoundedEnum a
+  ⇒ Ord a
   ⇒ Proxy a
   → QC eff Unit
 checkBoundedEnum p = do

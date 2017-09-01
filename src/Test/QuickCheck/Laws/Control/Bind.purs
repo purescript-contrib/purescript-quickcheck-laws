@@ -13,7 +13,9 @@ import Test.QuickCheck.Laws (A)
 -- | - Associativity: `(x >>= f) >>= g = x >>= (\k → f k >>= g)`
 checkBind
   ∷ ∀ eff m
-  . (Bind m, Arbitrary (m A), Eq (m A))
+  . Bind m
+  ⇒ Arbitrary (m A)
+  ⇒ Eq (m A)
   ⇒ Proxy2 m
   → QC eff Unit
 checkBind _ = do
