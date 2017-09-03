@@ -61,5 +61,10 @@ checkEuclideanRing _ = do
 
   submultiplicative ∷ a → a → Boolean
   submultiplicative a b
-    | a /= zero && b /= zero = degree a <= degree (a * b)
-    | otherwise = true
+    | a == zero || b == zero = true
+    | productOverflows a b = true
+    | otherwise = degree a <= degree (a * b)
+                  
+  productOverflows :: a -> a -> Boolean
+  productOverflows a b = p / b /= a
+    where p = a * b
