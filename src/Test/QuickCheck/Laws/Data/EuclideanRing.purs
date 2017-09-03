@@ -66,5 +66,4 @@ checkEuclideanRing _ = do
     | otherwise = degree a <= degree (a * b)
                   
   productOverflows :: a -> a -> Boolean
-  productOverflows a b = p / b /= a
-    where p = a * b
+  productOverflows a b = a * b / b /= a
