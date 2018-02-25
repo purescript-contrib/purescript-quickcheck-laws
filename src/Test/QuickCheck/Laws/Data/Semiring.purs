@@ -2,12 +2,12 @@ module Test.QuickCheck.Laws.Data.Semiring where
 
 import Prelude
 
+import Control.Apply (lift2, lift3)
 import Control.Monad.Eff.Console (log)
-
-import Type.Proxy (Proxy)
-
-import Test.QuickCheck (QC, quickCheck')
+import Test.QuickCheck (QC, arbitrary, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Gen (Gen)
+import Type.Proxy (Proxy)
 
 -- | - Commutative monoid under addition:
 -- |   - Associativity: `(a + b) + c = a + (b + c)`
@@ -27,28 +27,36 @@ checkSemiring
   ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
-checkSemiring _ = do
+checkSemiring _ = checkSemiringGen (arbitrary :: Gen a)
+
+checkSemiringGen
+  ∷ ∀ eff a
+  . Semiring a
+  ⇒ Eq a
+  ⇒ Gen a
+  → QC eff Unit
+checkSemiringGen gen = do
 
   log "Checking 'Associativity' law for Semiring addition"
-  quickCheck' 1000 associativeAddition
+  quickCheck' 1000 $ lift3 associativeAddition gen gen gen
 
   log "Checking 'Identity' law for Semiring addition"
-  quickCheck' 1000 identityAddition
+  quickCheck' 1000 $ identityAddition <$> gen
 
   log "Checking 'Commutative' law for Semiring addition"
-  quickCheck' 1000 commutativeAddition
+  quickCheck' 1000 $ lift2 commutativeAddition gen gen
 
   log "Checking 'Associativity' law for Semiring multiplication"
-  quickCheck' 1000 associativeMultiplication
+  quickCheck' 1000 $ lift3 associativeMultiplication gen gen gen
 
   log "Checking 'Identity' law for Semiring multiplication"
-  quickCheck' 1000 identityMultiplication
+  quickCheck' 1000 $ identityMultiplication <$> gen
 
   log "Checking 'Left distribution' law for Semiring"
-  quickCheck' 1000 leftDistribution
+  quickCheck' 1000 $ lift3 leftDistribution gen gen gen
 
   log "Checking 'Right distribution' law for Semiring"
-  quickCheck' 1000 rightDistribution
+  quickCheck' 1000 $ lift3 rightDistribution gen gen gen
 
   where
 

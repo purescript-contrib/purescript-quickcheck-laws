@@ -3,11 +3,9 @@ module Test.QuickCheck.Laws.Data.Bounded where
 import Prelude
 
 import Control.Monad.Eff.Console (log)
-
+import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
-
-import Test.QuickCheck (QC, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Ordering: `bottom <= a <= top`
 checkBounded
@@ -17,10 +15,18 @@ checkBounded
   ⇒ Ord a
   ⇒ Proxy a
   → QC eff Unit
-checkBounded _ = do
+checkBounded _ = checkBoundedGen (arbitrary :: Gen a)
+
+checkBoundedGen
+  ∷ ∀ eff a
+  . Bounded a
+  ⇒ Ord a
+  ⇒ Gen a
+  → QC eff Unit
+checkBoundedGen gen = do
 
   log "Checking 'Ordering' law for Bounded"
-  quickCheck' 1000 ordering
+  quickCheck' 1000 $ ordering <$> gen
 
   where
 

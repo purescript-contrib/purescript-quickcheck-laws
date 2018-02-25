@@ -2,12 +2,11 @@ module Test.QuickCheck.Laws.Data.Semigroup where
 
 import Prelude
 
+import Control.Apply (lift3)
 import Control.Monad.Eff.Console (log)
-
+import Test.QuickCheck (class Arbitrary, arbitrary, QC, quickCheck')
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
-
-import Test.QuickCheck (QC, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Associativity: `(x <> y) <> z = x <> (y <> z)`
 checkSemigroup
@@ -17,10 +16,18 @@ checkSemigroup
   ⇒ Eq s
   ⇒ Proxy s
   → QC eff Unit
-checkSemigroup _ = do
+checkSemigroup _ = checkSemigroupGen (arbitrary :: Gen s)
+
+checkSemigroupGen
+  ∷ ∀ eff s
+  . Semigroup s
+  ⇒ Eq s
+  ⇒ Gen s
+  → QC eff Unit
+checkSemigroupGen gen = do
 
   log "Checking 'Associativity' law for Semigroup"
-  quickCheck' 1000 associativity
+  quickCheck' 1000 $ lift3 associativity gen gen gen
 
   where
 

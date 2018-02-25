@@ -2,12 +2,11 @@ module Test.QuickCheck.Laws.Data.Eq where
 
 import Prelude
 
+import Control.Apply (lift2, lift3)
 import Control.Monad.Eff.Console (log)
-
+import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
-
-import Test.QuickCheck (QC, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Reflexivity: `x == x = true`
 -- | - Symmetry: `x == y = y == x`
@@ -19,19 +18,26 @@ checkEq
   ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
-checkEq _ = do
+checkEq _ = checkEqGen (arbitrary :: Gen a)
+
+checkEqGen
+  ∷ ∀ eff a
+  . Eq a
+  ⇒ Gen a
+  → QC eff Unit
+checkEqGen gen = do
 
   log "Checking 'Reflexivity' law for Eq"
-  quickCheck' 1000 reflexivity
+  quickCheck' 1000 $ reflexivity <$> gen
 
   log "Checking 'Symmetry' law for Eq"
-  quickCheck' 1000 symmetry
+  quickCheck' 1000 $ lift2 symmetry gen gen
 
   log "Checking 'Transitivity' law for Eq"
-  quickCheck' 1000 transitivity
+  quickCheck' 1000 $ lift3 transitivity gen gen gen
 
   log "Checking 'Negation' law for Eq"
-  quickCheck' 1000 negation
+  quickCheck' 1000 $ lift2 negation gen gen
 
   where
 

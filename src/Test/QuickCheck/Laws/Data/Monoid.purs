@@ -3,13 +3,10 @@ module Test.QuickCheck.Laws.Data.Monoid where
 import Prelude
 
 import Control.Monad.Eff.Console (log)
-
 import Data.Monoid (class Monoid, mempty)
-
+import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
-
-import Test.QuickCheck (QC, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Left identity: `mempty <> x = x`
 -- | - Right identity: `x <> mempty = x`
@@ -20,13 +17,21 @@ checkMonoid
   ⇒ Eq m
   ⇒ Proxy m
   → QC eff Unit
-checkMonoid _ = do
+checkMonoid _ = checkMonoidGen (arbitrary :: Gen m)
+
+checkMonoidGen
+  ∷ ∀ eff m
+  . Monoid m
+  ⇒ Eq m
+  ⇒ Gen m
+  → QC eff Unit
+checkMonoidGen gen = do
 
   log "Checking 'Left identity' law for Monoid"
-  quickCheck' 1000 leftIdentity
+  quickCheck' 1000 $ leftIdentity <$> gen
 
   log "Checking 'Right identity' law for Monoid"
-  quickCheck' 1000 rightIdentity
+  quickCheck' 1000 $ rightIdentity <$> gen
 
   where
 

@@ -2,12 +2,11 @@ module Test.QuickCheck.Laws.Data.EuclideanRing where
 
 import Prelude
 
+import Control.Apply (lift2)
 import Control.Monad.Eff.Console (log)
-
+import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
-
-import Test.QuickCheck (QC, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Integral domain: `a /= 0` and `b /= 0` implies `a * b /= 0`
 -- | - Multiplicative Euclidean function: ``a = (a / b) * b + (a `mod` b)``
@@ -19,22 +18,30 @@ checkEuclideanRing
   ⇒ Eq a
   ⇒ Proxy a
   → QC eff Unit
-checkEuclideanRing _ = do
+checkEuclideanRing _ = checkEuclideanRingGen (arbitrary :: Gen a)
+
+checkEuclideanRingGen
+  ∷ ∀ eff a
+  . EuclideanRing a
+  ⇒ Eq a
+  ⇒ Gen a
+  → QC eff Unit
+checkEuclideanRingGen gen = do
 
   log "Checking 'Integral domain' law for EuclideanRing"
   log "one /= zero:"
   quickCheck' 1 \(_ :: Unit) -> (zero /= one :: a)
   log "product of nonzero elements is nonzero:"
-  quickCheck' 1000 integralDomain
+  quickCheck' 1000 $ lift2 integralDomain gen gen
 
   log "Checking 'Nonnegative euclidean function' law for EuclideanRing"
-  quickCheck' 1000 nonnegativeEuclideanFunc
+  quickCheck' 1000 $ nonnegativeEuclideanFunc <$> gen
 
   log "Checking 'Quotient/remainder' law for EuclideanRing"
-  quickCheck' 1000 quotRem
+  quickCheck' 1000 $ lift2 quotRem gen gen
 
   log "Checking 'Submultiplicative euclidean function' law for EuclideanRing"
-  quickCheck' 1000 submultiplicative
+  quickCheck' 1000 $ lift2 submultiplicative gen gen
 
   where
 

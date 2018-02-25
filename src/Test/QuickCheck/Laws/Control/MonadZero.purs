@@ -5,12 +5,10 @@ import Prelude
 import Control.Monad.Eff.Console (log)
 import Control.MonadZero (class MonadZero)
 import Control.Plus (empty)
-
-import Type.Proxy (Proxy2)
-
-import Test.QuickCheck (QC, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
+import Type.Proxy (Proxy2)
 
 -- | - Annihilation: `empty >>= f = empty`
 checkMonadZero
@@ -21,10 +19,18 @@ checkMonadZero
   ⇒ Eq (m B)
   ⇒ Proxy2 m
   → QC eff Unit
-checkMonadZero _ = do
+checkMonadZero _ = checkMonadZeroGen (arbitrary ∷ Gen (A → m B))
+
+checkMonadZeroGen
+  ∷ ∀ eff m
+  . MonadZero m
+  ⇒ Eq (m B)
+  ⇒ Gen (A → m B)
+  → QC eff Unit
+checkMonadZeroGen gen = do
 
   log "Checking 'Annihilation' law for MonadZero"
-  quickCheck' 1000 annihilation
+  quickCheck' 1000 $ annihilation <$> gen
 
   where
 
