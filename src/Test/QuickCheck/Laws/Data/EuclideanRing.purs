@@ -2,23 +2,22 @@ module Test.QuickCheck.Laws.Data.EuclideanRing where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-
-import Type.Proxy (Proxy)
-
-import Test.QuickCheck (QC, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Type.Proxy (Proxy)
 
 -- | - Integral domain: `a /= 0` and `b /= 0` implies `a * b /= 0`
 -- | - Multiplicative Euclidean function: ``a = (a / b) * b + (a `mod` b)``
 -- |   where `degree a > 0` and `degree a <= degree (a * b)`
 checkEuclideanRing
-  ∷ ∀ eff a
+  ∷ ∀ a
   . EuclideanRing a
   ⇒ Arbitrary a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkEuclideanRing _ = do
 
   log "Checking 'Integral domain' law for EuclideanRing"

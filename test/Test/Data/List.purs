@@ -3,19 +3,18 @@ module Test.Data.List where
 import Prelude
 
 import Data.List (List)
-
-import Test.QuickCheck.Laws (QC, A, checkLaws)
+import Effect (Effect)
+import Test.QuickCheck.Laws (A, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-
 import Type.Proxy (Proxy(..), Proxy2(..))
 
-checkList ∷ ∀ eff. QC eff Unit
+checkList ∷ Effect Unit
 checkList = checkLaws "List" do
   Data.checkEq prxList
   Data.checkOrd prxList
   Data.checkFunctor prx2List
-  Data.checkFoldableFunctor prx2List  
+  Data.checkFoldableFunctor prx2List
   Control.checkApply prx2List
   Control.checkApplicative prx2List
   Control.checkBind prx2List
