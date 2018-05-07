@@ -2,13 +2,13 @@ module Test.Prim.Number where
 
 import Prelude
 
+import Effect (Effect)
 import Test.QuickCheck.Arbitrary (class Coarbitrary, class Arbitrary)
-import Test.QuickCheck.Laws (QC, checkLaws)
+import Test.QuickCheck.Laws (checkLaws)
 import Test.QuickCheck.Laws.Data as Data
-
 import Type.Proxy (Proxy(..))
 
-checkNumber ∷ ∀ eff. QC eff Unit
+checkNumber ∷ Effect Unit
 checkNumber = checkLaws "Number" do
   Data.checkEq prxNumber
   Data.checkOrd prxNumber

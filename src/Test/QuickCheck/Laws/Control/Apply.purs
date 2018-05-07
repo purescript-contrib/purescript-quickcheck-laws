@@ -2,24 +2,23 @@ module Test.QuickCheck.Laws.Control.Apply where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-
-import Type.Proxy (Proxy2)
-
-import Test.QuickCheck (QC, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A, B, C)
+import Type.Proxy (Proxy2)
 
 -- | - Associative composition: `(<<<) <$> f <*> g <*> h = f <*> (g <*> h)`
 checkApply
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Apply f
   ⇒ Arbitrary (f A)
   ⇒ Arbitrary (f (A → B))
   ⇒ Arbitrary (f (B → C))
   ⇒ Eq (f C)
   ⇒ Proxy2 f
-  → QC eff Unit
+  → Effect Unit
 checkApply _ = do
 
   log "Checking 'Associative composition' law for Apply"

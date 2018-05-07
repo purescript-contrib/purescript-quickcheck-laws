@@ -3,14 +3,13 @@ module Test.Data.Identity where
 import Prelude
 
 import Data.Identity (Identity)
-
-import Test.QuickCheck.Laws (QC, A, checkLaws)
+import Effect (Effect)
+import Test.QuickCheck.Laws (A, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-
 import Type.Proxy (Proxy(..), Proxy2(..))
 
-checkIdentity ∷ ∀ eff. QC eff Unit
+checkIdentity ∷ Effect Unit
 checkIdentity = checkLaws "Identity" do
   Data.checkEq prxIdentity
   Data.checkOrd prxIdentity
@@ -26,7 +25,7 @@ checkIdentity = checkLaws "Identity" do
   -- Data.checkField prxIdentity
 
   Data.checkFunctor prx2Identity
-  Data.checkFoldableFunctor prx2Identity  
+  Data.checkFoldableFunctor prx2Identity
   Control.checkApply prx2Identity
   Control.checkApplicative prx2Identity
   Control.checkBind prx2Identity
