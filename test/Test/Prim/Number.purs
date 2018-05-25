@@ -41,4 +41,3 @@ derive newtype instance ringApproxNumber :: Ring ApproxNumber
 derive newtype instance commutativeRingApproxNumber :: CommutativeRing ApproxNumber
 derive newtype instance euclideanRingApproxNumber :: EuclideanRing ApproxNumber
 derive newtype instance divisionRingApproxNumber :: DivisionRing ApproxNumber
-derive newtype instance fieldApproxNumber :: Field ApproxNumber
