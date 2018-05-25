@@ -20,8 +20,8 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-proxy": "#compiler/0.12",
-    "purescript-enums": "#compiler/0.12",
-    "purescript-quickcheck": "#compiler/0.12"
+    "purescript-proxy": "^3.0.0",
+    "purescript-enums": "^4.0.0",
+    "purescript-quickcheck": "^5.0.0"
   }
 }
