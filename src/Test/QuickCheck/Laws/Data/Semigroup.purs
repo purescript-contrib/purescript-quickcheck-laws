@@ -2,21 +2,22 @@ module Test.QuickCheck.Laws.Data.Semigroup where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
+import Effect (Effect)
+import Effect.Console (log)
 
 import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC, quickCheck')
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Associativity: `(x <> y) <> z = x <> (y <> z)`
 checkSemigroup
-  ∷ ∀ eff s
+  ∷ ∀ s
   . Semigroup s
   ⇒ Arbitrary s
   ⇒ Eq s
   ⇒ Proxy s
-  → QC eff Unit
+  → Effect Unit
 checkSemigroup _ = do
 
   log "Checking 'Associativity' law for Semigroup"

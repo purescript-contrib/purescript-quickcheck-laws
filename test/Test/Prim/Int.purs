@@ -2,12 +2,13 @@ module Test.Prim.Int where
 
 import Prelude
 
-import Test.QuickCheck.Laws (QC, checkLaws)
-import Test.QuickCheck.Laws.Data as Data
+import Effect (Effect)
 
+import Test.QuickCheck.Laws (checkLaws)
+import Test.QuickCheck.Laws.Data as Data
 import Type.Proxy (Proxy(..))
 
-checkInt ∷ ∀ eff. QC eff Unit
+checkInt ∷ Effect Unit
 checkInt = checkLaws "Int" do
   Data.checkEq prxInt
   Data.checkOrd prxInt

@@ -3,24 +3,25 @@ module Test.QuickCheck.Laws.Control.Alt where
 import Prelude
 
 import Control.Alt (class Alt, (<|>))
-import Control.Monad.Eff.Console (log)
+import Effect (Effect)
+import Effect.Console (log)
 
 import Type.Proxy (Proxy2)
 
-import Test.QuickCheck (QC, quickCheck')
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A, B)
 
 -- | - Associativity: `(x <|> y) <|> z == x <|> (y <|> z)`
 -- | - Distributivity: `f <$> (x <|> y) == (f <$> x) <|> (f <$> y)`
 checkAlt
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Alt f
   ⇒ Arbitrary (f A)
   ⇒ Eq (f A)
   ⇒ Eq (f B)
   ⇒ Proxy2 f
-  → QC eff Unit
+  → Effect Unit
 checkAlt _ = do
 
   log "Checking 'Associativity' law for Alt"

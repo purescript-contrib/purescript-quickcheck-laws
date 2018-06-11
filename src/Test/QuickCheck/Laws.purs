@@ -1,16 +1,14 @@
 module Test.QuickCheck.Laws
   ( module Test.QuickCheck.Laws
-  , module Test.QuickCheck
   ) where
 
 import Prelude
-import Control.Monad.Eff.Console (log)
+import Effect (Effect)
+import Effect.Console (log)
 import Data.Enum (class Enum, class BoundedEnum)
-import Data.Monoid (class Monoid)
-import Test.QuickCheck (QC)
 import Test.QuickCheck.Arbitrary (class Arbitrary, class Coarbitrary)
 
-checkLaws ∷ ∀ eff. String → QC eff Unit → QC eff Unit
+checkLaws ∷ String → Effect Unit → Effect Unit
 checkLaws typeName laws = do
   log $ "\n\nChecking laws of " <> typeName <> " instances...\n"
   laws

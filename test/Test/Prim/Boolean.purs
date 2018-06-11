@@ -2,12 +2,13 @@ module Test.Prim.Boolean where
 
 import Prelude
 
-import Test.QuickCheck.Laws (QC, checkLaws)
-import Test.QuickCheck.Laws.Data as Data
+import Effect (Effect)
 
+import Test.QuickCheck.Laws (checkLaws)
+import Test.QuickCheck.Laws.Data as Data
 import Type.Proxy (Proxy(..))
 
-checkBoolean ∷ ∀ eff. QC eff Unit
+checkBoolean ∷ Effect Unit
 checkBoolean = checkLaws "Boolean" do
   Data.checkEq prxBoolean
   Data.checkOrd prxBoolean
