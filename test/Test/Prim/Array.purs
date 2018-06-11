@@ -2,13 +2,14 @@ module Test.Prim.Array where
 
 import Prelude
 
-import Test.QuickCheck.Laws (QC, A, checkLaws)
+import Effect (Effect)
+
+import Test.QuickCheck.Laws (A, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-
 import Type.Proxy (Proxy(..), Proxy2(..))
 
-checkArray ∷ ∀ eff. QC eff Unit
+checkArray ∷ Effect Unit
 checkArray = checkLaws "Array" do
   Data.checkEq prxArray
   Data.checkOrd prxArray

@@ -2,21 +2,22 @@ module Test.QuickCheck.Laws.Data.Bounded where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
+import Effect (Effect)
+import Effect.Console (log)
 
 import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC, quickCheck')
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Ordering: `bottom <= a <= top`
 checkBounded
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Arbitrary a
   ⇒ Bounded a
   ⇒ Ord a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkBounded _ = do
 
   log "Checking 'Ordering' law for Bounded"

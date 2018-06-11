@@ -2,20 +2,21 @@ module Test.QuickCheck.Laws.Control.Applicative where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
+import Effect (Effect)
+import Effect.Console (log)
 
 import Type.Proxy (Proxy2)
 
-import Test.QuickCheck (QC, quickCheck')
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A, B, C)
 
--- | - Identity: `(pure id) <*> v = v`
+-- | - Identity: `(pure identity) <*> v = v`
 -- | - Composition: `(pure (<<<)) <*> f <*> g <*> h = f <*> (g <*> h)`
 -- | - Homomorphism: `(pure f) <*> (pure x) = pure (f x)`
 -- | - Interchange: `u <*> (pure y) = (pure ($ y)) <*> u`
 checkApplicative
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Applicative f
   ⇒ Arbitrary (f A)
   ⇒ Arbitrary (f (A → B))
@@ -24,11 +25,11 @@ checkApplicative
   ⇒ Eq (f B)
   ⇒ Eq (f C)
   ⇒ Proxy2 f
-  → QC eff Unit
+  → Effect Unit
 checkApplicative _ = do
 
   log "Checking 'Identity' law for Applicative"
-  quickCheck' 1000 identity
+  quickCheck' 1000 identity'
 
   log "Checking 'Composition' law for Applicative"
   quickCheck' 1000 composition
@@ -41,8 +42,8 @@ checkApplicative _ = do
 
   where
 
-  identity ∷ f A → Boolean
-  identity v = (pure id <*> v) == v
+  identity' ∷ f A → Boolean
+  identity' v = (pure identity <*> v) == v
 
   composition ∷ f (B → C) → f (A → B) → f A → Boolean
   composition f g x = (pure (<<<) <*> f <*> g <*> x) == (f <*> (g <*> x))

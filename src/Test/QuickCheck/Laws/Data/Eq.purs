@@ -2,11 +2,12 @@ module Test.QuickCheck.Laws.Data.Eq where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
+import Effect (Effect)
+import Effect.Console (log)
 
 import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC, quickCheck')
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Reflexivity: `x == x = true`
@@ -14,11 +15,11 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Transitivity: if `x == y` and `y == z` then `x == z`
 -- | - Negation: `x /= y = not (x == y)`
 checkEq
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Arbitrary a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkEq _ = do
 
   log "Checking 'Reflexivity' law for Eq"

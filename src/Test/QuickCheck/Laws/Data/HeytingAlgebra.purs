@@ -2,13 +2,14 @@ module Test.QuickCheck.Laws.Data.HeytingAlgebra where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
+import Effect (Effect)
+import Effect.Console (log)
 
 import Data.HeytingAlgebra (tt, ff, implies)
 
 import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC, quickCheck')
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Associativity:
@@ -34,12 +35,12 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Complemented:
 -- |   - ``not a = a `implies` ff``
 checkHeytingAlgebra
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Arbitrary a
   ⇒ HeytingAlgebra a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkHeytingAlgebra _ = do
 
   log "Checking 'Associativity of disjunction' law for HeytingAlgebra"

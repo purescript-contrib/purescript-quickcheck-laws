@@ -2,21 +2,22 @@ module Test.QuickCheck.Laws.Data.CommutativeRing where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
+import Effect (Effect)
+import Effect.Console (log)
 
 import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC, quickCheck')
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 
 -- | - Commutative multiplication: `a * b = b * a`
 checkCommutativeRing
-  ∷ ∀ eff a
+  ∷ ∀ a
   . CommutativeRing a
   ⇒ Arbitrary a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkCommutativeRing _ = do
 
   log "Checking 'Commutative multiplication' law for CommutativeRing"
