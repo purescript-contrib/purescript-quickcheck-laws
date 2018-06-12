@@ -2,23 +2,22 @@ module Test.QuickCheck.Laws.Control.Monad where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-
-import Type.Proxy (Proxy2)
-
-import Test.QuickCheck (QC, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A)
+import Type.Proxy (Proxy2)
 
 -- | - Left Identity: `pure x >>= f = f x`
 -- | - Right Identity: `x >>= pure = x`
 checkMonad
-  ∷ ∀ eff m
+  ∷ ∀ m
   . Monad m
   ⇒ Arbitrary (m A)
   ⇒ Eq (m A)
   ⇒ Proxy2 m
-  → QC eff Unit
+  → Effect Unit
 checkMonad _ = do
 
   log "Checking 'Left identity' law for Monad"

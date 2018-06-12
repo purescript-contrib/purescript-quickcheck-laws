@@ -3,23 +3,21 @@ module Test.Data.Tuple where
 import Prelude
 
 import Data.Tuple (Tuple)
-
-import Test.QuickCheck.Laws (QC, A, B, C, checkLaws)
+import Effect (Effect)
+import Test.QuickCheck.Laws (A, B, C, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-
 import Type.Proxy (Proxy(..), Proxy2(..), Proxy3(..))
 
-checkTuple ∷ ∀ eff. QC eff Unit
+checkTuple ∷ Effect Unit
 checkTuple = checkLaws "Tuple" do
   Data.checkEq prxTuple
   Data.checkOrd prxTuple
   Data.checkBounded prxTuple
-  Data.checkBoundedEnum prxTuple
   Data.checkSemigroup prxTuple
   Data.checkMonoid prxTuple
   Data.checkFunctor prx2Tuple
-  Data.checkFoldableFunctor prx2Tuple  
+  Data.checkFoldableFunctor prx2Tuple
   Control.checkSemigroupoid prx3Tuple
   Control.checkApply prx2Tuple
   Control.checkApplicative prx2Tuple

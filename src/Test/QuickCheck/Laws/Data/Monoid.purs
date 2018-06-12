@@ -2,24 +2,21 @@ module Test.QuickCheck.Laws.Data.Monoid where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-
-import Data.Monoid (class Monoid, mempty)
-
-import Type.Proxy (Proxy)
-
-import Test.QuickCheck (QC, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Type.Proxy (Proxy)
 
 -- | - Left identity: `mempty <> x = x`
 -- | - Right identity: `x <> mempty = x`
 checkMonoid
-  ∷ ∀ eff m
+  ∷ ∀ m
   . Monoid m
   ⇒ Arbitrary m
   ⇒ Eq m
   ⇒ Proxy m
-  → QC eff Unit
+  → Effect Unit
 checkMonoid _ = do
 
   log "Checking 'Left identity' law for Monoid"

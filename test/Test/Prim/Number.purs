@@ -2,20 +2,20 @@ module Test.Prim.Number where
 
 import Prelude
 
+import Effect (Effect)
 import Test.QuickCheck.Arbitrary (class Coarbitrary, class Arbitrary)
-import Test.QuickCheck.Laws (QC, checkLaws)
+import Test.QuickCheck.Laws (checkLaws)
 import Test.QuickCheck.Laws.Data as Data
-
 import Type.Proxy (Proxy(..))
 
-checkNumber ∷ ∀ eff. QC eff Unit
+checkNumber ∷ Effect Unit
 checkNumber = checkLaws "Number" do
   Data.checkEq prxNumber
   Data.checkOrd prxNumber
   Data.checkSemiring prxNumber
-  Data.checkEuclideanRing prxNumber
   Data.checkRing prxNumber
-  Data.checkField prxNumber
+  Data.checkEuclideanRing prxNumber
+  Data.checkDivisionRing prxNumber
   Data.checkCommutativeRing prxNumber
   where
   prxNumber = Proxy ∷ Proxy ApproxNumber
@@ -40,4 +40,4 @@ derive newtype instance semiringApproxNumber :: Semiring ApproxNumber
 derive newtype instance ringApproxNumber :: Ring ApproxNumber
 derive newtype instance commutativeRingApproxNumber :: CommutativeRing ApproxNumber
 derive newtype instance euclideanRingApproxNumber :: EuclideanRing ApproxNumber
-derive newtype instance fieldApproxNumber :: Field ApproxNumber
+derive newtype instance divisionRingApproxNumber :: DivisionRing ApproxNumber
