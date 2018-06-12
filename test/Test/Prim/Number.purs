@@ -13,9 +13,9 @@ checkNumber = checkLaws "Number" do
   Data.checkEq prxNumber
   Data.checkOrd prxNumber
   Data.checkSemiring prxNumber
-  Data.checkEuclideanRing prxNumber
   Data.checkRing prxNumber
-  Data.checkField prxNumber
+  Data.checkEuclideanRing prxNumber
+  Data.checkDivisionRing prxNumber
   Data.checkCommutativeRing prxNumber
   where
   prxNumber = Proxy ∷ Proxy ApproxNumber
