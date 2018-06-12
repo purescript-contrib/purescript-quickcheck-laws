@@ -40,4 +40,4 @@ derive newtype instance semiringApproxNumber :: Semiring ApproxNumber
 derive newtype instance ringApproxNumber :: Ring ApproxNumber
 derive newtype instance commutativeRingApproxNumber :: CommutativeRing ApproxNumber
 derive newtype instance euclideanRingApproxNumber :: EuclideanRing ApproxNumber
-derive newtype instance fieldApproxNumber :: Field ApproxNumber
+derive newtype instance divisionRingApproxNumber :: DivisionRing ApproxNumber
