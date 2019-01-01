@@ -18,6 +18,13 @@ checkTuple = checkLaws "Tuple" do
   Data.checkMonoid prxTuple
   Data.checkFunctor prx2Tuple
   Data.checkFoldableFunctor prx2Tuple
+  Data.checkEqShow prxTuple
+  Data.checkOrdShow prxTuple
+  Data.checkBoundedShow prxTuple
+  Data.checkSemigroupShow prxTuple
+  Data.checkMonoidShow prxTuple
+  Data.checkFunctorShow prx2Tuple
+  Data.checkFoldableFunctorShow prx2Tuple
   Control.checkSemigroupoid prx3Tuple
   Control.checkApply prx2Tuple
   Control.checkApplicative prx2Tuple

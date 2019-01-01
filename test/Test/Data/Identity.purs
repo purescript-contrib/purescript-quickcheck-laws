@@ -14,9 +14,14 @@ checkIdentity = checkLaws "Identity" do
   Data.checkEq prxIdentity
   Data.checkOrd prxIdentity
   Data.checkBounded prxIdentity
+  Data.checkEqShow prxIdentity
+  Data.checkOrdShow prxIdentity
+  Data.checkBoundedShow prxIdentity
 
   Data.checkSemigroup prxIdentity
   Data.checkMonoid prxIdentity
+  Data.checkSemigroupShow prxIdentity
+  Data.checkMonoidShow prxIdentity
 
   -- Data.checkSemiring prxIdentity
   -- Data.checkEuclideanRing prxIdentity
@@ -26,6 +31,8 @@ checkIdentity = checkLaws "Identity" do
 
   Data.checkFunctor prx2Identity
   Data.checkFoldableFunctor prx2Identity
+  Data.checkFunctorShow prx2Identity
+  Data.checkFoldableFunctorShow prx2Identity
   Control.checkApply prx2Identity
   Control.checkApplicative prx2Identity
   Control.checkBind prx2Identity

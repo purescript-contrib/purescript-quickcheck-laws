@@ -83,7 +83,7 @@ checkEqShow _ = do
   symmetry x y = ((x === y) ==> (y === x)) &=& ((x /== y) ==> (y /== x))
 
   transitivity ∷ a → a → a → Result
-  transitivity x y z = ((x === y) &=& (y === x)) ==> (x === z)
+  transitivity x y z = ((x === y) &=& (y === z)) ==> (x === z)
 
   negation ∷ a → a → Result
   negation x y = (x /== y) ==> not' "Shouldn't be equal" (x === y)

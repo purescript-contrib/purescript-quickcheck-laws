@@ -14,5 +14,10 @@ checkOrdering = checkLaws "Ordering" do
   Data.checkBounded prxOrdering
   Data.checkBoundedEnum prxOrdering
   Data.checkSemigroup prxOrdering
+  Data.checkEqShow prxOrdering
+  Data.checkOrdShow prxOrdering
+  Data.checkBoundedShow prxOrdering
+  Data.checkBoundedEnumShow prxOrdering
+  Data.checkSemigroupShow prxOrdering
   where
   prxOrdering = Proxy ∷ Proxy Ordering

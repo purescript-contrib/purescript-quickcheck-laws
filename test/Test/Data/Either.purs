@@ -16,6 +16,11 @@ checkEither = checkLaws "Either" do
   Data.checkBounded prxEither
   Data.checkFunctor prx2Either
   Data.checkFoldableFunctor prx2Either
+  Data.checkEqShow prxEither
+  Data.checkOrdShow prxEither
+  Data.checkBoundedShow prxEither
+  Data.checkFunctorShow prx2Either
+  Data.checkFoldableFunctorShow prx2Either
   Control.checkApply prx2Either
   Control.checkApplicative prx2Either
   Control.checkAlt prx2Either

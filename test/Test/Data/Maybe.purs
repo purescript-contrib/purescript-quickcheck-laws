@@ -18,6 +18,13 @@ checkMaybe = checkLaws "Maybe" do
   Data.checkMonoid prxMaybe
   Data.checkFunctor prx2Maybe
   Data.checkFoldableFunctor prx2Maybe
+  Data.checkEqShow prxMaybe
+  Data.checkOrdShow prxMaybe
+  Data.checkBoundedShow prxMaybe
+  Data.checkSemigroupShow prxMaybe
+  Data.checkMonoidShow prxMaybe
+  Data.checkFunctorShow prx2Maybe
+  Data.checkFoldableFunctorShow prx2Maybe
   Control.checkApply prx2Maybe
   Control.checkApplicative prx2Maybe
   Control.checkAlt prx2Maybe
