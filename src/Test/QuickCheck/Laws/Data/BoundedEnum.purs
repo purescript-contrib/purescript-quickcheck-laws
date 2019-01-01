@@ -9,7 +9,8 @@ import Data.Maybe (Maybe(Just))
 import Data.Newtype (unwrap)
 import Effect (Effect)
 import Effect.Console (log)
-import Test.QuickCheck (quickCheck')
+import Test.QuickCheck (quickCheck', Result, (===))
+import Test.QuickCheck.Combinators ((|=|))
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Type.Proxy (Proxy)
 
@@ -60,7 +61,7 @@ checkBoundedEnum _ = do
   where
     c :: Int
     c = unwrap (cardinality :: Cardinality a)
-    
+
     succLaw :: Boolean
     succLaw = (Just top :: Maybe a) ==
                 foldl (>>=) (pure bottom) (replicate (c - 1) succ)
@@ -71,13 +72,13 @@ checkBoundedEnum _ = do
 
     predsuccLaw :: a -> Boolean
     predsuccLaw a = a == bottom || (pred a >>= succ) == Just a
-    
+
     succpredLaw :: a -> Boolean
     succpredLaw a = a == top || (succ a >>= pred) == Just a
 
     enumpredLaw :: a -> Boolean
     enumpredLaw a = a == bottom || (fromEnum <$> pred a) == Just (fromEnum a - 1)
-    
+
     enumsuccLaw :: a -> Boolean
     enumsuccLaw a = a == top || (fromEnum <$> succ a) == Just (fromEnum a + 1)
 
@@ -86,3 +87,79 @@ checkBoundedEnum _ = do
 
     tofromenumLaw :: a -> Boolean
     tofromenumLaw a = toEnum (fromEnum a) == Just a
+
+
+-- | Same as `checkBoundedEnum`, with better error reporting.
+-- | - succ: `succ bottom >>= succ >>= succ ... succ [cardinality - 1 times] = top`
+-- | - pred: `pred top    >>= pred >>= pred ... pred [cardinality - 1 times] = bottom`
+-- | - predsucc: `forall a > bottom: pred a >>= succ = Just a`
+-- | - succpred: `forall a < top:  succ a >>= pred = Just a`
+-- | - enumpred: `forall a > bottom: fromEnum <$> pred a = Just (fromEnum a - 1)`
+-- | - enumsucc: `forall a < top:  fromEnum <$> succ a = Just (fromEnum a + 1)`
+-- | - compare: `compare e1 e2 = compare (fromEnum e1) (fromEnum e2)`
+-- | - tofromenum: toEnum (fromEnum a) = Just a
+
+checkBoundedEnumShow
+  ∷ ∀ a
+  . Arbitrary a
+  ⇒ BoundedEnum a
+  ⇒ Ord a
+  ⇒ Show a
+  ⇒ Proxy a
+  → Effect Unit
+checkBoundedEnumShow _ = do
+
+  log "Checking 'succ' law for BoundedEnum"
+  quickCheck' 1 succLaw
+
+  log "Checking 'pred' law for BoundedEnum"
+  quickCheck' 1 predLaw
+
+  log "Checking 'predsucc' law for BoundedEnum"
+  quickCheck' 1000 predsuccLaw
+
+  log "Checking 'succpred' law for BoundedEnum"
+  quickCheck' 1000 succpredLaw
+
+  log "Checking 'enumpred' law for BoundedEnum"
+  quickCheck' 1000 enumpredLaw
+
+  log "Checking 'enumsucc' law for BoundedEnum"
+  quickCheck' 1000 enumsuccLaw
+
+  log "Checking 'compare' law for BoundedEnum"
+  quickCheck' 1000 compareLaw
+
+  log "Checking 'tofromenum' law for BoundedEnum"
+  quickCheck' 1000 tofromenumLaw
+
+
+  where
+    c :: Int
+    c = unwrap (cardinality :: Cardinality a)
+
+    succLaw :: Result
+    succLaw = (Just top :: Maybe a) ===
+                foldl (>>=) (pure bottom) (replicate (c - 1) succ)
+
+    predLaw :: Result
+    predLaw = (Just bottom :: Maybe a) ===
+                foldl (>>=) (pure top) (replicate (c - 1) pred)
+
+    predsuccLaw :: a -> Result
+    predsuccLaw a = (a === bottom) |=| ((pred a >>= succ) === Just a)
+
+    succpredLaw :: a -> Result
+    succpredLaw a = (a === top) |=| ((succ a >>= pred) === Just a)
+
+    enumpredLaw :: a -> Result
+    enumpredLaw a = (a === bottom) |=| ((fromEnum <$> pred a) === Just (fromEnum a - 1))
+
+    enumsuccLaw :: a -> Result
+    enumsuccLaw a = (a === top) |=| ((fromEnum <$> succ a) === Just (fromEnum a + 1))
+
+    compareLaw :: a -> a -> Result
+    compareLaw a b = a `compare` b === fromEnum a `compare` fromEnum b
+
+    tofromenumLaw :: a -> Result
+    tofromenumLaw a = toEnum (fromEnum a) === Just a
