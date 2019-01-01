@@ -25,6 +25,21 @@ checkArray = checkLaws "Array" do
   Control.checkAlternative prx2Array
   Control.checkMonadZero prx2Array
   Control.checkMonadPlus prx2Array
+  Data.checkEqShow prxArray
+  Data.checkOrdShow prxArray
+  Data.checkFunctorShow prx2Array
+  Data.checkFoldableFunctorShow prx2Array
+  Control.checkApplyShow prx2Array
+  Control.checkApplicativeShow prx2Array
+  Control.checkBindShow prx2Array
+  Control.checkMonadShow prx2Array
+  Data.checkSemigroupShow prxArray
+  Data.checkMonoidShow prxArray
+  Control.checkAltShow prx2Array
+  Control.checkPlusShow prx2Array
+  Control.checkAlternativeShow prx2Array
+  Control.checkMonadZeroShow prx2Array
+  Control.checkMonadPlusShow prx2Array
   where
   prxArray = Proxy ∷ Proxy (Array A)
   prx2Array = Proxy2 ∷ Proxy2 Array

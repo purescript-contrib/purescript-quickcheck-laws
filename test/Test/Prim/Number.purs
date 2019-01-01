@@ -17,6 +17,13 @@ checkNumber = checkLaws "Number" do
   Data.checkEuclideanRing prxNumber
   Data.checkDivisionRing prxNumber
   Data.checkCommutativeRing prxNumber
+  Data.checkEqShow prxNumber
+  Data.checkOrdShow prxNumber
+  Data.checkSemiringShow prxNumber
+  Data.checkRingShow prxNumber
+  Data.checkEuclideanRingShow prxNumber
+  Data.checkDivisionRingShow prxNumber
+  Data.checkCommutativeRingShow prxNumber
   where
   prxNumber = Proxy ∷ Proxy ApproxNumber
 
@@ -36,6 +43,7 @@ instance eqApproxNumber :: Eq ApproxNumber where
   eq (ApproxNumber x) (ApproxNumber y) = x =~= y
 
 derive newtype instance ordApproxNumber :: Ord ApproxNumber
+derive newtype instance showApproxNumber :: Show ApproxNumber
 derive newtype instance semiringApproxNumber :: Semiring ApproxNumber
 derive newtype instance ringApproxNumber :: Ring ApproxNumber
 derive newtype instance commutativeRingApproxNumber :: CommutativeRing ApproxNumber

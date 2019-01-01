@@ -13,5 +13,9 @@ checkString = checkLaws "String" do
   Data.checkOrd prxString
   Data.checkSemigroup prxString
   Data.checkMonoid prxString
+  Data.checkEqShow prxString
+  Data.checkOrdShow prxString
+  Data.checkSemigroupShow prxString
+  Data.checkMonoidShow prxString
   where
   prxString = Proxy ∷ Proxy String

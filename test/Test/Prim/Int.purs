@@ -15,5 +15,11 @@ checkInt = checkLaws "Int" do
   Data.checkSemiring prxInt
   Data.checkEuclideanRing prxInt
   Data.checkRing prxInt
+  Data.checkEqShow prxInt
+  Data.checkOrdShow prxInt
+  Data.checkCommutativeRingShow prxInt
+  Data.checkSemiringShow prxInt
+  Data.checkEuclideanRingShow prxInt
+  Data.checkRingShow prxInt
   where
   prxInt = Proxy ∷ Proxy Int
