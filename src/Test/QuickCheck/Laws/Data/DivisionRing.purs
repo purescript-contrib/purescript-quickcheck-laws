@@ -38,7 +38,7 @@ checkDivisionRing _ = do
     | otherwise = false
 
 
--- | Same as `checkDivisionRing`, but with better error reporting.
+-- | Like `checkDivisionRing`, but with better error reporting.
 -- | Non-zero ring: one /= zero
 -- | Non-zero multiplicative inverse: recip a * a = a * recip a = one for all non-zero a
 checkDivisionRingShow

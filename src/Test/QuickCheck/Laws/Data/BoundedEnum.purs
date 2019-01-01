@@ -89,7 +89,7 @@ checkBoundedEnum _ = do
     tofromenumLaw a = toEnum (fromEnum a) == Just a
 
 
--- | Same as `checkBoundedEnum`, with better error reporting.
+-- | Like `checkBoundedEnum`, but with better error reporting.
 -- | - succ: `succ bottom >>= succ >>= succ ... succ [cardinality - 1 times] = top`
 -- | - pred: `pred top    >>= pred >>= pred ... pred [cardinality - 1 times] = bottom`
 -- | - predsucc: `forall a > bottom: pred a >>= succ = Just a`

@@ -48,7 +48,7 @@ checkEq _ = do
   negation x y = (x /= y) == not (x == y)
 
 
--- | Like `checkEq`, with better error reporting.
+-- | Like `checkEq`, but with better error reporting.
 -- | - Reflexivity: `x == x = true`
 -- | - Symmetry: `x == y = y == x`
 -- | - Transitivity: if `x == y` and `y == z` then `x == z`

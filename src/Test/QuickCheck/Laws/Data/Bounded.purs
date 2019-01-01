@@ -28,7 +28,8 @@ checkBounded _ = do
   ordering a = bottom <= a && a <= top
 
 
--- | - Ordering: `bottom <= a <= top`, with better error reporting
+-- | Like `checkBounded`, but with better error reporting.
+-- | - Ordering: `bottom <= a <= top`
 checkBoundedShow
   ∷ ∀ a
   . Arbitrary a

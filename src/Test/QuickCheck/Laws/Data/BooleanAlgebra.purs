@@ -28,8 +28,8 @@ checkBooleanAlgebra _ = do
   excludedMiddle a = (a || not a) == tt
 
 
-
--- | - Excluded middle: `a || not a = tt`, with better error reporting
+-- | Like `checkBooleanAlgebra`, but with better error reporting.
+-- | - Excluded middle: `a || not a = tt`
 checkBooleanAlgebraShow
   ∷ ∀ a
   . Arbitrary a

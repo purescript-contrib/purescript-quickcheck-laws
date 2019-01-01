@@ -6,7 +6,7 @@ import Control.Alt ((<|>))
 import Control.Plus (class Plus, empty)
 import Effect (Effect)
 import Effect.Console (log)
-import Test.QuickCheck (quickCheck')
+import Test.QuickCheck (quickCheck', Result, (===))
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
@@ -43,3 +43,39 @@ checkPlus _ = do
 
   annihilation ∷ (A → B) → Boolean
   annihilation f = (f <$> empty) == empty ∷ f B
+
+
+-- | - Left identity: `empty <|> x == x`
+-- | - Right identity: `x <|> empty == x`
+-- | - Annihilation: `f <$> empty == empty`
+checkPlusShow
+  ∷ ∀ f
+  . Plus f
+  ⇒ Arbitrary (f A)
+  ⇒ Eq (f A)
+  ⇒ Eq (f B)
+  ⇒ Show (f A)
+  ⇒ Show (f B)
+  ⇒ Proxy2 f
+  → Effect Unit
+checkPlusShow _ = do
+
+  log "Checking 'Left identity' law for Plus"
+  quickCheck' 1000 leftIdentity
+
+  log "Checking 'Right identity' law for Plus"
+  quickCheck' 1000 rightIdentity
+
+  log "Checking 'Annihilation' law for Plus"
+  quickCheck' 1000 annihilation
+
+  where
+
+  leftIdentity ∷ f A → Result
+  leftIdentity x = (empty <|> x) === x
+
+  rightIdentity ∷ f A → Result
+  rightIdentity x = (x <|> empty) === x
+
+  annihilation ∷ (A → B) → Result
+  annihilation f = (f <$> empty) === empty ∷ f B

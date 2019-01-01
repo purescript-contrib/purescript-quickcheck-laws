@@ -27,7 +27,7 @@ checkCommutativeRing _ = do
   commutativeMultiplication a b = a * b == b * a
 
 
--- | Same as `checkCommutativeRing`, but with better error reporting.
+-- | Like `checkCommutativeRing`, but with better error reporting.
 -- | - Commutative multiplication: `a * b = b * a`
 checkCommutativeRingShow
   ∷ ∀ a
