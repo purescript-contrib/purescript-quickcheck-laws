@@ -15,5 +15,11 @@ checkBoolean = checkLaws "Boolean" do
   Data.checkBoundedEnum prxBoolean
   Data.checkHeytingAlgebra prxBoolean
   Data.checkBooleanAlgebra prxBoolean
+  Data.checkEqShow prxBoolean
+  Data.checkOrdShow prxBoolean
+  Data.checkBoundedShow prxBoolean
+  Data.checkBoundedEnumShow prxBoolean
+  Data.checkHeytingAlgebraShow prxBoolean
+  Data.checkBooleanAlgebraShow prxBoolean
   where
   prxBoolean = Proxy ∷ Proxy Boolean

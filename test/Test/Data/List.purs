@@ -26,6 +26,21 @@ checkList = checkLaws "List" do
   Control.checkAlternative prx2List
   Control.checkMonadZero prx2List
   Control.checkMonadPlus prx2List
+  Data.checkEqShow prxList
+  Data.checkOrdShow prxList
+  Data.checkFunctorShow prx2List
+  Data.checkFoldableFunctorShow prx2List
+  Control.checkApplyShow prx2List
+  Control.checkApplicativeShow prx2List
+  Control.checkBindShow prx2List
+  Control.checkMonadShow prx2List
+  Data.checkSemigroupShow prxList
+  Data.checkMonoidShow prxList
+  Control.checkAltShow prx2List
+  Control.checkPlusShow prx2List
+  Control.checkAlternativeShow prx2List
+  Control.checkMonadZeroShow prx2List
+  Control.checkMonadPlusShow prx2List
   where
   prxList = Proxy ∷ Proxy (List A)
   prx2List = Proxy2 ∷ Proxy2 List

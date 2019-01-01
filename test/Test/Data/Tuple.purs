@@ -25,6 +25,20 @@ checkTuple = checkLaws "Tuple" do
   Control.checkMonad prx2Tuple
   Control.checkExtend prx2Tuple
   Control.checkComonad prx2Tuple
+  Data.checkEqShow prxTuple
+  Data.checkOrdShow prxTuple
+  Data.checkBoundedShow prxTuple
+  Data.checkSemigroupShow prxTuple
+  Data.checkMonoidShow prxTuple
+  Data.checkFunctorShow prx2Tuple
+  Data.checkFoldableFunctorShow prx2Tuple
+  Control.checkSemigroupoidShow prx3Tuple
+  Control.checkApplyShow prx2Tuple
+  Control.checkApplicativeShow prx2Tuple
+  Control.checkBindShow prx2Tuple
+  Control.checkMonadShow prx2Tuple
+  Control.checkExtendShow prx2Tuple
+  Control.checkComonadShow prx2Tuple
   where
   prxTuple = Proxy ∷ Proxy (Tuple A B)
   prx2Tuple = Proxy2 ∷ Proxy2 (Tuple C)

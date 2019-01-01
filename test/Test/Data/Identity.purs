@@ -38,6 +38,33 @@ checkIdentity = checkLaws "Identity" do
   -- checkPlus prx2Identity
   -- checkAlternative prx2Identity
   -- checkMonadZero prx2Identity
+  Data.checkEqShow prxIdentity
+  Data.checkOrdShow prxIdentity
+  Data.checkBoundedShow prxIdentity
+
+  Data.checkSemigroupShow prxIdentity
+  Data.checkMonoidShow prxIdentity
+
+  -- Data.checkSemiringShow prxIdentity
+  -- Data.checkEuclideanRingShow prxIdentity
+  -- Data.checkRingShow prxIdentity
+  -- Data.checkCommutativeRingShow prxIdentity
+  -- Data.checkFieldShow prxIdentity
+
+  Data.checkFunctorShow prx2Identity
+  Data.checkFoldableFunctorShow prx2Identity
+  Control.checkApplyShow prx2Identity
+  Control.checkApplicativeShow prx2Identity
+  Control.checkBindShow prx2Identity
+  Control.checkMonadShow prx2Identity
+
+  Control.checkExtendShow prx2Identity
+  Control.checkComonadShow prx2Identity
+
+  -- checkAltShow prx2Identity
+  -- checkPlusShow prx2Identity
+  -- checkAlternativeShow prx2Identity
+  -- checkMonadZeroShow prx2Identity
   where
   prxIdentity = Proxy ∷ Proxy (Identity A)
   prx2Identity = Proxy2 ∷ Proxy2 Identity

@@ -5,7 +5,7 @@ import Prelude
 import Data.BooleanAlgebra (tt)
 import Effect (Effect)
 import Effect.Console (log)
-import Test.QuickCheck (quickCheck')
+import Test.QuickCheck (quickCheck', Result, (===))
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Type.Proxy (Proxy)
 
@@ -26,3 +26,24 @@ checkBooleanAlgebra _ = do
 
   excludedMiddle ∷ a → Boolean
   excludedMiddle a = (a || not a) == tt
+
+
+-- | Like `checkBooleanAlgebra`, but with better error reporting.
+-- | - Excluded middle: `a || not a = tt`
+checkBooleanAlgebraShow
+  ∷ ∀ a
+  . Arbitrary a
+  ⇒ BooleanAlgebra a
+  ⇒ Eq a
+  ⇒ Show a
+  ⇒ Proxy a
+  → Effect Unit
+checkBooleanAlgebraShow _ = do
+
+  log "Checking 'Excluded middle' law for BooleanAlgebra"
+  quickCheck' 1000 excludedMiddle
+
+  where
+
+  excludedMiddle ∷ a → Result
+  excludedMiddle a = (a || not a) === tt

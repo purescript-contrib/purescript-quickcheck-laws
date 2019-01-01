@@ -5,7 +5,7 @@ import Prelude
 import Data.Foldable (foldMap, fold, foldlDefault, foldl, foldr, class Foldable, foldrDefault)
 import Effect (Effect)
 import Effect.Console (log)
-import Test.QuickCheck (quickCheck')
+import Test.QuickCheck (quickCheck', Result, (===))
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
@@ -53,3 +53,49 @@ checkFoldableFunctor ff = do
   where
     foldMapLaw :: (A -> B) -> f A -> Boolean
     foldMapLaw f t = foldMap f t == (fold <<< map f) t
+
+
+-- | Like `checkFoldable`, but with better error reporting.
+-- | - foldr: `foldr = foldrDefault`
+-- | - foldl: `foldl = foldlDefault`
+checkFoldableShow
+  ∷ ∀ f
+  . Foldable f
+  ⇒ Arbitrary (f A)
+  ⇒ Proxy2 f
+  → Effect Unit
+checkFoldableShow _ = do
+
+  log "Checking 'foldr' law for Foldable"
+  quickCheck' 1000 foldrLaw
+
+  log "Checking 'foldl' law for Foldable"
+  quickCheck' 1000 foldlLaw
+
+  where
+    foldrLaw :: (A -> B -> B) -> B -> f A -> Result
+    foldrLaw f z t = foldr f z t === foldrDefault f z t
+
+    foldlLaw :: (B -> A -> B) -> B -> f A -> Result
+    foldlLaw f z t = foldl f z t === foldlDefault f z t
+
+
+-- | Like `checkFoldableFunctor`, but with better error reporting.
+-- | foldMap: `foldMap = fold <<< map`
+checkFoldableFunctorShow
+  ∷ ∀ f
+  . Foldable f
+  ⇒ Functor f
+  ⇒ Arbitrary (f A)
+  ⇒ Proxy2 f
+  → Effect Unit
+checkFoldableFunctorShow ff = do
+
+  checkFoldable ff
+
+  log "Checking 'foldMap' law for Foldable"
+  quickCheck' 1000 foldMapLaw
+
+  where
+    foldMapLaw :: (A -> B) -> f A -> Result
+    foldMapLaw f t = foldMap f t === (fold <<< map f) t

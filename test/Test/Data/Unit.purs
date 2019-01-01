@@ -20,5 +20,16 @@ checkUnit = checkLaws "Unit" do
   Data.checkCommutativeRing prxUnit
   Data.checkHeytingAlgebra prxUnit
   Data.checkBooleanAlgebra prxUnit
+  Data.checkEqShow prxUnit
+  Data.checkOrdShow prxUnit
+  Data.checkBoundedShow prxUnit
+  Data.checkBoundedEnumShow prxUnit
+  Data.checkSemigroupShow prxUnit
+  Data.checkMonoidShow prxUnit
+  Data.checkSemiringShow prxUnit
+  Data.checkRingShow prxUnit
+  Data.checkCommutativeRingShow prxUnit
+  Data.checkHeytingAlgebraShow prxUnit
+  Data.checkBooleanAlgebraShow prxUnit
   where
   prxUnit = Proxy ∷ Proxy Unit
