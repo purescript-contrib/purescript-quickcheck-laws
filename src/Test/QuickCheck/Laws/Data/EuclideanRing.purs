@@ -28,7 +28,7 @@ checkEuclideanRing _ = do
 
   log "Checking 'Integral domain' law for EuclideanRing"
   log "one /= zero:"
-  quickCheck' 1 \(_ :: Unit) -> (zero /= one :: a)
+  quickCheck' 1 \(_ :: Unit) -> (zero /= (one :: a))
   log "product of nonzero elements is nonzero:"
   quickCheck' 1000 integralDomain
 

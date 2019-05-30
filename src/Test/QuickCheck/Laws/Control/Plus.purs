@@ -42,4 +42,4 @@ checkPlus _ = do
   rightIdentity x = (x <|> empty) == x
 
   annihilation ∷ (A → B) → Boolean
-  annihilation f = (f <$> empty) == empty ∷ f B
+  annihilation f = (f <$> empty) == (empty ∷ f B)

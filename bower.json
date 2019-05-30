@@ -21,7 +21,7 @@
   ],
   "dependencies": {
     "purescript-proxy": "^3.0.0",
-    "purescript-enums": "^4.0.0",
-    "purescript-quickcheck": "^6.0.0"
+    "purescript-enums": "^4.0.1",
+    "purescript-quickcheck": "^6.1.0"
   }
 }
