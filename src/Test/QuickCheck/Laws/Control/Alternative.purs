@@ -36,4 +36,4 @@ checkAlternative _ = do
   distributivity f g x = ((f <|> g) <*> x) == ((f <*> x) <|> (g <*> x))
 
   annihilation ∷ f A → Boolean
-  annihilation x = (empty <*> x) == empty ∷ f A
+  annihilation x = (empty <*> x) == (empty ∷ f A)
