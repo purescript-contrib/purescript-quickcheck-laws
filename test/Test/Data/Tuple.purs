@@ -17,6 +17,7 @@ checkTuple = checkLaws "Tuple" do
   Data.checkSemigroup prxTuple
   Data.checkMonoid prxTuple
   Data.checkFunctor prx2Tuple
+  Data.checkFunctorWithIndex prx2Tuple
   Data.checkFoldableFunctor prx2Tuple
   Control.checkSemigroupoid prx3Tuple
   Control.checkApply prx2Tuple
