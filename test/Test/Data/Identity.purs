@@ -25,6 +25,7 @@ checkIdentity = checkLaws "Identity" do
   -- Data.checkField prxIdentity
 
   Data.checkFunctor prx2Identity
+  Data.checkFunctorWithIndex prx2Identity
   Data.checkFoldableFunctor prx2Identity
   Control.checkApply prx2Identity
   Control.checkApplicative prx2Identity

@@ -14,6 +14,7 @@ checkList = checkLaws "List" do
   Data.checkEq prxList
   Data.checkOrd prxList
   Data.checkFunctor prx2List
+  Data.checkFunctorWithIndex prx2List
   Data.checkFoldableFunctor prx2List
   Control.checkApply prx2List
   Control.checkApplicative prx2List

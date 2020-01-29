@@ -15,6 +15,7 @@ checkEither = checkLaws "Either" do
   Data.checkOrd prxEither
   Data.checkBounded prxEither
   Data.checkFunctor prx2Either
+  Data.checkFunctorWithIndex prx2Either
   Data.checkFoldableFunctor prx2Either
   Control.checkApply prx2Either
   Control.checkApplicative prx2Either
