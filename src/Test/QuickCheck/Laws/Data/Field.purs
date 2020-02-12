@@ -8,7 +8,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Type.Proxy (Proxy)
 
--- | - Non-zero multiplicative inverse: ``a `mod` b = 0` for all `a` and `b`
+-- | - Non-zero multiplicative inverse: ```a `mod` b = 0``` for all `a` and `b`
 checkField
   ∷ ∀ a
   . Field a
