@@ -21,7 +21,7 @@ import Type.Proxy (Proxy)
 -- | - enumpred: `forall a > bottom: fromEnum <$> pred a = Just (fromEnum a - 1)`
 -- | - enumsucc: `forall a < top:  fromEnum <$> succ a = Just (fromEnum a + 1)`
 -- | - compare: `compare e1 e2 = compare (fromEnum e1) (fromEnum e2)`
--- | - tofromenum: toEnum (fromEnum a) = Just a
+-- | - tofromenum: `toEnum (fromEnum a) = Just a`
 
 checkBoundedEnum
   ∷ ∀ a
