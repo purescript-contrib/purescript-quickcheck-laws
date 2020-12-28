@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up a PureScript toolchain
+        uses: purescript-contrib/setup-purescript@main
+        with:
+          purescript: "0.14.0-rc3"
+
+      - name: Install dependencies
+        run: bower install
+
+      - name: Build source
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test
