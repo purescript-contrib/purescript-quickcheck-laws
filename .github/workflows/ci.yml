@@ -4,7 +4,6 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
 
 jobs:
   build:
@@ -15,14 +14,20 @@ jobs:
 
       - name: Set up a PureScript toolchain
         uses: purescript-contrib/setup-purescript@main
+
+      - name: Cache PureScript dependencies
+        uses: actions/cache@v2
         with:
-          purescript: "0.14.0-rc3"
+          key: ${{ runner.os }}-spago-${{ hashFiles('**/*.dhall') }}
+          path: |
+            .spago
+            output
 
       - name: Install dependencies
-        run: bower install
+        run: spago install
 
       - name: Build source
-        run: npm run build
+        run: spago build --no-install --purs-args '--censor-lib --strict'
 
       - name: Run tests
-        run: npm run test
+        run: spago test --no-install
