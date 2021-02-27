@@ -11,6 +11,7 @@ New features:
 Bugfixes:
 
 Other improvements:
+  - Migrated the library to the `contrib` organization (#54 by @thomashoneyman)
 
 ## [v6.0.0](https://github.com/purescript-contrib/purescript-quickcheck-laws/releases/tag/v6.0.0) - 2021-02-26
 
