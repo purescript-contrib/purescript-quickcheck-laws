@@ -49,6 +49,9 @@ checkSemiring _ = do
   log "Checking 'Right distribution' law for Semiring"
   quickCheck' 1000 rightDistribution
 
+  log "Checking 'Annihilation' law for Semiring"
+  quickCheck' 1000 annihiliation
+
   where
 
   associativeAddition ∷ a → a → a → Boolean
