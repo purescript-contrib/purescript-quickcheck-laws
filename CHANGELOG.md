@@ -9,9 +9,12 @@ Breaking changes:
 New features:
 
 Bugfixes:
+- Also test `Semiring`'s Annihilation law (#56 by @JordanMartinez)
 
 Other improvements:
-  - Migrated the library to the `contrib` organization (#54 by @thomashoneyman)
+- Migrated the library to the `contrib` organization (#54 by @thomashoneyman)
+- Fix warnings revealed by v0.14.1 PS release (#56 by @JordanMartinez)
+- Install transitive dependencies used in source code (#56 by @JordanMartinez)
 
 ## [v6.0.0](https://github.com/purescript-contrib/purescript-quickcheck-laws/releases/tag/v6.0.0) - 2021-02-26
 
