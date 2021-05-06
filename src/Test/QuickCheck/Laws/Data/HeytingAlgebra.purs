@@ -90,7 +90,7 @@ checkHeytingAlgebra _ = do
   absorption op1 op2 a b = (a `op1` (a `op2` b)) == a
 
   idempotent ∷ (a → a → a) → a → a → Boolean
-  idempotent op a b = a `op` a == a
+  idempotent op a _ = a `op` a == a
 
   identity ∷ (a → a → a) → a → a → Boolean
   identity op ident a = a `op` ident == a
