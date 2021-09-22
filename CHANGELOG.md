@@ -7,6 +7,7 @@ Notable changes to this project are documented in this file. The format is based
 Breaking changes:
 
 New features:
+- Provide `Arbitrary`-less law checks (#36, #57 by @matthewleon and @JordanMartinez)
 
 Bugfixes:
 
