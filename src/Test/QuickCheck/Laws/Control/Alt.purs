@@ -4,8 +4,10 @@ import Prelude
 
 import Control.Alt (class Alt, (<|>))
 import Control.Apply (lift2, lift3)
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
@@ -13,24 +15,23 @@ import Type.Proxy (Proxy2)
 -- | - Associativity: `(x <|> y) <|> z == x <|> (y <|> z)`
 -- | - Distributivity: `f <$> (x <|> y) == (f <$> x) <|> (f <$> y)`
 checkAlt
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Alt f
   ⇒ Arbitrary (f A)
   ⇒ Eq (f A)
   ⇒ Eq (f B)
   ⇒ Proxy2 f
-  → QC eff Unit
+  → Effect Unit
 checkAlt _ = checkAltGen (arbitrary :: Gen (f A))
 
 checkAltGen
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Alt f
   ⇒ Eq (f A)
   ⇒ Eq (f B)
   ⇒ Gen (f A)
-  → QC eff Unit
+  → Effect Unit
 checkAltGen gen = do
-
   log "Checking 'Associativity' law for Alt"
   quickCheck' 1000 $ lift3 associativity gen gen gen
 

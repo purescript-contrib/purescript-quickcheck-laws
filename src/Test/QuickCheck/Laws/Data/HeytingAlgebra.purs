@@ -3,9 +3,11 @@ module Test.QuickCheck.Laws.Data.HeytingAlgebra where
 import Prelude
 
 import Control.Apply (lift2, lift3)
-import Control.Monad.Eff.Console (log)
 import Data.HeytingAlgebra (tt, ff, implies)
-import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
@@ -32,22 +34,21 @@ import Type.Proxy (Proxy)
 -- | - Complemented:
 -- |   - ``not a = a `implies` ff``
 checkHeytingAlgebra
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Arbitrary a
   ⇒ HeytingAlgebra a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkHeytingAlgebra _ = checkHeytingAlgebraGen (arbitrary :: Gen a)
 
 checkHeytingAlgebraGen
-  ∷ ∀ eff a
+  ∷ ∀ a
   . HeytingAlgebra a
   ⇒ Eq a
   ⇒ Gen a
-  → QC eff Unit
+  → Effect Unit
 checkHeytingAlgebraGen gen = do
-
   log "Checking 'Associativity of disjunction' law for HeytingAlgebra"
   quickCheck' 1000 $ lift3 (associativity (||)) gen gen gen
 
@@ -98,7 +99,7 @@ checkHeytingAlgebraGen gen = do
   absorption op1 op2 a b = (a `op1` (a `op2` b)) == a
 
   idempotent ∷ (a → a → a) → a → a → Boolean
-  idempotent op a b = a `op` a == a
+  idempotent op a _ = a `op` a == a
 
   identity ∷ (a → a → a) → a → a → Boolean
   identity op ident a = a `op` ident == a

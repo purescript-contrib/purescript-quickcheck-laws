@@ -3,18 +3,21 @@ module Test.QuickCheck.Laws.Control.Applicative where
 import Prelude
 
 import Control.Apply (lift3)
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Data.Function as F
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B, C)
 import Type.Proxy (Proxy2)
 
--- | - Identity: `(pure id) <*> v = v`
+-- | - Identity: `(pure identity) <*> v = v`
 -- | - Composition: `(pure (<<<)) <*> f <*> g <*> h = f <*> (g <*> h)`
 -- | - Homomorphism: `(pure f) <*> (pure x) = pure (f x)`
 -- | - Interchange: `u <*> (pure y) = (pure ($ y)) <*> u`
 checkApplicative
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Applicative f
   ⇒ Arbitrary (f A)
   ⇒ Arbitrary (f (A → B))
@@ -23,7 +26,7 @@ checkApplicative
   ⇒ Eq (f B)
   ⇒ Eq (f C)
   ⇒ Proxy2 f
-  → QC eff Unit
+  → Effect Unit
 checkApplicative _ =
   checkApplicativeGen
     (arbitrary :: Gen (f A))
@@ -31,7 +34,7 @@ checkApplicative _ =
     (arbitrary :: Gen (f (B → C)))
 
 checkApplicativeGen
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Applicative f
   ⇒ Eq (f A)
   ⇒ Eq (f B)
@@ -39,9 +42,8 @@ checkApplicativeGen
   ⇒ Gen (f A)
   → Gen (f (A → B))
   → Gen (f (B → C))
-  → QC eff Unit
+  → Effect Unit
 checkApplicativeGen gen genab genbc = do
-
   log "Checking 'Identity' law for Applicative"
   quickCheck' 1000 $ identity <$> gen
 
@@ -57,7 +59,7 @@ checkApplicativeGen gen genab genbc = do
   where
 
   identity ∷ f A → Boolean
-  identity v = (pure id <*> v) == v
+  identity v = (pure F.identity <*> v) == v
 
   composition ∷ f (B → C) → f (A → B) → f A → Boolean
   composition f g x = (pure (<<<) <*> f <*> g <*> x) == (f <*> (g <*> x))

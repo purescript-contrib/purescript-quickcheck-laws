@@ -2,8 +2,11 @@ module Test.QuickCheck.Laws.Data.Functor where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Data.Function as F
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
@@ -11,22 +14,21 @@ import Type.Proxy (Proxy2)
 -- | - Identity: `(<$>) id = id`
 -- | - Composition: `(<$>) (f <<< g) = (f <$>) <<< (g <$>)`
 checkFunctor
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Functor f
   ⇒ Arbitrary (f A)
   ⇒ Eq (f A)
   ⇒ Proxy2 f
-  → QC eff Unit
+  → Effect Unit
 checkFunctor _ = checkFunctorGen (arbitrary :: Gen (f A))
 
 checkFunctorGen
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Functor f
   ⇒ Eq (f A)
   ⇒ Gen (f A)
-  → QC eff Unit
+  → Effect Unit
 checkFunctorGen gen = do
-
   log "Checking 'Identity' law for Functor"
   quickCheck' 1000 $ identity <$> gen
 
@@ -36,7 +38,7 @@ checkFunctorGen gen = do
   where
 
   identity ∷ f A → Boolean
-  identity f = (id <$> f) == id f
+  identity f = (F.identity <$> f) == F.identity f
 
   composition ∷ f A → (B → A) → (A → B) → Boolean
   composition x f g = ((<$>) (f <<< g) x) == (((f <$> _) <<< (g <$> _)) x)

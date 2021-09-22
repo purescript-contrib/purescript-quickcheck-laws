@@ -2,29 +2,30 @@ module Test.QuickCheck.Laws.Data.Ring where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (class Arbitrary, arbitrary, QC, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
 -- | - Additive inverse: `a - a = a + (-a) = (-a) + a = zero`
 checkRing
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Ring a
   ⇒ Arbitrary a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkRing _ = checkRingGen (arbitrary :: Gen a)
 
 checkRingGen
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Ring a
   ⇒ Eq a
   ⇒ Gen a
-  → QC eff Unit
+  → Effect Unit
 checkRingGen gen = do
-
   log "Checking 'Additive inverse' law for Ring"
   quickCheck' 1000 $ additiveInverse <$> gen
 

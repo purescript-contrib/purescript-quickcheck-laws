@@ -3,23 +3,24 @@ module Test.QuickCheck.Laws.Control.Semigroupoid where
 import Prelude
 
 import Control.Apply (lift3)
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC, arbitrary, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (B, C, D, E)
 import Type.Proxy (Proxy3)
 
 -- | - Associativity: `p <<< (q <<< r) = (p <<< q) <<< r`
 checkSemigroupoid
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Semigroupoid a
   ⇒ Arbitrary (a B C)
   ⇒ Arbitrary (a C D)
   ⇒ Arbitrary (a D E)
   ⇒ Eq (a B E)
   ⇒ Proxy3 a
-  → QC eff Unit
+  → Effect Unit
 checkSemigroupoid _ =
   checkSemigroupoidGen
     (arbitrary ∷ Gen (a B C))
@@ -27,13 +28,13 @@ checkSemigroupoid _ =
     (arbitrary ∷ Gen (a D E))
 
 checkSemigroupoidGen
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Semigroupoid a
   ⇒ Eq (a B E)
   ⇒ Gen (a B C)
   → Gen (a C D)
   → Gen (a D E)
-  → QC eff Unit
+  → Effect Unit
 checkSemigroupoidGen genbc gencd gende = do
 
   log "Checking 'Associativity' law for Semigroupoid"

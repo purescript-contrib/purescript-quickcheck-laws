@@ -2,9 +2,11 @@ module Test.QuickCheck.Laws.Data.Foldable where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
 import Data.Foldable (foldMap, fold, foldlDefault, foldl, foldr, class Foldable, foldrDefault)
-import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
@@ -13,20 +15,19 @@ import Type.Proxy (Proxy2)
 -- | - foldr: `foldr = foldrDefault`
 -- | - foldl: `foldl = foldlDefault`
 checkFoldable
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Foldable f
   ⇒ Arbitrary (f A)
   ⇒ Proxy2 f
-  → QC eff Unit
+  → Effect Unit
 checkFoldable _ = checkFoldableGen (arbitrary :: Gen (f A))
 
 checkFoldableGen
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Foldable f
   ⇒ Gen (f A)
-  → QC eff Unit
+  → Effect Unit
 checkFoldableGen gen = do
-
   log "Checking 'foldr' law for Foldable"
   quickCheck' 1000 $ foldrLaw <$> gen
 
@@ -39,26 +40,24 @@ checkFoldableGen gen = do
 
     foldlLaw :: f A -> (B -> A -> B) -> B -> Boolean
     foldlLaw t f z = foldl f z t == foldlDefault f z t
-                                                           
 
 -- | foldMap: `foldMap = fold <<< map`
 checkFoldableFunctor
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Foldable f
   ⇒ Functor f
   ⇒ Arbitrary (f A)
   ⇒ Proxy2 f
-  → QC eff Unit
+  → Effect Unit
 checkFoldableFunctor _ = checkFoldableFunctorGen (arbitrary :: Gen (f A))
 
 checkFoldableFunctorGen
-  ∷ ∀ eff f
+  ∷ ∀ f
   . Foldable f
   ⇒ Functor f
   ⇒ Gen (f A)
-  → QC eff Unit
+  → Effect Unit
 checkFoldableFunctorGen gen = do
-
   checkFoldableGen gen
 
   log "Checking 'foldMap' law for Foldable"

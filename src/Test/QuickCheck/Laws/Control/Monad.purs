@@ -2,8 +2,10 @@ module Test.QuickCheck.Laws.Control.Monad where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A)
 import Type.Proxy (Proxy2)
@@ -11,26 +13,25 @@ import Type.Proxy (Proxy2)
 -- | - Left Identity: `pure x >>= f = f x`
 -- | - Right Identity: `x >>= pure = x`
 checkMonad
-  ∷ ∀ eff m
+  ∷ ∀ m
   . Monad m
   ⇒ Arbitrary (m A)
   ⇒ Eq (m A)
   ⇒ Proxy2 m
-  → QC eff Unit
+  → Effect Unit
 checkMonad _ =
   checkMonadGen
     (arbitrary :: Gen (m A))
     (arbitrary :: Gen (A → m A))
 
 checkMonadGen
-  ∷ ∀ eff m
+  ∷ ∀ m
   . Monad m
   ⇒ Eq (m A)
   ⇒ Gen (m A)
   → Gen (A → m A)
-  → QC eff Unit
+  → Effect Unit
 checkMonadGen gen genf = do
-
   log "Checking 'Left identity' law for Monad"
   quickCheck' 1000 $ leftIdentity <$> genf
 

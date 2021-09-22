@@ -2,30 +2,31 @@ module Test.QuickCheck.Laws.Data.BooleanAlgebra where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
 import Data.BooleanAlgebra (tt)
-import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
 -- | - Excluded middle: `a || not a = tt`
 checkBooleanAlgebra
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Arbitrary a
   ⇒ BooleanAlgebra a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkBooleanAlgebra _ = checkBooleanAlgebraGen (arbitrary :: Gen a)
 
 checkBooleanAlgebraGen
-  ∷ ∀ eff a
+  ∷ ∀ a
   . BooleanAlgebra a
   ⇒ Eq a
   ⇒ Gen a
-  → QC eff Unit
+  → Effect Unit
 checkBooleanAlgebraGen gen = do
-
   log "Checking 'Excluded middle' law for BooleanAlgebra"
   quickCheck' 1000 $ excludedMiddle <$> gen
 

@@ -3,9 +3,10 @@ module Test.QuickCheck.Laws.Data.Semiring where
 import Prelude
 
 import Control.Apply (lift2, lift3)
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (QC, arbitrary, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
@@ -21,22 +22,21 @@ import Type.Proxy (Proxy)
 -- |   - Right distributivity: `(a + b) * c = (a * c) + (b * c)`
 -- | - Annihiliation: `zero * a = a * zero = zero`
 checkSemiring
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Semiring a
   ⇒ Arbitrary a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkSemiring _ = checkSemiringGen (arbitrary :: Gen a)
 
 checkSemiringGen
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Semiring a
   ⇒ Eq a
   ⇒ Gen a
-  → QC eff Unit
+  → Effect Unit
 checkSemiringGen gen = do
-
   log "Checking 'Associativity' law for Semiring addition"
   quickCheck' 1000 $ lift3 associativeAddition gen gen gen
 
@@ -57,6 +57,9 @@ checkSemiringGen gen = do
 
   log "Checking 'Right distribution' law for Semiring"
   quickCheck' 1000 $ lift3 rightDistribution gen gen gen
+
+  log "Checking 'Annihilation' law for Semiring"
+  quickCheck' 1000 $ annihiliation <$> gen
 
   where
 

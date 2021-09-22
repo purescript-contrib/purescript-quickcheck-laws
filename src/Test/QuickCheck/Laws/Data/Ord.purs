@@ -3,8 +3,10 @@ module Test.QuickCheck.Laws.Data.Ord where
 import Prelude
 
 import Control.Apply (lift2, lift3)
-import Control.Monad.Eff.Console (log)
-import Test.QuickCheck (class Arbitrary, QC, arbitrary, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
@@ -12,20 +14,19 @@ import Type.Proxy (Proxy)
 -- | - Antisymmetry: if `a <= b` and `b <= a` then `a = b`
 -- | - Transitivity: if `a <= b` and `b <= c` then `a <= c`
 checkOrd
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Arbitrary a
   ⇒ Ord a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkOrd _ = checkOrdGen (arbitrary :: Gen a)
 
 checkOrdGen
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Ord a
   ⇒ Gen a
-  → QC eff Unit
+  → Effect Unit
 checkOrdGen gen = do
-
   log "Checking 'Reflexivity' law for Ord"
   quickCheck' 1000 $ reflexivity <$> gen
 
