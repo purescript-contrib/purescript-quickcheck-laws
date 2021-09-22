@@ -36,10 +36,10 @@ checkFoldableGen gen = do
 
   where
     foldrLaw :: f A -> (A -> B -> B) -> B -> Boolean
-    foldrLaw t f z = foldr f z t == foldrDefault f z t
+    foldrLaw fa f b = foldr f b fa == foldrDefault f b fa
 
     foldlLaw :: f A -> (B -> A -> B) -> B -> Boolean
-    foldlLaw t f z = foldl f z t == foldlDefault f z t
+    foldlLaw fa f b = foldl f b fa == foldlDefault f b fa
 
 -- | foldMap: `foldMap = fold <<< map`
 checkFoldableFunctor
