@@ -9,7 +9,7 @@ import Test.QuickCheck.Laws.Data.EuclideanRing (checkEuclideanRing, checkEuclide
 import Test.QuickCheck.Laws.Data.Field (checkField, checkFieldGen) as Exports
 import Test.QuickCheck.Laws.Data.Foldable (checkFoldable, checkFoldableGen, checkFoldableFunctor, checkFoldableFunctorGen) as Exports
 import Test.QuickCheck.Laws.Data.Functor (checkFunctor, checkFunctorGen) as Exports
-import Test.QuickCheck.Laws.Data.FunctorWithIndex (checkFunctorWithIndex) as Exports
+import Test.QuickCheck.Laws.Data.FunctorWithIndex (checkFunctorWithIndex, checkFunctorWithIndexGen) as Exports
 import Test.QuickCheck.Laws.Data.DivisionRing (checkDivisionRing, checkDivisionRingGen) as Exports
 import Test.QuickCheck.Laws.Data.HeytingAlgebra (checkHeytingAlgebra, checkHeytingAlgebraGen) as Exports
 import Test.QuickCheck.Laws.Data.Monoid (checkMonoid, checkMonoidGen) as Exports
