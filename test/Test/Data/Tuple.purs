@@ -14,8 +14,7 @@ checkTuple = checkLaws "Tuple" do
   Data.checkEq prxTuple
   Data.checkOrd prxTuple
   Data.checkBounded prxTuple
-  Data.checkEnum prxTuple  
-  Data.checkBoundedEnum prxTuple
+  Data.checkEnum prxTuple
   Data.checkSemigroup prxTuple
   Data.checkMonoid prxTuple
   Data.checkFunctor prx2Tuple
