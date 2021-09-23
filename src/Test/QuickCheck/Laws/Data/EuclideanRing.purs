@@ -2,28 +2,33 @@ module Test.QuickCheck.Laws.Data.EuclideanRing where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
-
--- | - Integral domain: `a /= 0` and `b /= 0` implies `a * b /= 0`
--- | - Multiplicative Euclidean function: ``a = (a / b) * b + (a `mod` b)``
--- |   where `degree a > 0` and `degree a <= degree (a * b)`
+-- | - Integral domain: `one /= zero`, and if `a` and `b` are both nonzero then
+-- |   so is their product `a * b`
+-- | - Euclidean function `degree`:
+-- |   - Nonnegativity: For all nonzero `a`, `degree a >= 0`
+-- |   - Quotient/remainder: For all `a` and `b`, where `b` is nonzero,
+-- |     let `q = a / b` and ``r = a `mod` b``; then `a = q*b + r`, and also
+-- |     either `r = zero` or `degree r < degree b`
+-- | - Submultiplicative euclidean function:
+-- |   - For all nonzero `a` and `b`, `degree a <= degree (a * b)`
 checkEuclideanRing
-  ∷ ∀ eff a
+  ∷ ∀ a
   . EuclideanRing a
   ⇒ Arbitrary a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkEuclideanRing _ = do
 
   log "Checking 'Integral domain' law for EuclideanRing"
   log "one /= zero:"
-  quickCheck' 1 \(_ :: Unit) -> (zero /= one :: a)
+  quickCheck' 1 \(_ :: Unit) -> (zero /= (one :: a))
   log "product of nonzero elements is nonzero:"
   quickCheck' 1000 integralDomain
 

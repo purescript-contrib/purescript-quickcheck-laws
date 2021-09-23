@@ -2,22 +2,22 @@ module Test.QuickCheck.Laws.Control.Category where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-
-import Type.Proxy (Proxy3)
-
-import Test.QuickCheck (QC, quickCheck')
+import Data.Function as F
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Laws (B, C)
+import Type.Proxy (Proxy3)
 
 -- | - Identity: `id <<< p = p <<< id = p`
 checkCategory
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Category a
   ⇒ Arbitrary (a B C)
   ⇒ Eq (a B C)
   ⇒ Proxy3 a
-  → QC eff Unit
+  → Effect Unit
 checkCategory _ = do
 
   log "Checking 'Identity' law for Category"
@@ -26,5 +26,5 @@ checkCategory _ = do
   where
 
   identity ∷ a B C → Boolean
-  identity p = (id <<< p) == p
-            && (p <<< id) == p
+  identity p = (F.identity <<< p) == p
+            && (p <<< F.identity) == p

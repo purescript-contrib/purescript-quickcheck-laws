@@ -2,12 +2,14 @@
 module Test.QuickCheck.Laws.Data.BoundedEnum where
 
 import Prelude
-import Control.Monad.Eff.Console (log)
+
 import Data.Array (replicate, foldl)
 import Data.Enum (toEnum, Cardinality, cardinality, fromEnum, class BoundedEnum, pred, succ)
 import Data.Maybe (Maybe(Just))
 import Data.Newtype (unwrap)
-import Test.QuickCheck (QC, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Type.Proxy (Proxy)
 
@@ -19,16 +21,16 @@ import Type.Proxy (Proxy)
 -- | - enumpred: `forall a > bottom: fromEnum <$> pred a = Just (fromEnum a - 1)`
 -- | - enumsucc: `forall a < top:  fromEnum <$> succ a = Just (fromEnum a + 1)`
 -- | - compare: `compare e1 e2 = compare (fromEnum e1) (fromEnum e2)`
--- | - tofromenum: toEnum (fromEnum a) = Just a
+-- | - tofromenum: `toEnum (fromEnum a) = Just a`
 
 checkBoundedEnum
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Arbitrary a
   ⇒ BoundedEnum a
   ⇒ Ord a
   ⇒ Proxy a
-  → QC eff Unit
-checkBoundedEnum p = do
+  → Effect Unit
+checkBoundedEnum _ = do
 
   log "Checking 'succ' law for BoundedEnum"
   quickCheck' 1 succLaw

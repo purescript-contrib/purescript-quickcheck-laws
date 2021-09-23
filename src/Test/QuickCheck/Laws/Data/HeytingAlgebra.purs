@@ -2,14 +2,12 @@ module Test.QuickCheck.Laws.Data.HeytingAlgebra where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-
 import Data.HeytingAlgebra (tt, ff, implies)
-
-import Type.Proxy (Proxy)
-
-import Test.QuickCheck (QC, quickCheck')
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Type.Proxy (Proxy)
 
 -- | - Associativity:
 -- |   - `a || (b || c) = (a || b) || c`
@@ -34,12 +32,12 @@ import Test.QuickCheck.Arbitrary (class Arbitrary)
 -- | - Complemented:
 -- |   - ``not a = a `implies` ff``
 checkHeytingAlgebra
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Arbitrary a
   ⇒ HeytingAlgebra a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkHeytingAlgebra _ = do
 
   log "Checking 'Associativity of disjunction' law for HeytingAlgebra"
@@ -92,7 +90,7 @@ checkHeytingAlgebra _ = do
   absorption op1 op2 a b = (a `op1` (a `op2` b)) == a
 
   idempotent ∷ (a → a → a) → a → a → Boolean
-  idempotent op a b = a `op` a == a
+  idempotent op a _ = a `op` a == a
 
   identity ∷ (a → a → a) → a → a → Boolean
   identity op ident a = a `op` ident == a

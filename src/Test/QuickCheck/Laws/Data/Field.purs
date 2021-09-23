@@ -2,21 +2,20 @@ module Test.QuickCheck.Laws.Data.Field where
 
 import Prelude
 
-import Control.Monad.Eff.Console (log)
-
+import Effect (Effect)
+import Effect.Console (log)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Type.Proxy (Proxy)
 
-import Test.QuickCheck (QC, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
-
--- | - Non-zero multiplicative inverse: ``a `mod` b = 0` for all `a` and `b`
+-- | - Non-zero multiplicative inverse: ```a `mod` b = 0``` for all `a` and `b`
 checkField
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Field a
   ⇒ Arbitrary a
   ⇒ Eq a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkField _ = do
 
   log "Checking 'Non-zero multiplicative inverse' law for Field"

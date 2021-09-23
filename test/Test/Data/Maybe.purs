@@ -3,14 +3,13 @@ module Test.Data.Maybe where
 import Prelude
 
 import Data.Maybe (Maybe)
-
-import Test.QuickCheck.Laws (QC, A, checkLaws)
+import Effect (Effect)
+import Test.QuickCheck.Laws (A, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-
 import Type.Proxy (Proxy(..), Proxy2(..))
 
-checkMaybe ∷ ∀ eff. QC eff Unit
+checkMaybe ∷ Effect Unit
 checkMaybe = checkLaws "Maybe" do
   Data.checkEq prxMaybe
   Data.checkOrd prxMaybe
@@ -20,7 +19,8 @@ checkMaybe = checkLaws "Maybe" do
   Data.checkSemigroup prxMaybe
   Data.checkMonoid prxMaybe
   Data.checkFunctor prx2Maybe
-  Data.checkFoldableFunctor prx2Maybe  
+  Data.checkFunctorWithIndex prx2Maybe
+  Data.checkFoldableFunctor prx2Maybe
   Control.checkApply prx2Maybe
   Control.checkApplicative prx2Maybe
   Control.checkAlt prx2Maybe
