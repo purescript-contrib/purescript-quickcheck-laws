@@ -2,11 +2,13 @@
 module Test.QuickCheck.Laws.Data.Enum where
 
 import Prelude
-import Control.Monad.Eff.Console (log)
+
+import Effect.Console (log)
+import Effect
 import Data.Enum (pred, succ, class Enum)
 import Data.Maybe (maybe)
-import Test.QuickCheck (QC, quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck (quickCheck')
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Type.Proxy (Proxy)
 
 checkEnum
@@ -15,9 +17,8 @@ checkEnum
   ⇒ Enum a
   ⇒ Ord a
   ⇒ Proxy a
-  → QC eff Unit
+  → Effect Unit
 checkEnum _ = do
-
 
   log "Checking 'Successor' law for Enum"
   quickCheck' 1000 successor
@@ -36,7 +37,6 @@ checkEnum _ = do
 
   log "Checking 'Non-skipping pred' law for Enum"
   quickCheck' 1000 nonSkippingPred
-
 
   where
 
@@ -57,4 +57,3 @@ checkEnum _ = do
 
     nonSkippingPred :: a -> a -> Boolean
     nonSkippingPred a b = a <= b || maybe false (b <= _) (pred a)
-
