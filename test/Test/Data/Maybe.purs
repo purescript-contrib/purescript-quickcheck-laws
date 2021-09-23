@@ -15,7 +15,6 @@ checkMaybe = checkLaws "Maybe" do
   Data.checkOrd prxMaybe
   Data.checkBounded prxMaybe
   Data.checkEnum prxMaybe  
-  Data.checkBoundedEnum prxMaybe
   Data.checkSemigroup prxMaybe
   Data.checkMonoid prxMaybe
   Data.checkFunctor prx2Maybe
