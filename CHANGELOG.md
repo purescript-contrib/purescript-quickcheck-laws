@@ -11,6 +11,7 @@ New features:
 Bugfixes:
 
 Other improvements:
+- Fix integer overflow error in test for Ints (#58 by @JordanMartinez)
 
 ## [v6.0.1](https://github.com/purescript-contrib/purescript-quickcheck-laws/releases/tag/v6.0.1) - 2021-05-06
 
