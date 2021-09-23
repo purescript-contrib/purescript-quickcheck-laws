@@ -4,15 +4,15 @@ module Test.QuickCheck.Laws.Data.Enum where
 import Prelude
 
 import Effect.Console (log)
-import Effect
+import Effect (Effect)
 import Data.Enum (pred, succ, class Enum)
 import Data.Maybe (maybe)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Type.Proxy (Proxy)
 
 checkEnum
-  ∷ ∀ eff a
+  ∷ ∀ a
   . Arbitrary a
   ⇒ Enum a
   ⇒ Ord a
