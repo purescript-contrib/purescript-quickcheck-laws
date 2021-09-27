@@ -6,7 +6,8 @@ import Data.Function as F
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (B, C)
 import Type.Proxy (Proxy3)
 
@@ -18,10 +19,18 @@ checkCategory
   ⇒ Eq (a B C)
   ⇒ Proxy3 a
   → Effect Unit
-checkCategory _ = do
+checkCategory _ = checkCategoryGen (arbitrary :: Gen (a B C))
 
+checkCategoryGen
+  ∷ ∀ a
+  . Category a
+  ⇒ Arbitrary (a B C)
+  ⇒ Eq (a B C)
+  ⇒ Gen (a B C)
+  → Effect Unit
+checkCategoryGen gen = do
   log "Checking 'Identity' law for Category"
-  quickCheck' 1000 identity
+  quickCheck' 1000 $ identity <$> gen
 
   where
 

@@ -6,7 +6,8 @@ import Data.BooleanAlgebra (tt)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
 -- | - Excluded middle: `a || not a = tt`
@@ -17,10 +18,17 @@ checkBooleanAlgebra
   ⇒ Eq a
   ⇒ Proxy a
   → Effect Unit
-checkBooleanAlgebra _ = do
+checkBooleanAlgebra _ = checkBooleanAlgebraGen (arbitrary :: Gen a)
 
+checkBooleanAlgebraGen
+  ∷ ∀ a
+  . BooleanAlgebra a
+  ⇒ Eq a
+  ⇒ Gen a
+  → Effect Unit
+checkBooleanAlgebraGen gen = do
   log "Checking 'Excluded middle' law for BooleanAlgebra"
-  quickCheck' 1000 excludedMiddle
+  quickCheck' 1000 $ excludedMiddle <$> gen
 
   where
 

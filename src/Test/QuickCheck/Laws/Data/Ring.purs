@@ -5,7 +5,8 @@ import Prelude
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
 -- | - Additive inverse: `a - a = a + (-a) = (-a) + a = zero`
@@ -16,10 +17,17 @@ checkRing
   ⇒ Eq a
   ⇒ Proxy a
   → Effect Unit
-checkRing _ = do
+checkRing _ = checkRingGen (arbitrary :: Gen a)
 
+checkRingGen
+  ∷ ∀ a
+  . Ring a
+  ⇒ Eq a
+  ⇒ Gen a
+  → Effect Unit
+checkRingGen gen = do
   log "Checking 'Additive inverse' law for Ring"
-  quickCheck' 1000 additiveInverse
+  quickCheck' 1000 $ additiveInverse <$> gen
 
   where
 

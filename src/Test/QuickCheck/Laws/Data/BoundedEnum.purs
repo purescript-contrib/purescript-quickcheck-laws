@@ -3,6 +3,7 @@ module Test.QuickCheck.Laws.Data.BoundedEnum where
 
 import Prelude
 
+import Control.Apply (lift2)
 import Data.Array (replicate, foldl)
 import Data.Enum (toEnum, Cardinality, cardinality, fromEnum, class BoundedEnum, pred, succ)
 import Data.Maybe (Maybe(Just))
@@ -10,7 +11,8 @@ import Data.Newtype (unwrap)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
 
@@ -30,8 +32,15 @@ checkBoundedEnum
   ⇒ Ord a
   ⇒ Proxy a
   → Effect Unit
-checkBoundedEnum _ = do
+checkBoundedEnum _ = checkBoundedEnumGen (arbitrary :: Gen a)
 
+checkBoundedEnumGen
+  ∷ ∀ a
+  . BoundedEnum a
+  ⇒ Ord a
+  ⇒ Gen a
+  → Effect Unit
+checkBoundedEnumGen gen = do
   log "Checking 'succ' law for BoundedEnum"
   quickCheck' 1 succLaw
 
@@ -39,28 +48,28 @@ checkBoundedEnum _ = do
   quickCheck' 1 predLaw
 
   log "Checking 'predsucc' law for BoundedEnum"
-  quickCheck' 1000 predsuccLaw
+  quickCheck' 1000 $ predsuccLaw <$> gen
 
   log "Checking 'succpred' law for BoundedEnum"
-  quickCheck' 1000 succpredLaw
+  quickCheck' 1000 $ succpredLaw <$> gen
 
   log "Checking 'enumpred' law for BoundedEnum"
-  quickCheck' 1000 enumpredLaw
+  quickCheck' 1000 $ enumpredLaw <$> gen
 
   log "Checking 'enumsucc' law for BoundedEnum"
-  quickCheck' 1000 enumsuccLaw
+  quickCheck' 1000 $ enumsuccLaw <$> gen
 
   log "Checking 'compare' law for BoundedEnum"
-  quickCheck' 1000 compareLaw
+  quickCheck' 1000 $ lift2 compareLaw gen gen
 
   log "Checking 'tofromenum' law for BoundedEnum"
-  quickCheck' 1000 tofromenumLaw
+  quickCheck' 1000 $ tofromenumLaw <$> gen
 
 
   where
     c :: Int
     c = unwrap (cardinality :: Cardinality a)
-    
+
     succLaw :: Boolean
     succLaw = (Just top :: Maybe a) ==
                 foldl (>>=) (pure bottom) (replicate (c - 1) succ)
@@ -71,13 +80,13 @@ checkBoundedEnum _ = do
 
     predsuccLaw :: a -> Boolean
     predsuccLaw a = a == bottom || (pred a >>= succ) == Just a
-    
+
     succpredLaw :: a -> Boolean
     succpredLaw a = a == top || (succ a >>= pred) == Just a
 
     enumpredLaw :: a -> Boolean
     enumpredLaw a = a == bottom || (fromEnum <$> pred a) == Just (fromEnum a - 1)
-    
+
     enumsuccLaw :: a -> Boolean
     enumsuccLaw a = a == top || (fromEnum <$> succ a) == Just (fromEnum a + 1)
 

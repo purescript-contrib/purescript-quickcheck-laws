@@ -2,10 +2,12 @@ module Test.QuickCheck.Laws.Control.Bind where
 
 import Prelude
 
+import Control.Apply (lift3)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A)
 import Type.Proxy (Proxy2)
 
@@ -17,10 +19,18 @@ checkBind
   ⇒ Eq (m A)
   ⇒ Proxy2 m
   → Effect Unit
-checkBind _ = do
+checkBind _ = checkBindGen (arbitrary :: Gen (m A)) (arbitrary :: Gen (A → m A))
 
+checkBindGen
+  ∷ ∀ m
+  . Bind m
+  ⇒ Eq (m A)
+  ⇒ Gen (m A)
+  → Gen (A → m A)
+  → Effect Unit
+checkBindGen gen genF = do
   log "Checking 'Associativity' law for Bind"
-  quickCheck' 1000 associativity
+  quickCheck' 1000 $ lift3 associativity gen genF genF
 
   where
 
