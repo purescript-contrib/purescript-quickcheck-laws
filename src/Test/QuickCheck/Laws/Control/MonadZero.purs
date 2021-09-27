@@ -7,7 +7,8 @@ import Control.Plus (empty)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
 
@@ -20,10 +21,18 @@ checkMonadZero
   ⇒ Eq (m B)
   ⇒ Proxy2 m
   → Effect Unit
-checkMonadZero _ = do
+checkMonadZero _ = checkMonadZeroGen (arbitrary ∷ Gen (A → m B))
+
+checkMonadZeroGen
+  ∷ ∀ m
+  . MonadZero m
+  ⇒ Eq (m B)
+  ⇒ Gen (A → m B)
+  → Effect Unit
+checkMonadZeroGen gen = do
 
   log "Checking 'Annihilation' law for MonadZero"
-  quickCheck' 1000 annihilation
+  quickCheck' 1000 $ annihilation <$> gen
 
   where
 

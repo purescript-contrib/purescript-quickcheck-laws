@@ -5,7 +5,8 @@ import Prelude
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
 -- | - Left identity: `mempty <> x = x`
@@ -17,13 +18,20 @@ checkMonoid
   ⇒ Eq m
   ⇒ Proxy m
   → Effect Unit
-checkMonoid _ = do
+checkMonoid _ = checkMonoidGen (arbitrary :: Gen m)
 
+checkMonoidGen
+  ∷ ∀ m
+  . Monoid m
+  ⇒ Eq m
+  ⇒ Gen m
+  → Effect Unit
+checkMonoidGen gen = do
   log "Checking 'Left identity' law for Monoid"
-  quickCheck' 1000 leftIdentity
+  quickCheck' 1000 $ leftIdentity <$> gen
 
   log "Checking 'Right identity' law for Monoid"
-  quickCheck' 1000 rightIdentity
+  quickCheck' 1000 $ rightIdentity <$> gen
 
   where
 

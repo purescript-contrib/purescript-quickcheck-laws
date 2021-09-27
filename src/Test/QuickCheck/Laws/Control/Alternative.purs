@@ -4,11 +4,13 @@ import Prelude
 
 import Control.Alt ((<|>))
 import Control.Alternative (class Alternative)
+import Control.Apply (lift3)
 import Control.Plus (empty)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
 
@@ -21,14 +23,26 @@ checkAlternative
   ⇒ Arbitrary (f A)
   ⇒ Eq (f A)
   ⇒ Eq (f B)
-  ⇒ Proxy2 f  → Effect Unit
-checkAlternative _ = do
+  ⇒ Proxy2 f
+  → Effect Unit
+checkAlternative =
+  checkAlternativeGen (arbitrary :: Gen (f A)) (arbitrary :: Gen (f (A → B)))
 
+checkAlternativeGen
+  ∷ ∀ f
+  . Alternative f
+  ⇒ Eq (f A)
+  ⇒ Eq (f B)
+  ⇒ Gen (f A)
+  → Gen (f (A → B))
+  → Proxy2 f
+  → Effect Unit
+checkAlternativeGen gen genf _ = do
   log "Checking 'Left identity' law for Alternative"
-  quickCheck' 1000 distributivity
+  quickCheck' 1000 $ lift3 distributivity genf genf gen
 
   log "Checking 'Annihilation' law for Alternative"
-  quickCheck' 1000 annihilation
+  quickCheck' 1000 $ annihilation <$> gen
 
   where
 

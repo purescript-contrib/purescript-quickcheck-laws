@@ -2,11 +2,13 @@ module Test.QuickCheck.Laws.Data.HeytingAlgebra where
 
 import Prelude
 
+import Control.Apply (lift2, lift3)
 import Data.HeytingAlgebra (tt, ff, implies)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
 -- | - Associativity:
@@ -38,45 +40,52 @@ checkHeytingAlgebra
   ⇒ Eq a
   ⇒ Proxy a
   → Effect Unit
-checkHeytingAlgebra _ = do
+checkHeytingAlgebra _ = checkHeytingAlgebraGen (arbitrary :: Gen a)
 
+checkHeytingAlgebraGen
+  ∷ ∀ a
+  . HeytingAlgebra a
+  ⇒ Eq a
+  ⇒ Gen a
+  → Effect Unit
+checkHeytingAlgebraGen gen = do
   log "Checking 'Associativity of disjunction' law for HeytingAlgebra"
-  quickCheck' 1000 (associativity (||))
+  quickCheck' 1000 $ lift3 (associativity (||)) gen gen gen
 
   log "Checking 'Associativity of conjunction' law for HeytingAlgebra"
-  quickCheck' 1000 (associativity (&&))
+  quickCheck' 1000 $ lift3 (associativity (&&)) gen gen gen
 
   log "Checking 'Commutativity of disjunction' law for HeytingAlgebra"
-  quickCheck' 1000 (commutativity (||))
+  quickCheck' 1000 $ lift2 (commutativity (||)) gen gen
 
   log "Checking 'Commutativity of conjunction' law for HeytingAlgebra"
-  quickCheck' 1000 (commutativity (&&))
+  quickCheck' 1000 $ lift2 (commutativity (&&)) gen gen
 
   log "Checking 'Absorption of disjunction' law for HeytingAlgebra"
-  quickCheck' 1000 (absorption (||) (&&))
+  quickCheck' 1000 $ lift2 (absorption (||) (&&)) gen gen
 
   log "Checking 'Absorption of conjunction' law for HeytingAlgebra"
-  quickCheck' 1000 (absorption (&&) (||))
+  quickCheck' 1000 $ lift2 (absorption (&&) (||)) gen gen
 
   log "Checking 'Idempotent disjunction' law for HeytingAlgebra"
-  quickCheck' 1000 (idempotent (||))
+  quickCheck' 1000 $ lift2 (idempotent (||)) gen gen
 
   log "Checking 'Idempotent conjunction' law for HeytingAlgebra"
-  quickCheck' 1000 (idempotent (&&))
+  quickCheck' 1000 $ lift2 (idempotent (&&)) gen gen
 
   log "Checking 'Disjunction identity' law for HeytingAlgebra"
-  quickCheck' 1000 (identity (||) ff)
+  quickCheck' 1000 $ identity (||) ff <$> gen
 
   log "Checking 'Conjunction identity' law for HeytingAlgebra"
-  quickCheck' 1000 (identity (&&) tt)
+  quickCheck' 1000 $ identity (&&) tt <$> gen
 
   log "Checking 'Implication' laws for HeytingAlgebra"
-  quickCheck' 1000 implicationId
-  quickCheck' 1000 implications
-  quickCheck' 1000 distributiveImplication
+  quickCheck' 1000 $ implicationId <$> gen
+  quickCheck' 1000 $ lift2 implications gen gen
+  quickCheck' 1000 $ lift3 distributiveImplication gen gen gen
 
   log "Checking 'Complemented' law for HeytingAlgebra"
-  quickCheck' 1000 complemented
+  quickCheck' 1000 $ complemented <$> gen
 
   where
 

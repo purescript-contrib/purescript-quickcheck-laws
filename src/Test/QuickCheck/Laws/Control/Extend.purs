@@ -2,11 +2,13 @@ module Test.QuickCheck.Laws.Control.Extend where
 
 import Prelude
 
+import Control.Apply (lift3)
 import Control.Extend (class Extend, (<<=))
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary, class Coarbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, class Coarbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B, C)
 import Type.Proxy (Proxy2)
 
@@ -20,10 +22,26 @@ checkExtend
   ⇒ Eq (w C)
   ⇒ Proxy2 w
   → Effect Unit
-checkExtend _ = do
+checkExtend _ =
+  checkExtendGen
+    (arbitrary :: Gen (w A))
+    (arbitrary :: Gen (w B → C))
+    (arbitrary :: Gen (w A → B))
 
+checkExtendGen
+  ∷ ∀ w
+  . Extend w
+  ⇒ Arbitrary (w A)
+  ⇒ Coarbitrary (w A)
+  ⇒ Coarbitrary (w B)
+  ⇒ Eq (w C)
+  ⇒ Gen (w A)
+  → Gen (w B → C)
+  → Gen (w A → B)
+  → Effect Unit
+checkExtendGen gen genwbc genwab = do
   log "Checking 'Associativity' law for Extend"
-  quickCheck' 1000 associativity
+  quickCheck' 1000 $ lift3 associativity genwbc genwab gen
 
   where
 
