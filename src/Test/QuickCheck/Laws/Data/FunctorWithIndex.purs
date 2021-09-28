@@ -6,8 +6,9 @@ import Data.Function as F
 import Data.FunctorWithIndex (class FunctorWithIndex, mapWithIndex)
 import Effect (Effect)
 import Effect.Console (log)
-import Test.QuickCheck (class Coarbitrary, quickCheck')
+import Test.QuickCheck (class Coarbitrary, arbitrary, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
 
@@ -21,20 +22,29 @@ checkFunctorWithIndex
   ⇒ Eq (f A)
   ⇒ Proxy2 f
   → Effect Unit
-checkFunctorWithIndex _ = do
+checkFunctorWithIndex _ = checkFunctorWithIndexGen (arbitrary :: Gen (f A))
+
+checkFunctorWithIndexGen
+  ∷ ∀ f i
+  . FunctorWithIndex i f
+  ⇒ Coarbitrary i
+  ⇒ Eq (f A)
+  ⇒ Gen (f A)
+  → Effect Unit
+checkFunctorWithIndexGen gen = do
 
   log "Checking 'Identity' law for FunctorWithIndex"
-  quickCheck' 1000 identity
+  quickCheck' 1000 $ identity <$> gen
 
   log "Checking 'Composition' law for FunctorWithIndex"
-  quickCheck' 1000 composition
+  quickCheck' 1000 $ composition <$> gen
 
   where
 
   identity ∷ f A → Boolean
   identity x = mapWithIndex (\_ a → a) x == F.identity x
 
-  composition ∷ (i → B → A) → (i → A → B) → f A → Boolean
-  composition f g x =
-    (mapWithIndex f <<< mapWithIndex g) x
-      == mapWithIndex (\i -> f i <<< g i) x
+  composition ∷ f A → (i → B → A) → (i → A → B) → Boolean
+  composition fa f g =
+    (mapWithIndex f <<< mapWithIndex g) fa
+      == mapWithIndex (\i -> f i <<< g i) fa

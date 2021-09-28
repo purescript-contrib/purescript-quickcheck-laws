@@ -7,10 +7,12 @@ Notable changes to this project are documented in this file. The format is based
 Breaking changes:
 
 New features:
+- Provide `Arbitrary`-less law checks (#36 by @matthewleon, #57 by @JordanMartinez)
 
 Bugfixes:
 
 Other improvements:
+- Fix integer overflow error in test for Ints (#58 by @JordanMartinez)
 
 ## [v6.0.1](https://github.com/purescript-contrib/purescript-quickcheck-laws/releases/tag/v6.0.1) - 2021-05-06
 

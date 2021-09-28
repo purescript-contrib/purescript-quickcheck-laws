@@ -2,10 +2,12 @@ module Test.QuickCheck.Laws.Data.Semiring where
 
 import Prelude
 
+import Control.Apply (lift2, lift3)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Type.Proxy (Proxy)
 
 -- | - Commutative monoid under addition:
@@ -26,31 +28,38 @@ checkSemiring
   ⇒ Eq a
   ⇒ Proxy a
   → Effect Unit
-checkSemiring _ = do
+checkSemiring _ = checkSemiringGen (arbitrary :: Gen a)
 
+checkSemiringGen
+  ∷ ∀ a
+  . Semiring a
+  ⇒ Eq a
+  ⇒ Gen a
+  → Effect Unit
+checkSemiringGen gen = do
   log "Checking 'Associativity' law for Semiring addition"
-  quickCheck' 1000 associativeAddition
+  quickCheck' 1000 $ lift3 associativeAddition gen gen gen
 
   log "Checking 'Identity' law for Semiring addition"
-  quickCheck' 1000 identityAddition
+  quickCheck' 1000 $ identityAddition <$> gen
 
   log "Checking 'Commutative' law for Semiring addition"
-  quickCheck' 1000 commutativeAddition
+  quickCheck' 1000 $ lift2 commutativeAddition gen gen
 
   log "Checking 'Associativity' law for Semiring multiplication"
-  quickCheck' 1000 associativeMultiplication
+  quickCheck' 1000 $ lift3 associativeMultiplication gen gen gen
 
   log "Checking 'Identity' law for Semiring multiplication"
-  quickCheck' 1000 identityMultiplication
+  quickCheck' 1000 $ identityMultiplication <$> gen
 
   log "Checking 'Left distribution' law for Semiring"
-  quickCheck' 1000 leftDistribution
+  quickCheck' 1000 $ lift3 leftDistribution gen gen gen
 
   log "Checking 'Right distribution' law for Semiring"
-  quickCheck' 1000 rightDistribution
+  quickCheck' 1000 $ lift3 rightDistribution gen gen gen
 
   log "Checking 'Annihilation' law for Semiring"
-  quickCheck' 1000 annihiliation
+  quickCheck' 1000 $ annihiliation <$> gen
 
   where
 

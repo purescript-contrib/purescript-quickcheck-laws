@@ -2,10 +2,12 @@ module Test.QuickCheck.Laws.Control.Semigroupoid where
 
 import Prelude
 
+import Control.Apply (lift3)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (B, C, D, E)
 import Type.Proxy (Proxy3)
 
@@ -19,10 +21,24 @@ checkSemigroupoid
   ⇒ Eq (a B E)
   ⇒ Proxy3 a
   → Effect Unit
-checkSemigroupoid _ = do
+checkSemigroupoid _ =
+  checkSemigroupoidGen
+    (arbitrary ∷ Gen (a B C))
+    (arbitrary ∷ Gen (a C D))
+    (arbitrary ∷ Gen (a D E))
+
+checkSemigroupoidGen
+  ∷ ∀ a
+  . Semigroupoid a
+  ⇒ Eq (a B E)
+  ⇒ Gen (a B C)
+  → Gen (a C D)
+  → Gen (a D E)
+  → Effect Unit
+checkSemigroupoidGen genbc gencd gende = do
 
   log "Checking 'Associativity' law for Semigroupoid"
-  quickCheck' 1000 associativity
+  quickCheck' 1000 $ lift3 associativity gende gencd genbc
 
   where
 

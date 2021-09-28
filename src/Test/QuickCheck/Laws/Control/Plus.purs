@@ -7,7 +7,8 @@ import Control.Plus (class Plus, empty)
 import Effect (Effect)
 import Effect.Console (log)
 import Test.QuickCheck (quickCheck')
-import Test.QuickCheck.Arbitrary (class Arbitrary)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
 import Type.Proxy (Proxy2)
 
@@ -22,13 +23,21 @@ checkPlus
   ⇒ Eq (f B)
   ⇒ Proxy2 f
   → Effect Unit
-checkPlus _ = do
+checkPlus _ = checkPlusGen (arbitrary ∷ Gen (f A))
 
+checkPlusGen
+  ∷ ∀ f
+  . Plus f
+  ⇒ Eq (f A)
+  ⇒ Eq (f B)
+  ⇒ Gen (f A)
+  → Effect Unit
+checkPlusGen gen = do
   log "Checking 'Left identity' law for Plus"
-  quickCheck' 1000 leftIdentity
+  quickCheck' 1000 $ leftIdentity <$> gen
 
   log "Checking 'Right identity' law for Plus"
-  quickCheck' 1000 rightIdentity
+  quickCheck' 1000 $ rightIdentity <$> gen
 
   log "Checking 'Annihilation' law for Plus"
   quickCheck' 1000 annihilation
