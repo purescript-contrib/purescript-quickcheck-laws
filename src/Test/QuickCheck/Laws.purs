@@ -3,7 +3,6 @@ module Test.QuickCheck.Laws
   ) where
 
 import Prelude
-
 import Data.Enum (class Enum, class BoundedEnum)
 import Effect (Effect)
 import Effect.Console (log)

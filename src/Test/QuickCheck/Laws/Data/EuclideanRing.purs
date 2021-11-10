@@ -75,5 +75,5 @@ checkEuclideanRingGen gen = do
 
   submultiplicative ∷ a → a → Boolean
   submultiplicative a b
-    | a /= zero && b /= zero = degree a <= degree (a * b)
-    | otherwise = true
+    | a == zero || b == zero = true
+    | otherwise = degree a <= degree (a * b)
