@@ -3,7 +3,6 @@
 [![CI](https://github.com/purescript-contrib/purescript-quickcheck-laws/workflows/CI/badge.svg?branch=main)](https://github.com/purescript-contrib/purescript-quickcheck-laws/actions?query=workflow%3ACI+branch%3Amain)
 [![Release](https://img.shields.io/github/release/purescript-contrib/purescript-quickcheck-laws.svg)](https://github.com/purescript-contrib/purescript-quickcheck-laws/releases)
 [![Pursuit](https://pursuit.purescript.org/packages/purescript-quickcheck-laws/badge)](https://pursuit.purescript.org/packages/purescript-quickcheck-laws)
-[![Maintainer: thomashoneyman](https://img.shields.io/badge/maintainer-thomashoneyman-teal.svg)](https://github.com/thomashoneyman)
 [![Maintainer: garyb](https://img.shields.io/badge/maintainer-garyb-teal.svg)](https://github.com/garyb)
 
 QuickCheck-powered law tests for PureScript's core typeclasses.
