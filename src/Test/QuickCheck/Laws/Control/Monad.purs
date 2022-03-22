@@ -8,7 +8,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 -- | - Left Identity: `pure x >>= f = f x`
 -- | - Right Identity: `x >>= pure = x`
@@ -17,7 +17,7 @@ checkMonad
   . Monad m
   ⇒ Arbitrary (m A)
   ⇒ Eq (m A)
-  ⇒ Proxy2 m
+  ⇒ Proxy m
   → Effect Unit
 checkMonad _ =
   checkMonadGen

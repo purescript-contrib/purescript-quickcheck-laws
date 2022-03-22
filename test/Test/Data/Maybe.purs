@@ -7,7 +7,7 @@ import Effect (Effect)
 import Test.QuickCheck.Laws (A, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-import Type.Proxy (Proxy(..), Proxy2(..))
+import Type.Proxy (Proxy(..))
 
 checkMaybe ∷ Effect Unit
 checkMaybe = checkLaws "Maybe" do
@@ -30,4 +30,4 @@ checkMaybe = checkLaws "Maybe" do
   Control.checkExtend prx2Maybe
   where
   prxMaybe = Proxy ∷ Proxy (Maybe A)
-  prx2Maybe = Proxy2 ∷ Proxy2 Maybe
+  prx2Maybe = Proxy ∷ Proxy Maybe

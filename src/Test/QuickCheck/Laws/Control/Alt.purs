@@ -10,7 +10,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy(..))
 
 -- | - Associativity: `(x <|> y) <|> z == x <|> (y <|> z)`
 -- | - Distributivity: `f <$> (x <|> y) == (f <$> x) <|> (f <$> y)`
@@ -20,7 +20,7 @@ checkAlt
   ⇒ Arbitrary (f A)
   ⇒ Eq (f A)
   ⇒ Eq (f B)
-  ⇒ Proxy2 f
+  ⇒ Proxy f
   → Effect Unit
 checkAlt _ = checkAltGen (arbitrary :: Gen (f A))
 

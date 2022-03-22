@@ -9,7 +9,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 -- | - Associativity: `(x >>= f) >>= g = x >>= (\k → f k >>= g)`
 checkBind
@@ -17,7 +17,7 @@ checkBind
   . Bind m
   ⇒ Arbitrary (m A)
   ⇒ Eq (m A)
-  ⇒ Proxy2 m
+  ⇒ Proxy m
   → Effect Unit
 checkBind _ = checkBindGen (arbitrary :: Gen (m A)) (arbitrary :: Gen (A → m A))
 

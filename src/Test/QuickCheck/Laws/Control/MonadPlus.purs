@@ -11,7 +11,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 -- | - Distributivity: `(x <|> y) >>= f == (x >>= f) <|> (y >>= f)`
 checkMonadPlus
@@ -20,7 +20,7 @@ checkMonadPlus
   ⇒ Arbitrary (m A)
   ⇒ Arbitrary (m B)
   ⇒ Eq (m B)
-  ⇒ Proxy2 m
+  ⇒ Proxy m
   → Effect Unit
 checkMonadPlus _ =
   checkMonadPlusGen

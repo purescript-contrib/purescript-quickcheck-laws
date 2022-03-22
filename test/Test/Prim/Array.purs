@@ -6,7 +6,7 @@ import Effect (Effect)
 import Test.QuickCheck.Laws (A, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-import Type.Proxy (Proxy(..), Proxy2(..))
+import Type.Proxy (Proxy(..))
 
 checkArray ∷ Effect Unit
 checkArray = checkLaws "Array" do
@@ -26,4 +26,4 @@ checkArray = checkLaws "Array" do
   Control.checkMonadPlus prx2Array
   where
   prxArray = Proxy ∷ Proxy (Array A)
-  prx2Array = Proxy2 ∷ Proxy2 Array
+  prx2Array = Proxy ∷ Proxy Array

@@ -9,7 +9,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (B, C)
-import Type.Proxy (Proxy3)
+import Type.Proxy (Proxy)
 
 -- | - Identity: `id <<< p = p <<< id = p`
 checkCategory
@@ -17,7 +17,7 @@ checkCategory
   . Category a
   ⇒ Arbitrary (a B C)
   ⇒ Eq (a B C)
-  ⇒ Proxy3 a
+  ⇒ Proxy a
   → Effect Unit
 checkCategory _ = checkCategoryGen (arbitrary :: Gen (a B C))
 

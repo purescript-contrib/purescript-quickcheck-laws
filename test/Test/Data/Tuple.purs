@@ -7,7 +7,7 @@ import Effect (Effect)
 import Test.QuickCheck.Laws (A, B, C, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-import Type.Proxy (Proxy(..), Proxy2(..), Proxy3(..))
+import Type.Proxy (Proxy(..))
 
 checkTuple ∷ Effect Unit
 checkTuple = checkLaws "Tuple" do
@@ -29,5 +29,5 @@ checkTuple = checkLaws "Tuple" do
   Control.checkComonad prx2Tuple
   where
   prxTuple = Proxy ∷ Proxy (Tuple A B)
-  prx2Tuple = Proxy2 ∷ Proxy2 (Tuple C)
-  prx3Tuple = Proxy3 ∷ Proxy3 Tuple
+  prx2Tuple = Proxy ∷ Proxy (Tuple C)
+  prx3Tuple = Proxy ∷ Proxy Tuple

@@ -7,7 +7,7 @@ import Effect (Effect)
 import Test.QuickCheck.Laws (A, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-import Type.Proxy (Proxy(..), Proxy2(..))
+import Type.Proxy (Proxy(..))
 
 checkIdentity ∷ Effect Unit
 checkIdentity = checkLaws "Identity" do
@@ -40,4 +40,4 @@ checkIdentity = checkLaws "Identity" do
   -- checkAlternative prx2Identity
   where
   prxIdentity = Proxy ∷ Proxy (Identity A)
-  prx2Identity = Proxy2 ∷ Proxy2 Identity
+  prx2Identity = Proxy ∷ Proxy Identity
