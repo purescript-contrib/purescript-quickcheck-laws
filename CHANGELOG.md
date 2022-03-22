@@ -7,6 +7,7 @@ Notable changes to this project are documented in this file. The format is based
 Breaking changes:
 - Update project and deps to PureScript v0.15.0 (#59 by @JordanMartinez)
 - Drop deprecated `MonadZero` instance (#59 by @JordanMartinez)
+- Drop `Proxy2`/`Proxy3` usage in favor of just `Proxy` (#59 by @JordanMartinez)
 
 New features:
 - Provide `Arbitrary`-less law checks (#36 by @matthewleon, #57 by @JordanMartinez)
