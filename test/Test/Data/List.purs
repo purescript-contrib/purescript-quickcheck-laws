@@ -25,7 +25,6 @@ checkList = checkLaws "List" do
   Control.checkAlt prx2List
   Control.checkPlus prx2List
   Control.checkAlternative prx2List
-  Control.checkMonadZero prx2List
   Control.checkMonadPlus prx2List
   where
   prxList = Proxy ∷ Proxy (List A)

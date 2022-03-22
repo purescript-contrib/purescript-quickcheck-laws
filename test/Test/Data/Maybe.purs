@@ -14,7 +14,7 @@ checkMaybe = checkLaws "Maybe" do
   Data.checkEq prxMaybe
   Data.checkOrd prxMaybe
   Data.checkBounded prxMaybe
-  Data.checkEnum prxMaybe  
+  Data.checkEnum prxMaybe
   Data.checkSemigroup prxMaybe
   Data.checkMonoid prxMaybe
   Data.checkFunctor prx2Maybe
@@ -27,7 +27,6 @@ checkMaybe = checkLaws "Maybe" do
   Control.checkAlternative prx2Maybe
   Control.checkBind prx2Maybe
   Control.checkMonad prx2Maybe
-  Control.checkMonadZero prx2Maybe
   Control.checkExtend prx2Maybe
   where
   prxMaybe = Proxy ∷ Proxy (Maybe A)

@@ -38,7 +38,6 @@ checkIdentity = checkLaws "Identity" do
   -- checkAlt prx2Identity
   -- checkPlus prx2Identity
   -- checkAlternative prx2Identity
-  -- checkMonadZero prx2Identity
   where
   prxIdentity = Proxy ∷ Proxy (Identity A)
   prx2Identity = Proxy2 ∷ Proxy2 Identity

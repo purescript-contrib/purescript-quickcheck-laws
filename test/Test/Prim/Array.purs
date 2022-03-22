@@ -23,7 +23,6 @@ checkArray = checkLaws "Array" do
   Control.checkAlt prx2Array
   Control.checkPlus prx2Array
   Control.checkAlternative prx2Array
-  Control.checkMonadZero prx2Array
   Control.checkMonadPlus prx2Array
   where
   prxArray = Proxy ∷ Proxy (Array A)
