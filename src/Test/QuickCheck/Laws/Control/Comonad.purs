@@ -11,7 +11,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, class Coarbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 -- | - Left Identity: `extract <<= x = x`
 -- | - Right Identity: `extract (f <<= x) = f x`
@@ -21,7 +21,7 @@ checkComonad
   ⇒ Arbitrary (w A)
   ⇒ Coarbitrary (w A)
   ⇒ Eq (w A)
-  ⇒ Proxy2 w
+  ⇒ Proxy w
   → Effect Unit
 checkComonad _ =
   checkComonadGen

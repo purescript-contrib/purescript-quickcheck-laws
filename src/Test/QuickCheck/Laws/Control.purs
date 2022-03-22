@@ -10,6 +10,5 @@ import Test.QuickCheck.Laws.Control.Comonad (checkComonad, checkComonadGen) as E
 import Test.QuickCheck.Laws.Control.Extend (checkExtend, checkExtendGen) as Exports
 import Test.QuickCheck.Laws.Control.Monad (checkMonad, checkMonadGen) as Exports
 import Test.QuickCheck.Laws.Control.MonadPlus (checkMonadPlus, checkMonadPlusGen) as Exports
-import Test.QuickCheck.Laws.Control.MonadZero (checkMonadZero, checkMonadZeroGen) as Exports
 import Test.QuickCheck.Laws.Control.Plus (checkPlus, checkPlusGen) as Exports
 import Test.QuickCheck.Laws.Control.Semigroupoid (checkSemigroupoid, checkSemigroupoidGen) as Exports

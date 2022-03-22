@@ -9,7 +9,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 -- | - Identity: `(<$>) id = id`
 -- | - Composition: `(<$>) (f <<< g) = (f <$>) <<< (g <$>)`
@@ -18,7 +18,7 @@ checkFunctor
   . Functor f
   ⇒ Arbitrary (f A)
   ⇒ Eq (f A)
-  ⇒ Proxy2 f
+  ⇒ Proxy f
   → Effect Unit
 checkFunctor _ = checkFunctorGen (arbitrary :: Gen (f A))
 

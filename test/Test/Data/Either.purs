@@ -7,14 +7,14 @@ import Effect (Effect)
 import Test.QuickCheck.Laws (A, B, C, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-import Type.Proxy (Proxy(..), Proxy2(..))
+import Type.Proxy (Proxy(..))
 
 checkEither ∷ Effect Unit
 checkEither = checkLaws "Either" do
   Data.checkEq prxEither
   Data.checkOrd prxEither
   Data.checkBounded prxEither
-  Data.checkEnum prxEither  
+  Data.checkEnum prxEither
   Data.checkFunctor prx2Either
   Data.checkFunctorWithIndex prx2Either
   Data.checkFoldableFunctor prx2Either
@@ -26,4 +26,4 @@ checkEither = checkLaws "Either" do
   Control.checkExtend prx2Either
   where
   prxEither = Proxy ∷ Proxy (Either A B)
-  prx2Either = Proxy2 ∷ Proxy2 (Either C)
+  prx2Either = Proxy ∷ Proxy (Either C)

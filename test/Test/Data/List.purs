@@ -7,7 +7,7 @@ import Effect (Effect)
 import Test.QuickCheck.Laws (A, checkLaws)
 import Test.QuickCheck.Laws.Control as Control
 import Test.QuickCheck.Laws.Data as Data
-import Type.Proxy (Proxy(..), Proxy2(..))
+import Type.Proxy (Proxy(..))
 
 checkList ∷ Effect Unit
 checkList = checkLaws "List" do
@@ -25,8 +25,7 @@ checkList = checkLaws "List" do
   Control.checkAlt prx2List
   Control.checkPlus prx2List
   Control.checkAlternative prx2List
-  Control.checkMonadZero prx2List
   Control.checkMonadPlus prx2List
   where
   prxList = Proxy ∷ Proxy (List A)
-  prx2List = Proxy2 ∷ Proxy2 List
+  prx2List = Proxy ∷ Proxy List

@@ -10,7 +10,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B, C)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 -- | - Identity: `(pure identity) <*> v = v`
 -- | - Composition: `(pure (<<<)) <*> f <*> g <*> h = f <*> (g <*> h)`
@@ -25,7 +25,7 @@ checkApplicative
   ⇒ Eq (f A)
   ⇒ Eq (f B)
   ⇒ Eq (f C)
-  ⇒ Proxy2 f
+  ⇒ Proxy f
   → Effect Unit
 checkApplicative _ =
   checkApplicativeGen

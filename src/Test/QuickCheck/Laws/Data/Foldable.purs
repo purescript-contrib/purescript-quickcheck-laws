@@ -9,7 +9,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 
 -- | - foldr: `foldr = foldrDefault`
@@ -18,7 +18,7 @@ checkFoldable
   ∷ ∀ f
   . Foldable f
   ⇒ Arbitrary (f A)
-  ⇒ Proxy2 f
+  ⇒ Proxy f
   → Effect Unit
 checkFoldable _ = checkFoldableGen (arbitrary :: Gen (f A))
 
@@ -47,7 +47,7 @@ checkFoldableFunctor
   . Foldable f
   ⇒ Functor f
   ⇒ Arbitrary (f A)
-  ⇒ Proxy2 f
+  ⇒ Proxy f
   → Effect Unit
 checkFoldableFunctor _ = checkFoldableFunctorGen (arbitrary :: Gen (f A))
 

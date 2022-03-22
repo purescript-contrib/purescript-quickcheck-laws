@@ -10,7 +10,7 @@ import Test.QuickCheck (class Coarbitrary, arbitrary, quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 -- | - Identity: `mapWithIndex (\_ a → a) = identity`
 -- | - Composition: `mapWithIndex f . mapWithIndex g = mapWithIndex (\i → f i <<< g i)`
@@ -20,7 +20,7 @@ checkFunctorWithIndex
   ⇒ Arbitrary (f A)
   ⇒ Coarbitrary i
   ⇒ Eq (f A)
-  ⇒ Proxy2 f
+  ⇒ Proxy f
   → Effect Unit
 checkFunctorWithIndex _ = checkFunctorWithIndexGen (arbitrary :: Gen (f A))
 

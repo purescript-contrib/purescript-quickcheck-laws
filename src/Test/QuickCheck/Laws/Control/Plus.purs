@@ -10,7 +10,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 -- | - Left identity: `empty <|> x == x`
 -- | - Right identity: `x <|> empty == x`
@@ -21,7 +21,7 @@ checkPlus
   ⇒ Arbitrary (f A)
   ⇒ Eq (f A)
   ⇒ Eq (f B)
-  ⇒ Proxy2 f
+  ⇒ Proxy f
   → Effect Unit
 checkPlus _ = checkPlusGen (arbitrary ∷ Gen (f A))
 

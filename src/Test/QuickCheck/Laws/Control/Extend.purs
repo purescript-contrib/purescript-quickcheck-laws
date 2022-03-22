@@ -10,7 +10,7 @@ import Test.QuickCheck (quickCheck')
 import Test.QuickCheck.Arbitrary (class Arbitrary, class Coarbitrary, arbitrary)
 import Test.QuickCheck.Gen (Gen)
 import Test.QuickCheck.Laws (A, B, C)
-import Type.Proxy (Proxy2)
+import Type.Proxy (Proxy)
 
 -- | - Associativity: `extend f <<< extend g = extend (f <<< extend g)`
 checkExtend
@@ -20,7 +20,7 @@ checkExtend
   ⇒ Coarbitrary (w A)
   ⇒ Coarbitrary (w B)
   ⇒ Eq (w C)
-  ⇒ Proxy2 w
+  ⇒ Proxy w
   → Effect Unit
 checkExtend _ =
   checkExtendGen
