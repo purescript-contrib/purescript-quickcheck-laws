@@ -22,6 +22,6 @@
   "dependencies": {
     "purescript-prelude": "^6.0.0",
     "purescript-enums": "^6.0.0",
-    "purescript-quickcheck": "^8.0.2"
+    "purescript-quickcheck": "^8.0.1"
   }
 }
