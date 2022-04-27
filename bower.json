@@ -20,8 +20,8 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-prelude": "master",
-    "purescript-enums": "master",
-    "purescript-quickcheck": "master"
+    "purescript-prelude": "^6.0.0",
+    "purescript-enums": "^6.0.0",
+    "purescript-quickcheck": "^8.0.1"
   }
 }
