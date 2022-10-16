@@ -62,7 +62,8 @@ main = do
 
 The above code implements a law-abiding instance of `Functor` and therefore the
 tests all pass with a message:
-```
+
+```text
 Checking 'Identity' law for Functor
 1000/1000 test(s) passed.
 Checking 'Composition' law for Functor
@@ -70,9 +71,11 @@ Checking 'Composition' law for Functor
 ```
 
 If we change the implementation of map to, say,
+
 ```purs
   map _ (Pair x y) = Pair y x
 ```
+
 we get an instance of `Functor` that isn't at all law-abiding. It ignores the
 first argument and swaps the elements of the `Pair`. Sure enough, if we run the
 tests on this version we get an error message informing us that one of the tests
