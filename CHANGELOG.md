@@ -11,6 +11,7 @@ New features:
 Bugfixes:
 
 Other improvements:
+- Add QuickStart section to README.md (#61 by @JamieBallingall)
 
 ## [v7.0.0](https://github.com/purescript-contrib/purescript-quickcheck-laws/releases/tag/v7.0.0) - 2022-04-27
 

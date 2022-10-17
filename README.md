@@ -17,7 +17,72 @@ spago install quickcheck-laws
 
 ## Quick start
 
-The quick start hasn't been written yet (contributions are welcome!). The quick start covers a common, minimal use case for the library, whereas longer examples and tutorials can be kept in the [docs directory](./docs).
+Below is an example of how to test the laws of the `Functor` typeclass for a new
+type `Pair` that we create. On running this code, 1000 tests of the two
+`Functor` laws (identity and composition) will be sucessfully run.
+
+```purs
+module Main (main) where
+
+-- The relevent imports
+import Prelude
+import Effect (Effect)
+import Test.QuickCheck.Arbitrary (class Arbitrary, arbitrary)
+import Test.QuickCheck.Laws.Data.Functor (checkFunctor)
+import Type.Proxy (Proxy(Proxy))
+
+-- A type to test the `Functor` instance of
+data Pair a = Pair a a
+
+-- We need an `Eq` instance to check whether two different calls to `map` result
+-- in the same value
+derive instance Eq a => Eq (Pair a)
+
+-- We need to be able to generate values of type `Pair a`, assuming that we can
+-- generate values of type `a`
+instance Arbitrary a => Arbitrary (Pair a) where
+  arbitrary = Pair <$> arbitrary <*> arbitrary
+
+-- The `Functor` that we want to test. There are multiple ways of defining a
+-- functor over `Pair` but here we pick a simple and obvious one
+instance Functor Pair where
+  map f (Pair x y) = Pair (f x) (f y)
+
+-- We are going to need to "pass `Pair` into the function `checkFunctor`". Since
+-- we can't pass types (or type constructors) into functions directly, we create
+-- a proxy that we can pass in
+proxy :: Proxy Pair
+proxy = Proxy
+
+-- Finally, we can run the test by passing the proxy into `checkFunctor`
+main :: Effect Unit
+main = do
+  checkFunctor proxy
+```
+
+The above code implements a law-abiding instance of `Functor` and therefore the
+tests all pass with a message:
+
+```text
+Checking 'Identity' law for Functor
+1000/1000 test(s) passed.
+Checking 'Composition' law for Functor
+1000/1000 test(s) passed.
+```
+
+If we change the implementation of map to, say,
+
+```purs
+  map _ (Pair x y) = Pair y x
+```
+
+we get an instance of `Functor` that isn't at all law-abiding. It ignores the
+first argument and swaps the elements of the `Pair`. Sure enough, if we run the
+tests on this version we get an error message informing us that one of the tests
+has failed.
+
+Additional examples of successful tests can be found in
+[the test suite](./test).
 
 ## Documentation
 
