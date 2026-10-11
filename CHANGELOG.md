@@ -11,7 +11,13 @@ New features:
 Bugfixes:
 
 Other improvements:
+
+## [v7.0.1](https://github.com/purescript-contrib/purescript-quickcheck-laws/releases/tag/v7.0.1) - 2026-10-11
+
+Other improvements:
 - Add QuickStart section to README.md (#61 by @JamieBallingall)
+- Fix the legacy package set reference (#62 by @garyb)
+- Migrate to registry-backed Spago 1.0 and update repository tooling and CI actions (#64 by @thomashoneyman)
 
 ## [v7.0.0](https://github.com/purescript-contrib/purescript-quickcheck-laws/releases/tag/v7.0.0) - 2022-04-27
 
